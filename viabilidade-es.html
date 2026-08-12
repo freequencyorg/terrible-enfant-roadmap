@@ -154,9 +154,17 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 <tr><td>Margen del socio sobre el SRP · Matalab (mayorista)</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="m_mt" value="55" oninput="calc()"></td><td class="sk">%</td></tr>
 <tr><td>Margen del socio sobre el SRP · E-commerce</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="m_ec" value="0" oninput="calc()"></td><td class="sk">%</td></tr>
 <tr class="cat"><td colspan="3">Inversión ya realizada (R$)</td></tr>
-<tr><td>Comunicación</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_com" value="0" oninput="calc()"></td><td class="sk">R$</td></tr>
-<tr><td>Showroom</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_show" value="0" oninput="calc()"></td><td class="sk">R$</td></tr>
-<tr class="sb"><td>Total</td><td class="num" id="rz_t"></td><td class="sk">R$</td></tr>
+<tr class="cat"><td colspan="3" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Comunicación</td></tr>
+<tr><td>Creative direction fee 2025</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_1" value="0" oninput="calc()"></td><td class="sk">R$</td></tr>
+<tr><td>Agency fee 2025</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_2" value="0" oninput="calc()"></td><td class="sk">R$</td></tr>
+<tr><td>Freequency fee 2026</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_3" value="0" oninput="calc()"></td><td class="sk">R$</td></tr>
+<tr><td>Design fee colabs</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_4" value="0" oninput="calc()"></td><td class="sk">R$</td></tr>
+<tr class="sb"><td>Subtotal Comunicación</td><td class="num" id="rz_ct"></td><td class="sk">R$</td></tr>
+<tr class="cat"><td colspan="3" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Showroom</td></tr>
+<tr><td>Alquiler del showroom pagado</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_5" value="0" oninput="calc()"></td><td class="sk">R$</td></tr>
+<tr><td>Inversión en reforma del showroom</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_6" value="0" oninput="calc()"></td><td class="sk">R$</td></tr>
+<tr class="sb"><td>Subtotal Showroom</td><td class="num" id="rz_st"></td><td class="sk">R$</td></tr>
+<tr class="tot"><td>Total</td><td class="num" id="rz_t"></td><td class="sk">R$</td></tr>
 </table>
 <div class="note" style="margin-top:12px">Capital aplicado antes del inicio del horizonte (septiembre 2026). Entra en la base de cálculo del ROI y del repago, pero no pasa por el estado de resultados de los trimestres proyectados.</div>
 <div class="note">La alícuota del Simples se aplica sobre los ingresos brutos facturados y es la misma para minorista y mayorista — lo que cambia es la base: a Matalab se factura al precio mayorista (SRP menos el margen del socio), mientras que showroom y e-commerce se facturan al precio de consumidor. La alícuota efectiva surge del tramo de los ingresos de los 12 meses previos (cuatro trimestres anteriores; anualizados en los primeros trimestres).</div>
@@ -409,8 +417,8 @@ const L={never:"no alcanzado",units:"un/trimestre",
  confirm:"¿Confirmar?",reset:"Restaurar valores",
  none:"— sin escenarios guardados —",
  atcost2:"a costo",otbok:"cobertura mantenida en el horizonte"};
-const XKEY='te-viab-v7-scn-es';
-const KEY='te-viab-v7-es', SKEY='te-viab-v7-sec-es';
+const XKEY='te-viab-v8-scn-es';
+const KEY='te-viab-v8-es', SKEY='te-viab-v8-sec-es';
 const FAIXAS=[[180000,.04,0],[360000,.073,5940],[720000,.095,13860],
               [1800000,.107,22500],[3600000,.143,87300],[4800000,.19,378000]];
 function aliq(r){ if(r<=0) return .04;
@@ -435,8 +443,8 @@ function fillQty(ci){
 function calc(){
   const fx=V('fx')||1;
   const mg={sh:V('m_sh')/100, mt:V('m_mt')/100, ec:V('m_ec')/100};
-  const rzC=V('rz_com'), rzS=V('rz_show'), rzT=rzC+rzS;
-  $('rz_t').textContent=N(rzT);
+  const rzC=V('rz_1')+V('rz_2')+V('rz_3')+V('rz_4'), rzS=V('rz_5')+V('rz_6'), rzT=rzC+rzS;
+  $('rz_ct').textContent=N(rzC); $('rz_st').textContent=N(rzS); $('rz_t').textContent=N(rzT);
 
   // ---------- catálogo
   const A={}; CATS.forEach(c=>A[c]={q:0,su:0,cu:0,sq:0,cq:0,inv:0,n:0});
@@ -757,6 +765,8 @@ function migrate(a){
   }
   // v6: sem os campos de OTB (lead time e cobertura)
   if(a.length===333) a=a.slice(0,249).concat(['1','2'], a.slice(249,333));
+  // v7: "já investido" com 2 campos -> 6 (comunicação detalhada + showroom)
+  if(a.length===335) a=a.slice(0,4).concat(['0','0',a[4],'0',a[5],'0'], a.slice(6,335));
   return a;
 }
 function load(a){ a=migrate(a); const el=inputs(); if(!a||a.length!==el.length) return false;
@@ -813,7 +823,7 @@ function share(){
 function dl(){
   const d=new Date(), pad=n=>String(n).padStart(2,'0');
   const stamp=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-  const payload={app:'te-viabilidade',v:7,saved:d.toISOString(),values:vals()};
+  const payload={app:'te-viabilidade',v:8,saved:d.toISOString(),values:vals()};
   const blob=new Blob([JSON.stringify(payload,null,1)],{type:'application/json'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
