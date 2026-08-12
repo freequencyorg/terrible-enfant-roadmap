@@ -538,9 +538,11 @@ const Rk=v=>{const x=toDisp(v);
   const mi=LOC==='en-US'?'m':'mi', mil=LOC==='en-US'?'k':'mil';
   return Math.abs(x)>=1000000?SY()+(x/1000000).toFixed(2).replace('.',LOC==='en-US'?'.':',')+' '+mi
     :Math.abs(x)>=10000?SY()+Math.round(x/1000).toLocaleString(LOC)+' '+mil:R(v);};
-const P=v=>(v*100).toFixed(1).replace('.',',')+'%';
+const P=v=>(v*100).toFixed(1).replace('.',LOC==='en-US'?'.':',')+'%';
 const P0=v=>Math.round(v*100)+'%';
-const N=v=>Math.round(v).toLocaleString('pt-BR');
+const N=v=>Math.round(v).toLocaleString(LOC);
+const NM=v=>Math.round(toDisp(v)).toLocaleString(LOC);
+const D1=v=>v.toFixed(1).replace('.',LOC==='en-US'?'.':',');
 const sig=v=>v>0?'pos':(v<0?'neg':'');
 
 function fillQty(ci){
@@ -553,7 +555,7 @@ function calc(){
   const fx=V('fx')||1;
   const mg={sh:V('m_sh')/100, mt:V('m_mt')/100, ec:V('m_ec')/100};
   const rzC=V('rz_1')+V('rz_2')+V('rz_3')+V('rz_4'), rzS=V('rz_5')+V('rz_6'), rzT=rzC+rzS;
-  $('rz_ct').textContent=N(rzC); $('rz_st').textContent=N(rzS); $('rz_t').textContent=N(rzT);
+  $('rz_ct').textContent=NM(rzC); $('rz_st').textContent=NM(rzS); $('rz_t').textContent=NM(rzT);
 
   // ---------- catálogo
   const A={}; CATS.forEach(c=>A[c]={q:0,su:0,cu:0,sq:0,cq:0,inv:0,n:0});
@@ -698,7 +700,7 @@ function calc(){
     $(`ot_st_sold_${q}`).textContent=un[q]?N(un[q]):'—';
     $(`ot_st_end_${q}`).textContent=N(stEnd[q]);
     const ce=$(`ot_st_cov_${q}`);
-    ce.textContent=cov[q]===null?'—':cov[q].toFixed(1).replace('.',',');
+    ce.textContent=cov[q]===null?'—':D1(cov[q]);
     ce.className='c '+(cov[q]!==null&&cov[q]<covT?'neg':'');
   }
   let alert=-1;
@@ -711,7 +713,7 @@ function calc(){
     const oq=Math.max(0,alert-lead);
     const unitCost=totImp>0?tInv/totImp:0;
     $('ot_alert').textContent=QLAB[alert]; $('ot_alert').className='v neg';
-    $('ot_alert_s').textContent=N(stEnd[alert])+' un · '+(cov[alert]).toFixed(1).replace('.',',')+' / '+covT;
+    $('ot_alert_s').textContent=N(stEnd[alert])+' un · '+D1(cov[alert])+' / '+covT;
     $('ot_order').textContent=QLAB[oq]; $('ot_order').className='v';
     $('ot_order_s').textContent='lead time '+lead+'T';
     $('ot_size').textContent=N(need)+' un';
