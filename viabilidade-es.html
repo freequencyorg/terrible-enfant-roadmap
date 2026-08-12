@@ -344,6 +344,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 <h2 id="h4" onclick="tog('s4')"><span class="chev">▾</span>4. Sell-out por trimestre</h2>
 <div class="sec" id="s4">
 <div class="note">Cuántas unidades cree que va a vender de cada categoría, en cada punto de venta, trimestre a trimestre. A la derecha aparece el total vendido y qué parte del stock asignado representa — por encima del 100% está vendiendo más de lo que asignó. Las categorías sin stock asignado aparecen atenuadas.</div>
+<div style="margin:0 0 12px"><button class="btn" id="clrb" onclick="clearSales()">Poner ventas en cero</button></div>
 <div class="warn" id="w_sell">Ventas por encima del stock asignado — <span id="w_sell_d"></span></div>
 <div class="scroll"><table>
 <thead><tr><th>Ventas (unidades)</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Acumulado</th></tr></thead>
@@ -498,7 +499,7 @@ const L={never:"no alcanzado",units:"un/trimestre",
  tot:"Total",inq:"en",
  confirm:"¿Confirmar?",reset:"Restaurar valores",
  none:"— sin escenarios guardados —",
- atcost2:"a costo",otbok:"cobertura mantenida en el horizonte",un:"un"};
+ atcost2:"a costo",otbok:"cobertura mantenida en el horizonte",un:"un",clr:"Poner ventas en cero"};
 const XKEY='te-viab-v8-scn-es';
 const KEY='te-viab-v10-es', OLDKEY='te-viab-v8-es', SKEY='te-viab-v8-sec-es', CKEY='te-viab-v8-cur-es';
 const LOC="es-ES";
@@ -589,6 +590,18 @@ const NM=v=>{let x=Math.round(toDisp(v)); if(Object.is(x,-0)||x===0) x=0; return
 const D1=v=>v.toFixed(1).replace('.',LOC==='en-US'?'.':',');
 const sig=v=>v>0?'pos':(v<0?'neg':'');
 
+let clrArm=0;
+function clearSales(){
+  const b=$('clrb');
+  if(!clrArm){ clrArm=1; b.textContent=L.confirm;
+    b.style.background='#c8433a'; b.style.color='#fff'; b.style.borderColor='#c8433a';
+    setTimeout(()=>{ clrArm=0; b.textContent=L.clr; b.style.cssText=''; },4000); return; }
+  clrArm=0; b.textContent=L.clr; b.style.cssText='';
+  CH.forEach(ch=>CATS.forEach((c,ci)=>{
+    for(let q=0;q<NQ;q++) $(`so_${ch}_${ci}_${q}`).value='0';
+  }));
+  calc();
+}
 function replRow(ch){
   for(let ci=1;ci<CATS.length;ci++)
     for(let q=0;q<NQ;q++) $(`so_${ch}_${ci}_${q}`).value=$(`so_${ch}_0_${q}`).value;

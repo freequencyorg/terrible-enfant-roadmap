@@ -344,6 +344,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 <h2 id="h4" onclick="tog('s4')"><span class="chev">▾</span>4. Sell-out by quarter</h2>
 <div class="sec" id="s4">
 <div class="note">How many units you expect to sell of each category, at each point of sale, quarter by quarter. On the right you get the total sold and what share of the allocated stock that represents — above 100% means you are selling more than you put there. Categories with no allocated stock appear dimmed.</div>
+<div style="margin:0 0 12px"><button class="btn" id="clrb" onclick="clearSales()">Clear sales</button></div>
 <div class="warn" id="w_sell">Sales above allocated inventory — <span id="w_sell_d"></span></div>
 <div class="scroll"><table>
 <thead><tr><th>Sales (units)</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Cumulative</th></tr></thead>
@@ -498,7 +499,7 @@ const L={never:"not reached",units:"units/quarter",
  tot:"Total",inq:"at",
  confirm:"Confirm?",reset:"Reset",
  none:"— no saved scenarios —",
- atcost2:"at cost",otbok:"coverage held through the horizon",un:"un"};
+ atcost2:"at cost",otbok:"coverage held through the horizon",un:"un",clr:"Clear sales"};
 const XKEY='te-viab-v8-scn-en';
 const KEY='te-viab-v10-en', OLDKEY='te-viab-v8-en', SKEY='te-viab-v8-sec-en', CKEY='te-viab-v8-cur-en';
 const LOC="en-US";
@@ -589,6 +590,18 @@ const NM=v=>{let x=Math.round(toDisp(v)); if(Object.is(x,-0)||x===0) x=0; return
 const D1=v=>v.toFixed(1).replace('.',LOC==='en-US'?'.':',');
 const sig=v=>v>0?'pos':(v<0?'neg':'');
 
+let clrArm=0;
+function clearSales(){
+  const b=$('clrb');
+  if(!clrArm){ clrArm=1; b.textContent=L.confirm;
+    b.style.background='#c8433a'; b.style.color='#fff'; b.style.borderColor='#c8433a';
+    setTimeout(()=>{ clrArm=0; b.textContent=L.clr; b.style.cssText=''; },4000); return; }
+  clrArm=0; b.textContent=L.clr; b.style.cssText='';
+  CH.forEach(ch=>CATS.forEach((c,ci)=>{
+    for(let q=0;q<NQ;q++) $(`so_${ch}_${ci}_${q}`).value='0';
+  }));
+  calc();
+}
 function replRow(ch){
   for(let ci=1;ci<CATS.length;ci++)
     for(let q=0;q<NQ;q++) $(`so_${ch}_${ci}_${q}`).value=$(`so_${ch}_0_${q}`).value;
