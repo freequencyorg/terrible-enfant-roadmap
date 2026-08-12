@@ -55,6 +55,12 @@ color:var(--ink2);border:1px solid #b9b4aa;padding:8px 14px;cursor:pointer;font-
 .btn:hover{border-color:var(--ink);color:var(--ink)}
 .btn.pri{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .btn.pri:hover{opacity:.85}
+.curtog{display:inline-flex}
+.curtog button{font-size:11px;letter-spacing:.12em;background:transparent;color:var(--ink2);
+border:1px solid #b9b4aa;border-left-width:0;padding:8px 14px;cursor:pointer;font-family:var(--sans)}
+.curtog button:first-child{border-left-width:1px}
+.curtog button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fxinfo{font-size:11px;color:var(--muted);margin-left:8px}
 .lnk{color:var(--muted);text-decoration:none;font-size:12px}
 .lnk:hover{color:var(--ink)}
 table{border-collapse:collapse;width:100%;font-size:13px}
@@ -168,6 +174,10 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
   <button class="btn" onclick="allSec(1)">Abrir todo</button>
   <button class="btn" onclick="allSec(0)">Cerrar todo</button>
   <button class="btn" id="rstb" onclick="reset()">Restaurar valores</button>
+  <span class="curtog" title="Moneda de visualización">
+    <button id="cb_brl" class="on" onclick="setCur('brl')">R$</button>
+    <button id="cb_usd" onclick="setCur('usd')">US$</button>
+  </span>
   <a class="lnk" href="./">← Roadmap</a>
 </div>
 <div class="bar2">
@@ -184,24 +194,26 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 <h2 id="h1" onclick="tog('s1')"><span class="chev">▾</span>1. Premisas generales</h2>
 <div class="sec" id="s1">
 <table style="width:auto">
-<tr><td>Tipo de cambio US$ → R$</td><td class="num"><input class="e" type="number" step="0.0001" id="fx" value="5.0891" oninput="calc()"></td><td></td></tr>
+<tr><td>Tipo de cambio US$ → R$</td><td class="num"><input class="e" type="number" step="0.0001" id="fx" value="5.0891" oninput="calc()"></td>
+<td><button class="minib" style="margin-left:0" onclick="fetchFx()">Actualizar</button><span class="fxinfo" id="fxinfo"></span></td></tr>
 <tr><td>Margen del socio sobre el SRP · Showroom</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="m_sh" value="0" oninput="calc()"></td><td class="sk">%</td></tr>
 <tr><td>Margen del socio sobre el SRP · Matalab (mayorista)</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="m_mt" value="55" oninput="calc()"></td><td class="sk">%</td></tr>
 <tr><td>Margen del socio sobre el SRP · E-commerce</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="m_ec" value="0" oninput="calc()"></td><td class="sk">%</td></tr>
-<tr class="cat"><td colspan="3">Inversión ya realizada (R$)</td></tr>
+<tr class="cat"><td colspan="3">Inversión ya realizada (<span class="cl">R$</span>)</td></tr>
 <tr class="cat"><td colspan="3" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Comunicación</td></tr>
-<tr><td>Creative direction fee 2025</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_1" value="0" oninput="calc()"></td><td class="sk">R$</td></tr>
-<tr><td>Agency fee 2025</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_2" value="0" oninput="calc()"></td><td class="sk">R$</td></tr>
-<tr><td>Freequency fee 2026</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_3" value="0" oninput="calc()"></td><td class="sk">R$</td></tr>
-<tr><td>Design fee colabs</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_4" value="0" oninput="calc()"></td><td class="sk">R$</td></tr>
-<tr class="sb"><td>Subtotal Comunicación</td><td class="num" id="rz_ct"></td><td class="sk">R$</td></tr>
+<tr><td>Creative direction fee 2025</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_1" value="0" oninput="calc()"></td><td class="sk cl">R$</td></tr>
+<tr><td>Agency fee 2025</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_2" value="0" oninput="calc()"></td><td class="sk cl">R$</td></tr>
+<tr><td>Freequency fee 2026</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_3" value="0" oninput="calc()"></td><td class="sk cl">R$</td></tr>
+<tr><td>Design fee colabs</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_4" value="0" oninput="calc()"></td><td class="sk cl">R$</td></tr>
+<tr class="sb"><td>Subtotal Comunicación</td><td class="num" id="rz_ct"></td><td class="sk cl">R$</td></tr>
 <tr class="cat"><td colspan="3" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Showroom</td></tr>
-<tr><td>Alquiler del showroom pagado</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_5" value="0" oninput="calc()"></td><td class="sk">R$</td></tr>
-<tr><td>Inversión en reforma del showroom</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_6" value="0" oninput="calc()"></td><td class="sk">R$</td></tr>
-<tr class="sb"><td>Subtotal Showroom</td><td class="num" id="rz_st"></td><td class="sk">R$</td></tr>
-<tr class="tot"><td>Total</td><td class="num" id="rz_t"></td><td class="sk">R$</td></tr>
+<tr><td>Alquiler del showroom pagado</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_5" value="0" oninput="calc()"></td><td class="sk cl">R$</td></tr>
+<tr><td>Inversión en reforma del showroom</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_6" value="0" oninput="calc()"></td><td class="sk cl">R$</td></tr>
+<tr class="sb"><td>Subtotal Showroom</td><td class="num" id="rz_st"></td><td class="sk cl">R$</td></tr>
+<tr class="tot"><td>Total</td><td class="num" id="rz_t"></td><td class="sk cl">R$</td></tr>
 </table>
-<div class="note" style="margin-top:12px">Capital aplicado antes del inicio del horizonte (septiembre 2026). Entra en la base de cálculo del ROI y del repago, pero no pasa por el estado de resultados de los trimestres proyectados.</div>
+<div class="note" style="margin-top:12px">La moneda de visualización cambia todos los valores calculados y los campos de costo en reales. Los precios de catálogo se siguen cargando en dólares. El tipo de cambio es el de las premisas.</div>
+<div class="note">Capital aplicado antes del inicio del horizonte (septiembre 2026). Entra en la base de cálculo del ROI y del repago, pero no pasa por el estado de resultados de los trimestres proyectados.</div>
 <div class="note">La alícuota del Simples se aplica sobre los ingresos brutos facturados y es la misma para minorista y mayorista — lo que cambia es la base: a Matalab se factura al precio mayorista (SRP menos el margen del socio), mientras que showroom y e-commerce se facturan al precio de consumidor. La alícuota efectiva surge del tramo de los ingresos de los 12 meses previos (cuatro trimestres anteriores; anualizados en los primeros trimestres).</div>
 </div>
 
@@ -352,7 +364,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 <h2 id="h6" onclick="tog('s6')"><span class="chev">▾</span>6. Comunicación</h2>
 <div class="sec" id="s6">
 <div class="scroll"><table>
-<thead><tr><th>R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Total</th></tr></thead>
+<thead><tr><th class="cl">R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Total</th></tr></thead>
 <tbody><tr class="cat"><td colspan="11">Marca</td></tr>
 <tr><td>Colabs</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_7" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_8" value="0" oninput="calc()"></td><td class="num" id="cm_colabs_t"></td></tr>
 <tr><td>Seeding</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_7" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_8" value="0" oninput="calc()"></td><td class="num" id="cm_seeding_t"></td></tr>
@@ -370,7 +382,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 <div class="sec" id="s7">
 <div class="note">Fee de Freequency por frente de trabajo, en valor mensual para cada período. Entra en el estado de resultados como gasto propio, separado del presupuesto de comunicación — así se ve cuánto del costo es servicio de agencia y cuánto es medios y acciones.</div>
 <div class="scroll"><table>
-<thead><tr><th>R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Total</th></tr></thead>
+<thead><tr><th class="cl">R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Total</th></tr></thead>
 <tbody><tr><td>Administración</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_7" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_8" value="0" oninput="calc()"></td><td class="num" id="fe_adm_t"></td></tr>
 <tr><td>PR</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_7" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_8" value="0" oninput="calc()"></td><td class="num" id="fe_fpr_t"></td></tr>
 <tr><td>Social</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_7" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_8" value="0" oninput="calc()"></td><td class="num" id="fe_social_t"></td></tr><tr class="tot"><td>Total</td><td class="c" id="fe_q_0"></td><td class="c" id="fe_q_1"></td><td class="c" id="fe_q_2"></td><td class="c" id="fe_q_3"></td><td class="c" id="fe_q_4"></td><td class="c" id="fe_q_5"></td><td class="c" id="fe_q_6"></td><td class="c" id="fe_q_7"></td><td class="c" id="fe_q_8"></td><td class="num" id="fe_tt"></td></tr></tbody></table></div>
@@ -379,7 +391,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 <h2 id="h8" onclick="tog('s8')"><span class="chev">▾</span>8. Costos operativos</h2>
 <div class="sec" id="s8">
 <div class="scroll"><table style="min-width:560px;max-width:700px">
-<thead><tr><th>Rubro</th><th class="num">R$/mes · Q3 26–Q2 27</th><th class="num">R$/mes · Q3 27–Q3 28</th>
+<thead><tr><th>Rubro</th><th class="num"><span class="cl">R$</span>/mes · Q3 26–Q2 27</th><th class="num"><span class="cl">R$</span>/mes · Q3 27–Q3 28</th>
 <th class="num">Total</th></tr></thead>
 <tbody><tr><td>Equipo</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_0" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_0" value="0" oninput="calc()"></td><td class="num" id="opt_0"></td></tr>
 <tr><td>Logística y almacenamiento</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_1" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_1" value="0" oninput="calc()"></td><td class="num" id="opt_1"></td></tr>
@@ -393,7 +405,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 <div class="sec" id="s9">
 <div class="warn" id="w_simples">Ingresos anuales por encima del límite del Simples Nacional (R$ 4,8 mi)</div>
 <div class="scroll"><table>
-<thead><tr><th>R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Total</th></tr></thead>
+<thead><tr><th class="cl">R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Total</th></tr></thead>
 <tbody><tr class=""><td>Ingresos brutos</td><td class="num" id="d_rev_0"></td><td class="num" id="d_rev_1"></td><td class="num" id="d_rev_2"></td><td class="num" id="d_rev_3"></td><td class="num" id="d_rev_4"></td><td class="num" id="d_rev_5"></td><td class="num" id="d_rev_6"></td><td class="num" id="d_rev_7"></td><td class="num" id="d_rev_8"></td><td class="num" id="d_rev_t"></td></tr>
 <tr class=""><td>(−) Simples Nacional</td><td class="num" id="d_tax_0"></td><td class="num" id="d_tax_1"></td><td class="num" id="d_tax_2"></td><td class="num" id="d_tax_3"></td><td class="num" id="d_tax_4"></td><td class="num" id="d_tax_5"></td><td class="num" id="d_tax_6"></td><td class="num" id="d_tax_7"></td><td class="num" id="d_tax_8"></td><td class="num" id="d_tax_t"></td></tr>
 <tr class="sb"><td>Ingresos netos</td><td class="num" id="d_net_0"></td><td class="num" id="d_net_1"></td><td class="num" id="d_net_2"></td><td class="num" id="d_net_3"></td><td class="num" id="d_net_4"></td><td class="num" id="d_net_5"></td><td class="num" id="d_net_6"></td><td class="num" id="d_net_7"></td><td class="num" id="d_net_8"></td><td class="num" id="d_net_t"></td></tr>
@@ -417,7 +429,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
   <div class="tile r"><div class="k">Stock no vendido</div><div class="v" id="k_left"></div><div class="s" id="k_left_s"></div></div>
 </div>
 <div class="chart">
-  <div class="clab">Flujo acumulado — R$</div>
+  <div class="clab">Flujo acumulado — <span class="cl">R$</span></div>
   <div class="bars" id="bars"></div>
   <hr class="zero">
   <div style="display:flex;gap:8px"><div class="blab" style="flex:1;text-align:center">Q3 26</div><div class="blab" style="flex:1;text-align:center">Q4 26</div><div class="blab" style="flex:1;text-align:center">Q1 27</div><div class="blab" style="flex:1;text-align:center">Q2 27</div><div class="blab" style="flex:1;text-align:center">Q3 27</div><div class="blab" style="flex:1;text-align:center">Q4 27</div><div class="blab" style="flex:1;text-align:center">Q1 28</div><div class="blab" style="flex:1;text-align:center">Q2 28</div><div class="blab" style="flex:1;text-align:center">Q3 28</div></div>
@@ -454,18 +466,27 @@ const L={never:"no alcanzado",units:"un/trimestre",
  none:"— sin escenarios guardados —",
  atcost2:"a costo",otbok:"cobertura mantenida en el horizonte"};
 const XKEY='te-viab-v8-scn-es';
-const KEY='te-viab-v8-es', SKEY='te-viab-v8-sec-es';
+const KEY='te-viab-v8-es', SKEY='te-viab-v8-sec-es', CKEY='te-viab-v8-cur-es';
+const LOC="es-ES";
+const FXL={upd:"Actualizar",src:"mid-market (la misma referencia que usa Wise)",
+ man:"tasa manual",fail:"no se pudo obtener — usando tasa manual",
+ load:"buscando…"};
+let CUR='brl';
 const FAIXAS=[[180000,.04,0],[360000,.073,5940],[720000,.095,13860],
               [1800000,.107,22500],[3600000,.143,87300],[4800000,.19,378000]];
 function aliq(r){ if(r<=0) return .04;
   for(const [l,n,d] of FAIXAS){ if(r<=l) return Math.max(0,(r*n-d)/r); } return .19; }
 const $=id=>document.getElementById(id);
 const V=id=>{const e=$(id);if(!e)return 0;
-  const raw=e.classList&&e.classList.contains('n')?String(e.value).replace(/\./g,''):e.value;
-  return parseFloat(raw)||0;};
-const FMT=v=>{const d=String(v).replace(/\D/g,'');return d?Number(d).toLocaleString('pt-BR'):'';};
+  if(e.classList&&e.classList.contains('n')) return parseFloat(e.dataset.v)||0;
+  return parseFloat(e.value)||0;};
+const fxv=()=>parseFloat($('fx').value)||1;
+const toDisp=brl=>CUR==='usd'?brl/fxv():brl;
+const toCanon=d=>CUR==='usd'?d*fxv():d;
+const FMT=v=>{const d=String(v).replace(/\D/g,'');return d?Number(d).toLocaleString(LOC):'';};
 function mask(e){
   const el=e.target;
+  setTimeout(()=>{ el.dataset.v=String(toCanon(parseFloat(String(el.value).replace(/[.,]/g,''))||0)); },0);
   const before=el.value.slice(el.selectionStart||0).replace(/\D/g,'').length; // dígitos à direita do cursor
   el.value=FMT(el.value);
   let pos=el.value.length, seen=0;
@@ -476,11 +497,47 @@ function mask(e){
   if(seen<before) pos=0;
   el.setSelectionRange(pos,pos);
 }
-function formatAll(){ document.querySelectorAll('input.e.n').forEach(i=>{ i.value=FMT(i.value); }); }
-const R=v=>'R$ '+Math.round(v).toLocaleString('pt-BR');
-const U=v=>'US$ '+Math.round(v).toLocaleString('pt-BR');
-const Rk=v=>Math.abs(v)>=1000000?'R$ '+(v/1000000).toFixed(2).replace('.',',')+' mi'
-        :Math.abs(v)>=10000?'R$ '+Math.round(v/1000).toLocaleString('pt-BR')+' mil':R(v);
+function formatAll(){ document.querySelectorAll('input.e.n').forEach(i=>{
+  if(i.dataset.v===undefined) i.dataset.v=String(parseFloat(String(i.value).replace(/[.,]/g,''))||0);
+  i.value=FMT(Math.round(toDisp(parseFloat(i.dataset.v)||0)));
+}); }
+function curLabels(){ document.querySelectorAll('.cl').forEach(e=>e.textContent=CUR==='usd'?'US$':'R$'); }
+function setCur(c){
+  CUR=c;
+  $('cb_brl').className=c==='brl'?'on':''; $('cb_usd').className=c==='usd'?'on':'';
+  try{ localStorage.setItem(CKEY,c); }catch(e){}
+  curLabels(); formatAll(); calc();
+}
+// câmbio mid-market (mesma referência da Wise), com cadeia de fallback
+async function fetchFx(){
+  const info=$('fxinfo'); info.textContent=FXL.load;
+  const srcs=[
+    ['https://api.frankfurter.app/latest?from=USD&to=BRL', j=>[j.rates&&j.rates.BRL, j.date]],
+    ['https://open.er-api.com/v6/latest/USD', j=>[j.rates&&j.rates.BRL, (j.time_last_update_utc||'').slice(5,16)]],
+    ['https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json', j=>[j.usd&&j.usd.brl, j.date]],
+  ];
+  for(const [u,pick] of srcs){
+    try{
+      const ctl=new AbortController(); const t=setTimeout(()=>ctl.abort(),6000);
+      const r=await fetch(u,{cache:'no-store',signal:ctl.signal}); clearTimeout(t);
+      if(!r.ok) continue;
+      const [rate,date]=pick(await r.json());
+      if(rate&&isFinite(rate)){
+        $('fx').value=Number(rate).toFixed(4);
+        info.textContent=FXL.src+(date?' · '+date:'');
+        formatAll(); calc(); return true;
+      }
+    }catch(e){}
+  }
+  info.textContent=FXL.fail; return false;
+}
+const SY=()=>CUR==='usd'?'US$ ':'R$ ';
+const R=v=>{const x=toDisp(v);return SY()+Math.round(x).toLocaleString(LOC);};
+const U=v=>'US$ '+Math.round(v).toLocaleString(LOC);
+const Rk=v=>{const x=toDisp(v);
+  const mi=LOC==='en-US'?'m':'mi', mil=LOC==='en-US'?'k':'mil';
+  return Math.abs(x)>=1000000?SY()+(x/1000000).toFixed(2).replace('.',LOC==='en-US'?'.':',')+' '+mi
+    :Math.abs(x)>=10000?SY()+Math.round(x/1000).toLocaleString(LOC)+' '+mil:R(v);};
 const P=v=>(v*100).toFixed(1).replace('.',',')+'%';
 const P0=v=>Math.round(v*100)+'%';
 const N=v=>Math.round(v).toLocaleString('pt-BR');
@@ -790,7 +847,7 @@ function loadSec(){
   }catch(e){}
 }
 const inputs=()=>Array.from(document.querySelectorAll('input.e'));
-const vals=()=>inputs().map(i=>i.classList.contains('n')?String(i.value).replace(/\./g,''):i.value);
+const vals=()=>inputs().map(i=>i.classList.contains('n')?String(parseFloat(i.dataset.v)||0):i.value);
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(vals())); }catch(e){} }
 // migrações encadeadas: v3 (306) -> v4 (304) -> v5 (322) -> v6 (333, 9 trimestres)
 function migrate(a){
@@ -824,7 +881,8 @@ function migrate(a){
   return a;
 }
 function load(a){ a=migrate(a); const el=inputs(); if(!a||a.length!==el.length) return false;
-  el.forEach((i,n)=>i.value=a[n]); formatAll(); return true; }
+  el.forEach((i,n)=>{ if(i.classList.contains('n')) i.dataset.v=String(parseFloat(a[n])||0); else i.value=a[n]; });
+  formatAll(); return true; }
 
 // --- restaurar padrões em dois cliques (sem diálogo do navegador)
 let rstArm=0;
@@ -857,7 +915,7 @@ function dec(str){
   });
   return out;
 }
-function scenarioUrl(){ return location.origin+location.pathname+'#v1='+enc(vals()); }
+function scenarioUrl(){ return location.origin+location.pathname+(CUR==='usd'?'?cur=usd':'')+'#v1='+enc(vals()); }
 function readHash(){
   const h=location.hash.slice(1);
   if(!h) return null;
@@ -931,7 +989,7 @@ function scnDel(){
 document.querySelectorAll('.lang a').forEach(a=>a.addEventListener('click',e=>{
   if(a.classList.contains('on')) return;
   e.preventDefault();
-  location.href=a.getAttribute('href')+'#v1='+enc(vals());
+  location.href=a.getAttribute('href')+(CUR==='usd'?'?cur=usd':'')+'#v1='+enc(vals());
 }));
 (function init(){
   document.querySelectorAll('input.e.n').forEach(i=>{
@@ -940,11 +998,16 @@ document.querySelectorAll('.lang a').forEach(a=>a.addEventListener('click',e=>{
     i.addEventListener('focus',()=>{ i.dataset.sel='1'; i.select(); });
     i.addEventListener('mouseup',e=>{ if(i.dataset.sel){ e.preventDefault(); delete i.dataset.sel; } });
   });
+  try{ const q=new URLSearchParams(location.search).get('cur');
+    CUR=q==='usd'?'usd':(q==='brl'?'brl':(localStorage.getItem(CKEY)||'brl')); }catch(e){}
+  $('cb_brl').className=CUR==='brl'?'on':''; $('cb_usd').className=CUR==='usd'?'on':'';
+  curLabels();
   let ok=false;
   const fromUrl=readHash();
   if(fromUrl) ok=load(fromUrl);
   if(!ok){ try{ load(JSON.parse(localStorage.getItem(KEY))); }catch(e){} }
   formatAll(); loadSec(); scnFill(); calc();
+  $('fxinfo').textContent=FXL.man;
   const sk=$('sticky'), top=sk.offsetTop;
   addEventListener('scroll',()=>sk.classList.toggle('stuck',scrollY>top+2),{passive:true});
 })();
