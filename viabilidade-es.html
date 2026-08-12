@@ -106,7 +106,7 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 <body><div class="wrap">
 
 <div class="head">
-  <div><h1>Viabilidad y ROI — Operación Brasil</h1><div class="sub">Modelo de viabilidad de la fase test · Q3 2026 a Q2 2028 · Simples Nacional Anexo I (comercio)</div></div>
+  <div><h1>Viabilidad y ROI — Operación Brasil</h1><div class="sub">Modelo de viabilidad de la fase test · Q3 2026 a Q3 2028 · Simples Nacional Anexo I (comercio)</div></div>
   <div class="lang"><a href="./viabilidade.html" class="">PT</a><a href="./viabilidade-en.html" class="">EN</a><a href="./viabilidade-es.html" class="on">ES</a></div>
 </div>
 <div class="sticky" id="sticky">
@@ -115,7 +115,7 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
   <div class="kpi"><span class="kl">Repago</span><span class="kv" id="sk_pay">—</span></div>
   <div class="kpi"><span class="kl">Flujo acum.</span><span class="kv" id="sk_cum">—</span></div>
   <nav class="snav"><span class="nl">Ir a</span>
-    <a href="#h1" title="1. Premisas generales">1</a><a href="#h2" title="2. Catálogo e inversión en stock">2</a><a href="#h3" title="3. Asignación del stock por punto de venta">3</a><a href="#h4" title="4. Sell-out por trimestre">4</a><a href="#h5" title="5. Comunicación">5</a><a href="#h6" title="6. Agency fee (Freequency)">6</a><a href="#h7" title="7. Costos operativos">7</a><a href="#h8" title="8. Estado de resultados trimestral">8</a><a href="#h9" title="9. Resultado">9</a>
+    <a href="#h1" title="1. Premisas generales">1</a><a href="#h2" title="2. Catálogo e inversión en stock">2</a><a href="#h3" title="3. Asignación del stock por punto de venta">3</a><a href="#h4" title="4. Sell-out por trimestre">4</a><a href="#h5" title="5. Stock y OTB (cuándo recomprar)">5</a><a href="#h6" title="6. Comunicación">6</a><a href="#h7" title="7. Agency fee (Freequency)">7</a><a href="#h8" title="8. Costos operativos">8</a><a href="#h9" title="9. Estado de resultados trimestral">9</a><a href="#h10" title="10. Resultado">10</a>
   </nav>
 </div>
 
@@ -268,43 +268,64 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 <div class="note">Porcentaje del stock asignado que se vende en cada trimestre. El acumulado por punto de venta no debe superar el 100% — lo que sobre queda como stock no vendido.</div>
 <div class="warn" id="w_sell">Sell-out acumulado por encima del 100% del stock asignado — <span id="w_sell_d"></span></div>
 <div class="scroll"><table>
-<thead><tr><th>Sell-out (% de lo asignado)</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="num">Acumulado</th></tr></thead>
-<tbody><tr><td>Showroom</td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_7" value="0" oninput="calc()"></td><td class="num" id="so_sh_t"></td></tr><tr><td class="sk">↳ Unidades vendidas</td><td class="c sk" id="su_sh_0"></td><td class="c sk" id="su_sh_1"></td><td class="c sk" id="su_sh_2"></td><td class="c sk" id="su_sh_3"></td><td class="c sk" id="su_sh_4"></td><td class="c sk" id="su_sh_5"></td><td class="c sk" id="su_sh_6"></td><td class="c sk" id="su_sh_7"></td><td class="num sk" id="su_sh_t"></td></tr>
-<tr><td>Matalab (mayorista)</td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_7" value="0" oninput="calc()"></td><td class="num" id="so_mt_t"></td></tr><tr><td class="sk">↳ Unidades vendidas</td><td class="c sk" id="su_mt_0"></td><td class="c sk" id="su_mt_1"></td><td class="c sk" id="su_mt_2"></td><td class="c sk" id="su_mt_3"></td><td class="c sk" id="su_mt_4"></td><td class="c sk" id="su_mt_5"></td><td class="c sk" id="su_mt_6"></td><td class="c sk" id="su_mt_7"></td><td class="num sk" id="su_mt_t"></td></tr>
-<tr><td>E-commerce</td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_7" value="0" oninput="calc()"></td><td class="num" id="so_ec_t"></td></tr><tr><td class="sk">↳ Unidades vendidas</td><td class="c sk" id="su_ec_0"></td><td class="c sk" id="su_ec_1"></td><td class="c sk" id="su_ec_2"></td><td class="c sk" id="su_ec_3"></td><td class="c sk" id="su_ec_4"></td><td class="c sk" id="su_ec_5"></td><td class="c sk" id="su_ec_6"></td><td class="c sk" id="su_ec_7"></td><td class="num sk" id="su_ec_t"></td></tr>
-<tr class="tot"><td>Unidades vendidas — Total</td><td class="c" id="sq_0"></td><td class="c" id="sq_1"></td><td class="c" id="sq_2"></td><td class="c" id="sq_3"></td><td class="c" id="sq_4"></td><td class="c" id="sq_5"></td><td class="c" id="sq_6"></td><td class="c" id="sq_7"></td><td class="num" id="sq_t"></td></tr></tbody></table></div>
+<thead><tr><th>Sell-out (% de lo asignado)</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Acumulado</th></tr></thead>
+<tbody><tr><td>Showroom</td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_7" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_8" value="0" oninput="calc()"></td><td class="num" id="so_sh_t"></td></tr><tr><td class="sk">↳ Unidades vendidas</td><td class="c sk" id="su_sh_0"></td><td class="c sk" id="su_sh_1"></td><td class="c sk" id="su_sh_2"></td><td class="c sk" id="su_sh_3"></td><td class="c sk" id="su_sh_4"></td><td class="c sk" id="su_sh_5"></td><td class="c sk" id="su_sh_6"></td><td class="c sk" id="su_sh_7"></td><td class="c sk" id="su_sh_8"></td><td class="num sk" id="su_sh_t"></td></tr>
+<tr><td>Matalab (mayorista)</td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_7" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_8" value="0" oninput="calc()"></td><td class="num" id="so_mt_t"></td></tr><tr><td class="sk">↳ Unidades vendidas</td><td class="c sk" id="su_mt_0"></td><td class="c sk" id="su_mt_1"></td><td class="c sk" id="su_mt_2"></td><td class="c sk" id="su_mt_3"></td><td class="c sk" id="su_mt_4"></td><td class="c sk" id="su_mt_5"></td><td class="c sk" id="su_mt_6"></td><td class="c sk" id="su_mt_7"></td><td class="c sk" id="su_mt_8"></td><td class="num sk" id="su_mt_t"></td></tr>
+<tr><td>E-commerce</td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_7" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_8" value="0" oninput="calc()"></td><td class="num" id="so_ec_t"></td></tr><tr><td class="sk">↳ Unidades vendidas</td><td class="c sk" id="su_ec_0"></td><td class="c sk" id="su_ec_1"></td><td class="c sk" id="su_ec_2"></td><td class="c sk" id="su_ec_3"></td><td class="c sk" id="su_ec_4"></td><td class="c sk" id="su_ec_5"></td><td class="c sk" id="su_ec_6"></td><td class="c sk" id="su_ec_7"></td><td class="c sk" id="su_ec_8"></td><td class="num sk" id="su_ec_t"></td></tr>
+<tr class="tot"><td>Unidades vendidas — Total</td><td class="c" id="sq_0"></td><td class="c" id="sq_1"></td><td class="c" id="sq_2"></td><td class="c" id="sq_3"></td><td class="c" id="sq_4"></td><td class="c" id="sq_5"></td><td class="c" id="sq_6"></td><td class="c" id="sq_7"></td><td class="c" id="sq_8"></td><td class="num" id="sq_t"></td></tr></tbody></table></div>
 </div>
 
-<h2 id="h5" onclick="tog('s5')"><span class="chev">▾</span>5. Comunicación</h2>
+<h2 id="h5" onclick="tog('s5')"><span class="chev">▾</span>5. Stock y OTB (cuándo recomprar)</h2>
 <div class="sec" id="s5">
+<div class="note">La cobertura es el stock final dividido por la venta promedio de los trimestres siguientes — cuántos trimestres aguanta el stock al ritmo proyectado. Cuando cae por debajo del objetivo hay que recomprar; como la mercadería tarda el lead time en llegar, el pedido debe salir antes. El OTB sugerido es cuánto comprar para volver al nivel de cobertura objetivo.</div>
+<table style="width:auto;margin-bottom:14px">
+<tr><td>Lead time de reposición (trimestres)</td><td class="num"><input class="e w" type="number" min="0" max="4" step="1" id="lead" value="1" oninput="calc()"></td></tr>
+<tr><td>Cobertura objetivo (trimestres de venta)</td><td class="num"><input class="e w" type="number" min="0" step="0.5" id="cover" value="2" oninput="calc()"></td></tr>
+</table>
 <div class="scroll"><table>
-<thead><tr><th>R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="num">Total</th></tr></thead>
-<tbody><tr class="cat"><td colspan="10">Marca</td></tr>
-<tr><td>Colabs</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_7" value="0" oninput="calc()"></td><td class="num" id="cm_colabs_t"></td></tr>
-<tr><td>Seeding</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_7" value="0" oninput="calc()"></td><td class="num" id="cm_seeding_t"></td></tr>
-<tr><td>Eventos</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_7" value="0" oninput="calc()"></td><td class="num" id="cm_events_t"></td></tr>
-<tr><td>Otros</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_7" value="0" oninput="calc()"></td><td class="num" id="cm_other_t"></td></tr>
-<tr class="sb"><td>Subtotal Marca</td><td class="c" id="cg_b_0"></td><td class="c" id="cg_b_1"></td><td class="c" id="cg_b_2"></td><td class="c" id="cg_b_3"></td><td class="c" id="cg_b_4"></td><td class="c" id="cg_b_5"></td><td class="c" id="cg_b_6"></td><td class="c" id="cg_b_7"></td><td class="num" id="cg_b_t"></td></tr>
-<tr class="cat"><td colspan="10">Performance</td></tr>
-<tr><td>Paid media</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_7" value="0" oninput="calc()"></td><td class="num" id="cm_paid_t"></td></tr>
-<tr class="sb"><td>Subtotal Performance</td><td class="c" id="cg_p_0"></td><td class="c" id="cg_p_1"></td><td class="c" id="cg_p_2"></td><td class="c" id="cg_p_3"></td><td class="c" id="cg_p_4"></td><td class="c" id="cg_p_5"></td><td class="c" id="cg_p_6"></td><td class="c" id="cg_p_7"></td><td class="num" id="cg_p_t"></td></tr>
-<tr class="tot"><td>Total</td><td class="c" id="cm_q_0"></td><td class="c" id="cm_q_1"></td><td class="c" id="cm_q_2"></td><td class="c" id="cm_q_3"></td><td class="c" id="cm_q_4"></td><td class="c" id="cm_q_5"></td><td class="c" id="cm_q_6"></td><td class="c" id="cm_q_7"></td><td class="num" id="cm_tt"></td></tr></tbody></table></div>
+<thead><tr><th>Stock inicial</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th></th></tr></thead>
+<tbody><tr class=""><td>Stock inicial</td><td class="c" id="ot_st_ini_0"></td><td class="c" id="ot_st_ini_1"></td><td class="c" id="ot_st_ini_2"></td><td class="c" id="ot_st_ini_3"></td><td class="c" id="ot_st_ini_4"></td><td class="c" id="ot_st_ini_5"></td><td class="c" id="ot_st_ini_6"></td><td class="c" id="ot_st_ini_7"></td><td class="c" id="ot_st_ini_8"></td><td></td></tr>
+<tr class=""><td>Ventas</td><td class="c" id="ot_st_sold_0"></td><td class="c" id="ot_st_sold_1"></td><td class="c" id="ot_st_sold_2"></td><td class="c" id="ot_st_sold_3"></td><td class="c" id="ot_st_sold_4"></td><td class="c" id="ot_st_sold_5"></td><td class="c" id="ot_st_sold_6"></td><td class="c" id="ot_st_sold_7"></td><td class="c" id="ot_st_sold_8"></td><td></td></tr>
+<tr class="sb"><td>Stock final</td><td class="c" id="ot_st_end_0"></td><td class="c" id="ot_st_end_1"></td><td class="c" id="ot_st_end_2"></td><td class="c" id="ot_st_end_3"></td><td class="c" id="ot_st_end_4"></td><td class="c" id="ot_st_end_5"></td><td class="c" id="ot_st_end_6"></td><td class="c" id="ot_st_end_7"></td><td class="c" id="ot_st_end_8"></td><td></td></tr>
+<tr class="hl"><td>Cobertura (trimestres)</td><td class="c" id="ot_st_cov_0"></td><td class="c" id="ot_st_cov_1"></td><td class="c" id="ot_st_cov_2"></td><td class="c" id="ot_st_cov_3"></td><td class="c" id="ot_st_cov_4"></td><td class="c" id="ot_st_cov_5"></td><td class="c" id="ot_st_cov_6"></td><td class="c" id="ot_st_cov_7"></td><td class="c" id="ot_st_cov_8"></td><td></td></tr></tbody></table></div>
+<div class="tiles" style="margin-top:14px">
+  <div class="tile r"><div class="k">Cobertura por debajo del objetivo en</div><div class="v" id="ot_alert">—</div><div class="s" id="ot_alert_s"></div></div>
+  <div class="tile b"><div class="k">El pedido debe salir hasta</div><div class="v" id="ot_order">—</div><div class="s" id="ot_order_s"></div></div>
+  <div class="tile k2"><div class="k">OTB sugerido</div><div class="v" id="ot_size">—</div><div class="s" id="ot_size_s"></div></div>
+</div>
+<div class="note" style="margin-top:10px" id="ot_mixw"><b>Sugerencia por categoría (proporcional al mix vendido)</b> <span id="ot_mix"></span></div>
 </div>
 
-<h2 id="h6" onclick="tog('s6')"><span class="chev">▾</span>6. Agency fee (Freequency)</h2>
+<h2 id="h6" onclick="tog('s6')"><span class="chev">▾</span>6. Comunicación</h2>
 <div class="sec" id="s6">
+<div class="scroll"><table>
+<thead><tr><th>R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Total</th></tr></thead>
+<tbody><tr class="cat"><td colspan="11">Marca</td></tr>
+<tr><td>Colabs</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_7" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_8" value="0" oninput="calc()"></td><td class="num" id="cm_colabs_t"></td></tr>
+<tr><td>Seeding</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_7" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_8" value="0" oninput="calc()"></td><td class="num" id="cm_seeding_t"></td></tr>
+<tr><td>Eventos</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_7" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_8" value="0" oninput="calc()"></td><td class="num" id="cm_events_t"></td></tr>
+<tr><td>Otros</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_7" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_8" value="0" oninput="calc()"></td><td class="num" id="cm_other_t"></td></tr>
+<tr class="sb"><td>Subtotal Marca</td><td class="c" id="cg_b_0"></td><td class="c" id="cg_b_1"></td><td class="c" id="cg_b_2"></td><td class="c" id="cg_b_3"></td><td class="c" id="cg_b_4"></td><td class="c" id="cg_b_5"></td><td class="c" id="cg_b_6"></td><td class="c" id="cg_b_7"></td><td class="c" id="cg_b_8"></td><td class="num" id="cg_b_t"></td></tr>
+<tr class="cat"><td colspan="11">Performance</td></tr>
+<tr><td>Paid media</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_7" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_8" value="0" oninput="calc()"></td><td class="num" id="cm_paid_t"></td></tr>
+<tr class="sb"><td>Subtotal Performance</td><td class="c" id="cg_p_0"></td><td class="c" id="cg_p_1"></td><td class="c" id="cg_p_2"></td><td class="c" id="cg_p_3"></td><td class="c" id="cg_p_4"></td><td class="c" id="cg_p_5"></td><td class="c" id="cg_p_6"></td><td class="c" id="cg_p_7"></td><td class="c" id="cg_p_8"></td><td class="num" id="cg_p_t"></td></tr>
+<tr class="tot"><td>Total</td><td class="c" id="cm_q_0"></td><td class="c" id="cm_q_1"></td><td class="c" id="cm_q_2"></td><td class="c" id="cm_q_3"></td><td class="c" id="cm_q_4"></td><td class="c" id="cm_q_5"></td><td class="c" id="cm_q_6"></td><td class="c" id="cm_q_7"></td><td class="c" id="cm_q_8"></td><td class="num" id="cm_tt"></td></tr></tbody></table></div>
+</div>
+
+<h2 id="h7" onclick="tog('s7')"><span class="chev">▾</span>7. Agency fee (Freequency)</h2>
+<div class="sec" id="s7">
 <div class="note">Fee de Freequency por frente de trabajo, en valor mensual para cada período. Entra en el estado de resultados como gasto propio, separado del presupuesto de comunicación — así se ve cuánto del costo es servicio de agencia y cuánto es medios y acciones.</div>
 <div class="scroll"><table>
-<thead><tr><th>R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="num">Total</th></tr></thead>
-<tbody><tr><td>Administración</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_7" value="0" oninput="calc()"></td><td class="num" id="fe_adm_t"></td></tr>
-<tr><td>PR</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_7" value="0" oninput="calc()"></td><td class="num" id="fe_fpr_t"></td></tr>
-<tr><td>Social</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_7" value="0" oninput="calc()"></td><td class="num" id="fe_social_t"></td></tr><tr class="tot"><td>Total</td><td class="c" id="fe_q_0"></td><td class="c" id="fe_q_1"></td><td class="c" id="fe_q_2"></td><td class="c" id="fe_q_3"></td><td class="c" id="fe_q_4"></td><td class="c" id="fe_q_5"></td><td class="c" id="fe_q_6"></td><td class="c" id="fe_q_7"></td><td class="num" id="fe_tt"></td></tr></tbody></table></div>
+<thead><tr><th>R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Total</th></tr></thead>
+<tbody><tr><td>Administración</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_7" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_8" value="0" oninput="calc()"></td><td class="num" id="fe_adm_t"></td></tr>
+<tr><td>PR</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_7" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_8" value="0" oninput="calc()"></td><td class="num" id="fe_fpr_t"></td></tr>
+<tr><td>Social</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_7" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_8" value="0" oninput="calc()"></td><td class="num" id="fe_social_t"></td></tr><tr class="tot"><td>Total</td><td class="c" id="fe_q_0"></td><td class="c" id="fe_q_1"></td><td class="c" id="fe_q_2"></td><td class="c" id="fe_q_3"></td><td class="c" id="fe_q_4"></td><td class="c" id="fe_q_5"></td><td class="c" id="fe_q_6"></td><td class="c" id="fe_q_7"></td><td class="c" id="fe_q_8"></td><td class="num" id="fe_tt"></td></tr></tbody></table></div>
 </div>
 
-<h2 id="h7" onclick="tog('s7')"><span class="chev">▾</span>7. Costos operativos</h2>
-<div class="sec" id="s7">
+<h2 id="h8" onclick="tog('s8')"><span class="chev">▾</span>8. Costos operativos</h2>
+<div class="sec" id="s8">
 <table style="max-width:700px">
-<thead><tr><th>Rubro</th><th class="num">R$/mes · Q3 26–Q2 27</th><th class="num">R$/mes · Q3 27–Q2 28</th>
+<thead><tr><th>Rubro</th><th class="num">R$/mes · Q3 26–Q2 27</th><th class="num">R$/mes · Q3 27–Q3 28</th>
 <th class="num">Total</th></tr></thead>
 <tbody><tr><td>Equipo</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_0" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_0" value="0" oninput="calc()"></td><td class="num" id="opt_0"></td></tr>
 <tr><td>Logística y almacenamiento</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_1" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_1" value="0" oninput="calc()"></td><td class="num" id="opt_1"></td></tr>
@@ -314,25 +335,25 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 <tr><td>Otros</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_5" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_5" value="0" oninput="calc()"></td><td class="num" id="opt_5"></td></tr><tr class="tot"><td>Total</td><td class="num" id="op1t"></td><td class="num" id="op2t"></td><td class="num" id="optt"></td></tr></tbody></table>
 </div>
 
-<h2 id="h8" onclick="tog('s8')"><span class="chev">▾</span>8. Estado de resultados trimestral</h2>
-<div class="sec" id="s8">
+<h2 id="h9" onclick="tog('s9')"><span class="chev">▾</span>9. Estado de resultados trimestral</h2>
+<div class="sec" id="s9">
 <div class="warn" id="w_simples">Ingresos anuales por encima del límite del Simples Nacional (R$ 4,8 mi)</div>
 <div class="scroll"><table>
-<thead><tr><th>R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="num">Total</th></tr></thead>
-<tbody><tr class=""><td>Ingresos brutos</td><td class="num" id="d_rev_0"></td><td class="num" id="d_rev_1"></td><td class="num" id="d_rev_2"></td><td class="num" id="d_rev_3"></td><td class="num" id="d_rev_4"></td><td class="num" id="d_rev_5"></td><td class="num" id="d_rev_6"></td><td class="num" id="d_rev_7"></td><td class="num" id="d_rev_t"></td></tr>
-<tr class=""><td>(−) Simples Nacional</td><td class="num" id="d_tax_0"></td><td class="num" id="d_tax_1"></td><td class="num" id="d_tax_2"></td><td class="num" id="d_tax_3"></td><td class="num" id="d_tax_4"></td><td class="num" id="d_tax_5"></td><td class="num" id="d_tax_6"></td><td class="num" id="d_tax_7"></td><td class="num" id="d_tax_t"></td></tr>
-<tr class="sb"><td>Ingresos netos</td><td class="num" id="d_net_0"></td><td class="num" id="d_net_1"></td><td class="num" id="d_net_2"></td><td class="num" id="d_net_3"></td><td class="num" id="d_net_4"></td><td class="num" id="d_net_5"></td><td class="num" id="d_net_6"></td><td class="num" id="d_net_7"></td><td class="num" id="d_net_t"></td></tr>
-<tr class=""><td>(−) CMV</td><td class="num" id="d_cmv_0"></td><td class="num" id="d_cmv_1"></td><td class="num" id="d_cmv_2"></td><td class="num" id="d_cmv_3"></td><td class="num" id="d_cmv_4"></td><td class="num" id="d_cmv_5"></td><td class="num" id="d_cmv_6"></td><td class="num" id="d_cmv_7"></td><td class="num" id="d_cmv_t"></td></tr>
-<tr class="sb"><td>= Margen de contribución</td><td class="num" id="d_mc_0"></td><td class="num" id="d_mc_1"></td><td class="num" id="d_mc_2"></td><td class="num" id="d_mc_3"></td><td class="num" id="d_mc_4"></td><td class="num" id="d_mc_5"></td><td class="num" id="d_mc_6"></td><td class="num" id="d_mc_7"></td><td class="num" id="d_mc_t"></td></tr>
-<tr class=""><td>(−) Comunicación</td><td class="num" id="d_com_0"></td><td class="num" id="d_com_1"></td><td class="num" id="d_com_2"></td><td class="num" id="d_com_3"></td><td class="num" id="d_com_4"></td><td class="num" id="d_com_5"></td><td class="num" id="d_com_6"></td><td class="num" id="d_com_7"></td><td class="num" id="d_com_t"></td></tr>
-<tr class=""><td>(−) Agency fee</td><td class="num" id="d_fee_0"></td><td class="num" id="d_fee_1"></td><td class="num" id="d_fee_2"></td><td class="num" id="d_fee_3"></td><td class="num" id="d_fee_4"></td><td class="num" id="d_fee_5"></td><td class="num" id="d_fee_6"></td><td class="num" id="d_fee_7"></td><td class="num" id="d_fee_t"></td></tr>
-<tr class=""><td>(−) Operativo</td><td class="num" id="d_op_0"></td><td class="num" id="d_op_1"></td><td class="num" id="d_op_2"></td><td class="num" id="d_op_3"></td><td class="num" id="d_op_4"></td><td class="num" id="d_op_5"></td><td class="num" id="d_op_6"></td><td class="num" id="d_op_7"></td><td class="num" id="d_op_t"></td></tr>
-<tr class="tot"><td>= EBITDA</td><td class="num" id="d_eb_0"></td><td class="num" id="d_eb_1"></td><td class="num" id="d_eb_2"></td><td class="num" id="d_eb_3"></td><td class="num" id="d_eb_4"></td><td class="num" id="d_eb_5"></td><td class="num" id="d_eb_6"></td><td class="num" id="d_eb_7"></td><td class="num" id="d_eb_t"></td></tr>
-<tr class="hl"><td>Flujo acumulado</td><td class="num" id="d_cum_0"></td><td class="num" id="d_cum_1"></td><td class="num" id="d_cum_2"></td><td class="num" id="d_cum_3"></td><td class="num" id="d_cum_4"></td><td class="num" id="d_cum_5"></td><td class="num" id="d_cum_6"></td><td class="num" id="d_cum_7"></td><td class="num" id="d_cum_t"></td></tr><tr><td class="sk">Ingresos 12m (base Simples)</td><td class="num sk" id="d_rbt_0"></td><td class="num sk" id="d_rbt_1"></td><td class="num sk" id="d_rbt_2"></td><td class="num sk" id="d_rbt_3"></td><td class="num sk" id="d_rbt_4"></td><td class="num sk" id="d_rbt_5"></td><td class="num sk" id="d_rbt_6"></td><td class="num sk" id="d_rbt_7"></td><td></td></tr><tr><td class="sk">Alícuota efectiva</td><td class="num sk" id="d_rate_0"></td><td class="num sk" id="d_rate_1"></td><td class="num sk" id="d_rate_2"></td><td class="num sk" id="d_rate_3"></td><td class="num sk" id="d_rate_4"></td><td class="num sk" id="d_rate_5"></td><td class="num sk" id="d_rate_6"></td><td class="num sk" id="d_rate_7"></td><td></td></tr></tbody></table></div>
+<thead><tr><th>R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Total</th></tr></thead>
+<tbody><tr class=""><td>Ingresos brutos</td><td class="num" id="d_rev_0"></td><td class="num" id="d_rev_1"></td><td class="num" id="d_rev_2"></td><td class="num" id="d_rev_3"></td><td class="num" id="d_rev_4"></td><td class="num" id="d_rev_5"></td><td class="num" id="d_rev_6"></td><td class="num" id="d_rev_7"></td><td class="num" id="d_rev_8"></td><td class="num" id="d_rev_t"></td></tr>
+<tr class=""><td>(−) Simples Nacional</td><td class="num" id="d_tax_0"></td><td class="num" id="d_tax_1"></td><td class="num" id="d_tax_2"></td><td class="num" id="d_tax_3"></td><td class="num" id="d_tax_4"></td><td class="num" id="d_tax_5"></td><td class="num" id="d_tax_6"></td><td class="num" id="d_tax_7"></td><td class="num" id="d_tax_8"></td><td class="num" id="d_tax_t"></td></tr>
+<tr class="sb"><td>Ingresos netos</td><td class="num" id="d_net_0"></td><td class="num" id="d_net_1"></td><td class="num" id="d_net_2"></td><td class="num" id="d_net_3"></td><td class="num" id="d_net_4"></td><td class="num" id="d_net_5"></td><td class="num" id="d_net_6"></td><td class="num" id="d_net_7"></td><td class="num" id="d_net_8"></td><td class="num" id="d_net_t"></td></tr>
+<tr class=""><td>(−) CMV</td><td class="num" id="d_cmv_0"></td><td class="num" id="d_cmv_1"></td><td class="num" id="d_cmv_2"></td><td class="num" id="d_cmv_3"></td><td class="num" id="d_cmv_4"></td><td class="num" id="d_cmv_5"></td><td class="num" id="d_cmv_6"></td><td class="num" id="d_cmv_7"></td><td class="num" id="d_cmv_8"></td><td class="num" id="d_cmv_t"></td></tr>
+<tr class="sb"><td>= Margen de contribución</td><td class="num" id="d_mc_0"></td><td class="num" id="d_mc_1"></td><td class="num" id="d_mc_2"></td><td class="num" id="d_mc_3"></td><td class="num" id="d_mc_4"></td><td class="num" id="d_mc_5"></td><td class="num" id="d_mc_6"></td><td class="num" id="d_mc_7"></td><td class="num" id="d_mc_8"></td><td class="num" id="d_mc_t"></td></tr>
+<tr class=""><td>(−) Comunicación</td><td class="num" id="d_com_0"></td><td class="num" id="d_com_1"></td><td class="num" id="d_com_2"></td><td class="num" id="d_com_3"></td><td class="num" id="d_com_4"></td><td class="num" id="d_com_5"></td><td class="num" id="d_com_6"></td><td class="num" id="d_com_7"></td><td class="num" id="d_com_8"></td><td class="num" id="d_com_t"></td></tr>
+<tr class=""><td>(−) Agency fee</td><td class="num" id="d_fee_0"></td><td class="num" id="d_fee_1"></td><td class="num" id="d_fee_2"></td><td class="num" id="d_fee_3"></td><td class="num" id="d_fee_4"></td><td class="num" id="d_fee_5"></td><td class="num" id="d_fee_6"></td><td class="num" id="d_fee_7"></td><td class="num" id="d_fee_8"></td><td class="num" id="d_fee_t"></td></tr>
+<tr class=""><td>(−) Operativo</td><td class="num" id="d_op_0"></td><td class="num" id="d_op_1"></td><td class="num" id="d_op_2"></td><td class="num" id="d_op_3"></td><td class="num" id="d_op_4"></td><td class="num" id="d_op_5"></td><td class="num" id="d_op_6"></td><td class="num" id="d_op_7"></td><td class="num" id="d_op_8"></td><td class="num" id="d_op_t"></td></tr>
+<tr class="tot"><td>= EBITDA</td><td class="num" id="d_eb_0"></td><td class="num" id="d_eb_1"></td><td class="num" id="d_eb_2"></td><td class="num" id="d_eb_3"></td><td class="num" id="d_eb_4"></td><td class="num" id="d_eb_5"></td><td class="num" id="d_eb_6"></td><td class="num" id="d_eb_7"></td><td class="num" id="d_eb_8"></td><td class="num" id="d_eb_t"></td></tr>
+<tr class="hl"><td>Flujo acumulado</td><td class="num" id="d_cum_0"></td><td class="num" id="d_cum_1"></td><td class="num" id="d_cum_2"></td><td class="num" id="d_cum_3"></td><td class="num" id="d_cum_4"></td><td class="num" id="d_cum_5"></td><td class="num" id="d_cum_6"></td><td class="num" id="d_cum_7"></td><td class="num" id="d_cum_8"></td><td class="num" id="d_cum_t"></td></tr><tr><td class="sk">Ingresos 12m (base Simples)</td><td class="num sk" id="d_rbt_0"></td><td class="num sk" id="d_rbt_1"></td><td class="num sk" id="d_rbt_2"></td><td class="num sk" id="d_rbt_3"></td><td class="num sk" id="d_rbt_4"></td><td class="num sk" id="d_rbt_5"></td><td class="num sk" id="d_rbt_6"></td><td class="num sk" id="d_rbt_7"></td><td class="num sk" id="d_rbt_8"></td><td></td></tr><tr><td class="sk">Alícuota efectiva</td><td class="num sk" id="d_rate_0"></td><td class="num sk" id="d_rate_1"></td><td class="num sk" id="d_rate_2"></td><td class="num sk" id="d_rate_3"></td><td class="num sk" id="d_rate_4"></td><td class="num sk" id="d_rate_5"></td><td class="num sk" id="d_rate_6"></td><td class="num sk" id="d_rate_7"></td><td class="num sk" id="d_rate_8"></td><td></td></tr></tbody></table></div>
 </div>
 
-<h2 id="h9" onclick="tog('s9')"><span class="chev">▾</span>9. Resultado</h2>
-<div class="sec" id="s9">
+<h2 id="h10" onclick="tog('s10')"><span class="chev">▾</span>10. Resultado</h2>
+<div class="sec" id="s10">
 <div class="tiles">
   <div class="tile k2"><div class="k">Inversión total</div><div class="v" id="k_inv"></div><div class="s" id="k_inv_s"></div></div>
   <div class="tile b"><div class="k">Ingresos brutos</div><div class="v" id="k_rev"></div><div class="s" id="k_rev_s"></div></div>
@@ -345,7 +366,7 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
   <div class="clab">Flujo acumulado — R$</div>
   <div class="bars" id="bars"></div>
   <hr class="zero">
-  <div style="display:flex;gap:8px"><div class="blab" style="flex:1;text-align:center">Q3 26</div><div class="blab" style="flex:1;text-align:center">Q4 26</div><div class="blab" style="flex:1;text-align:center">Q1 27</div><div class="blab" style="flex:1;text-align:center">Q2 27</div><div class="blab" style="flex:1;text-align:center">Q3 27</div><div class="blab" style="flex:1;text-align:center">Q4 27</div><div class="blab" style="flex:1;text-align:center">Q1 28</div><div class="blab" style="flex:1;text-align:center">Q2 28</div></div>
+  <div style="display:flex;gap:8px"><div class="blab" style="flex:1;text-align:center">Q3 26</div><div class="blab" style="flex:1;text-align:center">Q4 26</div><div class="blab" style="flex:1;text-align:center">Q1 27</div><div class="blab" style="flex:1;text-align:center">Q2 27</div><div class="blab" style="flex:1;text-align:center">Q3 27</div><div class="blab" style="flex:1;text-align:center">Q4 27</div><div class="blab" style="flex:1;text-align:center">Q1 28</div><div class="blab" style="flex:1;text-align:center">Q2 28</div><div class="blab" style="flex:1;text-align:center">Q3 28</div></div>
 </div>
 <table style="max-width:940px;margin-top:20px">
 <thead><tr><th>Comparación entre puntos de venta</th><th class="num">Unidades</th><th class="num">Ingresos brutos</th>
@@ -363,10 +384,11 @@ const CH=["sh", "mt", "ec"];
 const CHL={"sh": "Showroom", "mt": "Matalab (mayorista)", "ec": "E-commerce"};
 const CKEYS=["colabs", "seeding", "events", "other", "paid"];
 const CGRP={"colabs": "b", "seeding": "b", "events": "b", "other": "b", "paid": "p"};
-const NQ=8;
+const NQ=9;
+const NP1=4;
 const FKEYS=["adm", "fpr", "social"];
-const QYEAR=[2026, 2026, 2027, 2027, 2027, 2027, 2028, 2028];
-const QLAB=["Q3 26", "Q4 26", "Q1 27", "Q2 27", "Q3 27", "Q4 27", "Q1 28", "Q2 28"];
+const QYEAR=[2026, 2026, 2027, 2027, 2027, 2027, 2028, 2028, 2028];
+const QLAB=["Q3 26", "Q4 26", "Q1 27", "Q2 27", "Q3 27", "Q4 27", "Q1 28", "Q2 28", "Q3 28"];
 const L={never:"no alcanzado",units:"un/trimestre",
  copied:"Enlace copiado",stock:"stock",
  sold:"un vendidas",atcost:"a costo",
@@ -375,9 +397,10 @@ const L={never:"no alcanzado",units:"un/trimestre",
  com:"Comunicación",show:"Showroom",
  tot:"Total",inq:"en",
  confirm:"¿Confirmar?",reset:"Restaurar valores",
- none:"— sin escenarios guardados —"};
-const XKEY='te-viab-v5-scn-es';
-const KEY='te-viab-v5-es', SKEY='te-viab-v5-sec-es';
+ none:"— sin escenarios guardados —",
+ atcost2:"a costo",otbok:"cobertura mantenida en el horizonte"};
+const XKEY='te-viab-v7-scn-es';
+const KEY='te-viab-v7-es', SKEY='te-viab-v7-sec-es';
 const FAIXAS=[[180000,.04,0],[360000,.073,5940],[720000,.095,13860],
               [1800000,.107,22500],[3600000,.143,87300],[4800000,.19,378000]];
 function aliq(r){ if(r<=0) return .04;
@@ -503,14 +526,15 @@ function calc(){
   const op=[]; let o1=0,o2=0;
   for(let i=0;i<6;i++){
     const a=V('op1_'+i), b=V('op2_'+i);
-    o1+=a; o2+=b; $('opt_'+i).textContent=R(a*12+b*12);
+    o1+=a; o2+=b; $('opt_'+i).textContent=R((a*NP1+b*(NQ-NP1))*3);
   }
-  $('op1t').textContent=R(o1); $('op2t').textContent=R(o2); $('optt').textContent=R(o1*12+o2*12);
-  for(let q=0;q<NQ;q++) op[q]=(q<4?o1:o2)*3;
+  $('op1t').textContent=R(o1); $('op2t').textContent=R(o2); $('optt').textContent=R((o1*NP1+o2*(NQ-NP1))*3);
+  for(let q=0;q<NQ;q++) op[q]=(q<NP1?o1:o2)*3;
 
   // ---------- receita / CMV
   const rev=[],cmv=[],un=[];
   const cAgg={}; CH.forEach(ch=>cAgg[ch]={u:0,r:0,mc:0});
+  const catSold={}; CATS.forEach(c=>catSold[c]=0);
   for(let q=0;q<NQ;q++){ rev[q]=0; cmv[q]=0; un[q]=0; }
   CH.forEach(ch=>{
     CATS.forEach(c=>{
@@ -521,11 +545,57 @@ function calc(){
         if(!u) continue;
         const r=u*A[c].srp*fx*(1-mg[ch]);
         const m=u*A[c].cst*fx;
-        rev[q]+=r; cmv[q]+=m; un[q]+=u;
+        rev[q]+=r; cmv[q]+=m; un[q]+=u; catSold[c]+=u;
         cAgg[ch].u+=u; cAgg[ch].r+=r; cAgg[ch].mc+=r-m;
       }
     });
   });
+
+  // ---------- estoque / OTB
+  const lead=Math.max(0,Math.round(V('lead'))), covT=Math.max(0,V('cover'));
+  const stIni=[],stEnd=[],cov=[];
+  let sIni=totImp;
+  for(let q=0;q<NQ;q++){
+    stIni[q]=sIni; stEnd[q]=Math.max(0,sIni-un[q]); sIni=stEnd[q];
+    let fut=0,nf=0;
+    for(let j=q+1;j<NQ;j++){ fut+=un[j]; nf++; }
+    const avg=nf>0?fut/nf:0;
+    cov[q]=avg>0?stEnd[q]/avg:null;
+    $(`ot_st_ini_${q}`).textContent=N(stIni[q]);
+    $(`ot_st_sold_${q}`).textContent=un[q]?N(un[q]):'—';
+    $(`ot_st_end_${q}`).textContent=N(stEnd[q]);
+    const ce=$(`ot_st_cov_${q}`);
+    ce.textContent=cov[q]===null?'—':cov[q].toFixed(1).replace('.',',');
+    ce.className='c '+(cov[q]!==null&&cov[q]<covT?'neg':'');
+  }
+  let alert=-1;
+  for(let q=0;q<NQ;q++){ if(cov[q]!==null&&cov[q]<covT){ alert=q; break; } }
+  if(alert>=0){
+    let fut=0,nf=0;
+    for(let j=alert+1;j<NQ;j++){ fut+=un[j]; nf++; }
+    const avg=nf>0?fut/nf:0;
+    const need=Math.max(0,Math.round(avg*covT-stEnd[alert]));
+    const oq=Math.max(0,alert-lead);
+    const unitCost=totImp>0?tInv/totImp:0;
+    $('ot_alert').textContent=QLAB[alert]; $('ot_alert').className='v neg';
+    $('ot_alert_s').textContent=N(stEnd[alert])+' un · '+(cov[alert]).toFixed(1).replace('.',',')+' / '+covT;
+    $('ot_order').textContent=QLAB[oq]; $('ot_order').className='v';
+    $('ot_order_s').textContent='lead time '+lead+'T';
+    $('ot_size').textContent=N(need)+' un';
+    $('ot_size_s').textContent=R(need*unitCost)+' '+L.atcost2;
+    let mix='';
+    if(need>0&&totSold>0){
+      mix=CATS.filter(c=>catSold[c]>0).map(c=>`${c} ${N(Math.round(need*catSold[c]/totSold))}`).join(' · ');
+    }
+    $('ot_mix').textContent=mix||'—';
+    $('ot_mixw').style.display=mix?'':'none';
+  } else {
+    $('ot_alert').textContent='—'; $('ot_alert').className='v';
+    $('ot_alert_s').textContent=L.otbok;
+    $('ot_order').textContent='—'; $('ot_order_s').textContent='';
+    $('ot_size').textContent='—'; $('ot_size_s').textContent='';
+    $('ot_mixw').style.display='none';
+  }
 
   // ---------- DRE
   const tax=[],net=[],mc=[],eb=[],cum=[],rbtA=[],rtA=[];
@@ -646,10 +716,12 @@ function loadSec(){
 const inputs=()=>Array.from(document.querySelectorAll('input.e'));
 const vals=()=>inputs().map(i=>i.value);
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(vals())); }catch(e){} }
-// migrações: v3 (306, PR na comunicação e sem fee) e v4 (304, fee mensal) -> v5 (322, fee por trimestre)
+// migrações encadeadas: v3 (306) -> v4 (304) -> v5 (322) -> v6 (333, 9 trimestres)
 function migrate(a){
   if(!Array.isArray(a)) return a;
+  // v3: PR na comunicação e sem agency fee
   if(a.length===306) a=a.slice(0,254).concat(a.slice(262,294),['0','0','0','0','0','0'],a.slice(294,306));
+  // v4: agency fee mensal (3x2) -> por trimestre (3x8)
   if(a.length===304){
     const pre=a.slice(0,286), mo=a.slice(286,292), op=a.slice(292,304), fq=[];
     for(let i=0;i<3;i++){
@@ -659,6 +731,16 @@ function migrate(a){
     }
     a=pre.concat(fq,op);
   }
+  // v5: 8 trimestres -> 9 trimestres (acrescenta Q3 28 zerado em cada linha)
+  if(a.length===322){
+    const ex=(blk,rows)=>{ const o=[];
+      for(let r=0;r<rows;r++){ const row=blk.slice(r*8,(r+1)*8); while(row.length<9) row.push('0'); o.push(...row); }
+      return o; };
+    a=a.slice(0,222).concat(ex(a.slice(222,246),3), ex(a.slice(246,286),5),
+                            ex(a.slice(286,310),3), a.slice(310,322));
+  }
+  // v6: sem os campos de OTB (lead time e cobertura)
+  if(a.length===333) a=a.slice(0,249).concat(['1','2'], a.slice(249,333));
   return a;
 }
 function load(a){ a=migrate(a); const el=inputs(); if(!a||a.length!==el.length) return false;
@@ -715,7 +797,7 @@ function share(){
 function dl(){
   const d=new Date(), pad=n=>String(n).padStart(2,'0');
   const stamp=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-  const payload={app:'te-viabilidade',v:5,saved:d.toISOString(),values:vals()};
+  const payload={app:'te-viabilidade',v:7,saved:d.toISOString(),values:vals()};
   const blob=new Blob([JSON.stringify(payload,null,1)],{type:'application/json'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
