@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <title>Viabilidade & ROI — Terrible Enfant Brasil</title>
 <style>
 :root{--ink:#141414;--ink2:#3d3a35;--muted:#8a857c;--line:#e4e0d8;--soft:#f5f3ee;
@@ -11,7 +14,8 @@
 --blue:#3a5d82;--blue-bg:#edf2f7;
 --edit:#fdf6e3;--edit-br:#d9c98f;
 --serif:"Georgia","Times New Roman",serif;
---sans:-apple-system,"Helvetica Neue",Arial,sans-serif}
+--sans:"Inter",-apple-system,"Helvetica Neue",Arial,sans-serif;
+--mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 *{box-sizing:border-box}
 body{font-family:var(--sans);color:var(--ink2);background:var(--paper);margin:0;
 padding:34px 26px 80px;font-size:14px;line-height:1.5}
@@ -63,25 +67,34 @@ border:1px solid #b9b4aa;border-left-width:0;padding:8px 14px;cursor:pointer;fon
 .fxinfo{font-size:11px;color:var(--muted);margin-left:8px}
 .lnk{color:var(--muted);text-decoration:none;font-size:12px}
 .lnk:hover{color:var(--ink)}
-table{border-collapse:collapse;width:100%;font-size:13px}
-td,th,input.e,input.ef,.kpi .kv,.bval,.chip,.tile .s{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
-th{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
-font-weight:400;border-bottom:2px solid var(--ink);padding:8px 8px;text-align:left;white-space:nowrap}
+table{border-collapse:collapse;width:100%;font-size:13px;letter-spacing:-.005em}
+/* números: mono desenhada para dados, sempre tabular */
+td.num,td.c,th.num,th.c,input.e,input.ef,.kpi .kv,.bval,.tile .v,.chip,.sk.num{
+font-family:var(--mono);font-variant-numeric:tabular-nums;font-feature-settings:"tnum";letter-spacing:-.02em}
+td.num,td.c{font-size:12px}
+.tile .s,.fxinfo{font-variant-numeric:tabular-nums}
+/* zeros recuam para o segundo plano */
+input.e.z{color:#b8b2a6;font-weight:400}
+td.zero0{color:#c2bcb0}
+th{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+font-weight:400;border-bottom:2px solid var(--ink);padding:8px 6px;text-align:left;white-space:nowrap}
 th.num,td.num{text-align:right} th.c,td.c{text-align:center}
-td{padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap;color:var(--ink2)}
+td{padding:5px 6px;border-bottom:1px solid var(--line);white-space:nowrap;color:var(--ink2)}
 tr.cat td{background:var(--soft);color:var(--ink);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:8px}
 tr.sb td{border-top:1px solid #cfc9be;font-weight:600;background:#f1eee7;color:var(--ink)}
 tr.tot td{border-top:2px solid var(--ink);border-bottom:none;font-weight:600;background:var(--paper);color:var(--ink)}
 tr.hl td{background:var(--blue-bg)}
 .sk{color:var(--muted);font-size:11px}
 .model{color:var(--ink)}
-input.e{background:var(--edit);border:1px solid var(--edit-br);border-radius:0;
-padding:4px 7px;font-size:12.5px;font-weight:600;text-align:right;color:var(--ink);
-font-family:var(--sans);width:74px}
-input.e:focus{outline:1px solid var(--ink);border-color:var(--ink)}
-input.e.w{width:56px} input.e.n{width:100px}
-input.ef{background:var(--edit);border:1px solid var(--edit-br);padding:5px 8px;
-font-size:12.5px;font-weight:600;text-align:right;color:var(--ink);font-family:var(--sans);width:70px}
+input.e{background:#fdfaf0;border:1px solid transparent;border-bottom:1px solid #ded6bd;border-radius:0;
+padding:5px 6px;font-size:12.5px;font-weight:500;text-align:right;color:var(--ink);width:72px;
+transition:background .12s,border-color .12s}
+input.e:hover{background:#fbf5e4;border-bottom-color:#c9bd97}
+input.e:focus{outline:none;background:#fff;border:1px solid var(--ink)}
+input.e.w{width:52px} input.e.n{width:92px}
+input.ef{background:#fdfaf0;border:1px solid transparent;border-bottom:1px solid #ded6bd;padding:5px 8px;
+font-size:13px;font-weight:500;text-align:right;color:var(--ink);width:74px}
+input.ef:focus{outline:none;background:#fff;border:1px solid var(--ink)}
 .fillbar{display:flex;gap:10px;align-items:center;margin:0 0 14px;font-size:12.5px;color:var(--muted)}
 .minib{border:1px solid var(--line);background:transparent;padding:3px 10px;font-size:9.5px;
 letter-spacing:.12em;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-left:12px;font-family:var(--sans)}
@@ -89,7 +102,7 @@ letter-spacing:.12em;text-transform:uppercase;color:var(--muted);cursor:pointer;
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:4px 0 6px}
 .tile{border:1px solid var(--line);background:var(--card);padding:15px 17px}
 .tile .k{font-size:9.5px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);margin-bottom:8px}
-.tile .v{font-family:var(--serif);font-size:24px;font-weight:400;letter-spacing:-.01em;color:var(--ink)}
+.tile .v{font-family:var(--mono);font-size:22px;font-weight:500;letter-spacing:-.03em;color:var(--ink)}
 .tile .v.sm{font-size:16px;line-height:1.3}
 .tile .s{font-size:11.5px;color:var(--muted);margin-top:5px}
 .tile.g{border-top:2px solid var(--pos)} .tile.b{border-top:2px solid var(--blue)}
@@ -501,6 +514,16 @@ function formatAll(){ document.querySelectorAll('input.e.n').forEach(i=>{
   if(i.dataset.v===undefined) i.dataset.v=String(parseFloat(String(i.value).replace(/[.,]/g,''))||0);
   i.value=FMT(Math.round(toDisp(parseFloat(i.dataset.v)||0)));
 }); }
+function dimZeros(){
+  document.querySelectorAll('input.e').forEach(i=>{
+    const v=String(i.value).replace(/[.,\s]/g,'');
+    i.classList.toggle('z', v===''||v==='0');
+  });
+  document.querySelectorAll('td.num,td.c').forEach(td=>{
+    const t=td.textContent.trim();
+    td.classList.toggle('zero0', t==='—'||t===''||/^(R\$|US\$)?\s*0$/.test(t)||t==='0%');
+  });
+}
 function curLabels(){ document.querySelectorAll('.cl').forEach(e=>e.textContent=CUR==='usd'?'US$':'R$'); }
 function setCur(c){
   CUR=c;
@@ -532,16 +555,16 @@ async function fetchFx(){
   info.textContent=FXL.fail; return false;
 }
 const SY=()=>CUR==='usd'?'US$ ':'R$ ';
-const R=v=>{const x=toDisp(v);return SY()+Math.round(x).toLocaleString(LOC);};
-const U=v=>'US$ '+Math.round(v).toLocaleString(LOC);
+const R=v=>{let x=Math.round(toDisp(v)); if(Object.is(x,-0)||x===0) x=0; return SY()+x.toLocaleString(LOC);};
+const U=v=>{let x=Math.round(v); if(Object.is(x,-0)||x===0) x=0; return 'US$ '+x.toLocaleString(LOC);};
 const Rk=v=>{const x=toDisp(v);
   const mi=LOC==='en-US'?'m':'mi', mil=LOC==='en-US'?'k':'mil';
   return Math.abs(x)>=1000000?SY()+(x/1000000).toFixed(2).replace('.',LOC==='en-US'?'.':',')+' '+mi
     :Math.abs(x)>=10000?SY()+Math.round(x/1000).toLocaleString(LOC)+' '+mil:R(v);};
 const P=v=>(v*100).toFixed(1).replace('.',LOC==='en-US'?'.':',')+'%';
 const P0=v=>Math.round(v*100)+'%';
-const N=v=>Math.round(v).toLocaleString(LOC);
-const NM=v=>Math.round(toDisp(v)).toLocaleString(LOC);
+const N=v=>{let x=Math.round(v); if(Object.is(x,-0)||x===0) x=0; return x.toLocaleString(LOC);};
+const NM=v=>{let x=Math.round(toDisp(v)); if(Object.is(x,-0)||x===0) x=0; return x.toLocaleString(LOC);};
 const D1=v=>v.toFixed(1).replace('.',LOC==='en-US'?'.':',');
 const sig=v=>v>0?'pos':(v<0?'neg':'');
 
@@ -827,6 +850,7 @@ function calc(){
     `<td class="num">${R(tm)}</td><td class="num">${tr2>0?P(tm/tr2):'—'}</td>`+
     `<td class="num">${tu>0?R(tm/tu):'—'}</td></tr>`);
 
+  dimZeros();
   save();
 }
 
