@@ -28,6 +28,13 @@ font-weight:650;color:var(--muted);text-decoration:none}
 .lang a:hover{background:var(--soft);color:var(--ink)}
 .lang a.on{background:var(--ink);color:#fff;border-color:var(--ink)}
 .bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0 6px}
+.bar2{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:8px 0 4px;
+padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:var(--soft);font-size:12.5px}
+.bar2 select,.bar2 input{border:1px solid var(--line);border-radius:7px;padding:5px 8px;
+font-size:12.5px;font-family:inherit;color:var(--ink);background:#fff}
+.bar2 select{min-width:190px} .bar2 input{width:180px}
+.bar2 .btn{padding:5px 11px}
+.bar2 .ttl{font-weight:650;color:var(--muted);text-transform:uppercase;font-size:10px;letter-spacing:.05em}
 .btn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;
 padding:7px 13px;font-size:12.5px;font-weight:600;cursor:pointer}
 .btn:hover{background:var(--soft)}
@@ -89,12 +96,24 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 </div>
 <div class="bar">
   <button class="btn pri" onclick="share()">Copiar enlace del escenario</button>
+  <button class="btn" onclick="dl()">Descargar escenario</button>
+  <button class="btn" onclick="document.getElementById('upf').click()">Cargar archivo</button>
+  <input type="file" id="upf" accept="application/json,.json" style="display:none" onchange="upload(event)">
   <button class="btn" onclick="allSec(1)">Abrir todo</button>
   <button class="btn" onclick="allSec(0)">Cerrar todo</button>
-  <button class="btn" onclick="reset()">Restaurar valores</button>
+  <button class="btn" id="rstb" onclick="reset()">Restaurar valores</button>
   <a class="lnk" href="./">← Roadmap</a>
-  <span class="lnk" style="margin-left:auto">Los campos en amarillo son editables · el resto se calcula · los cambios se guardan en este navegador</span>
 </div>
+<div class="bar2">
+  <span class="ttl">Escenarios guardados</span>
+  <select id="scnsel"></select>
+  <button class="btn" onclick="scnLoad()">Aplicar</button>
+  <button class="btn" onclick="scnDel()">Eliminar</button>
+  <span style="width:10px"></span>
+  <input id="scnname" placeholder="nombre del escenario">
+  <button class="btn" onclick="scnSave()">Guardar</button>
+</div>
+<div class="note" style="margin-top:8px">Los datos se guardan automáticamente en este navegador mientras escribe. Para no depender de una sola computadora, use <b>Descargar escenario</b> (genera un archivo .json que puede guardar en Drive o enviar por correo) o <b>Copiar enlace del escenario</b>. También puede guardar varias versiones con nombre — conservador, optimista — y alternar entre ellas. <span style="opacity:.7">Los campos en amarillo son editables · el resto se calcula · los cambios se guardan en este navegador</span></div>
 
 <h2 onclick="tog('s1')"><span class="chev">▾</span>1. Premisas generales</h2>
 <div class="sec" id="s1">
@@ -318,7 +337,10 @@ const L={never:"no alcanzado",units:"un/trimestre",
  ofimp:"de lo importado",invested:"invertidos",
  ofrev:"de los ingresos",sellthru:"sell-through",
  com:"Comunicación",show:"Showroom",
- tot:"Total",inq:"en"};
+ tot:"Total",inq:"en",
+ confirm:"¿Confirmar?",reset:"Restaurar valores",
+ none:"— sin escenarios guardados —"};
+const XKEY='te-viab-v3-scn-es';
 const KEY='te-viab-v3-es', SKEY='te-viab-v3-sec-es';
 const FAIXAS=[[180000,.04,0],[360000,.073,5940],[720000,.095,13860],
               [1800000,.107,22500],[3600000,.143,87300],[4800000,.19,378000]];
@@ -568,31 +590,124 @@ function loadSec(){
   }catch(e){}
 }
 const inputs=()=>Array.from(document.querySelectorAll('input.e'));
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(inputs().map(i=>i.value))); }catch(e){} }
+const vals=()=>inputs().map(i=>i.value);
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(vals())); }catch(e){} }
 function load(a){ const el=inputs(); if(!a||a.length!==el.length) return false;
   el.forEach((i,n)=>i.value=a[n]); return true; }
-function reset(){ try{localStorage.removeItem(KEY);}catch(e){} location.href=location.pathname; }
+
+// --- restaurar padrões em dois cliques (sem diálogo do navegador)
+let rstArm=0;
+function reset(){
+  const b=$('rstb');
+  if(!rstArm){ rstArm=1; b.textContent=L.confirm; b.style.background='#b91c1c';
+    b.style.color='#fff'; b.style.borderColor='#b91c1c';
+    setTimeout(()=>{ rstArm=0; b.textContent=L.reset; b.style.cssText=''; },4000); return; }
+  try{localStorage.removeItem(KEY);}catch(e){} location.href=location.pathname;
+}
+
+// --- codificação compacta do cenário (RLE, seguro para URL)
+function enc(v){
+  const out=[]; let i=0;
+  while(i<v.length){
+    let j=i; while(j<v.length && v[j]===v[i]) j++;
+    const n=j-i, val=(v[i]===''?'_':v[i]);
+    if(n>2) out.push(val+'*'+n); else for(let k=0;k<n;k++) out.push(val);
+    i=j;
+  }
+  return out.join(',');
+}
+function dec(str){
+  const out=[];
+  str.split(',').forEach(tok=>{
+    const k=tok.indexOf('*');
+    if(k>0){ const val=tok.slice(0,k), n=parseInt(tok.slice(k+1))||0;
+      for(let x=0;x<n;x++) out.push(val==='_'?'':val); }
+    else out.push(tok==='_'?'':tok);
+  });
+  return out;
+}
+function scenarioUrl(){ return location.origin+location.pathname+'#v1='+enc(vals()); }
+function readHash(){
+  const h=location.hash.slice(1);
+  if(!h) return null;
+  if(h.startsWith('v1=')) return dec(h.slice(3));
+  try{ return JSON.parse(decodeURIComponent(escape(atob(h)))); }catch(e){ return null; }
+}
+// --- link
 function share(){
-  const h=btoa(unescape(encodeURIComponent(JSON.stringify(inputs().map(i=>i.value)))));
-  navigator.clipboard.writeText(location.origin+location.pathname+'#'+h).then(()=>{
+  const url=scenarioUrl();
+  navigator.clipboard.writeText(url).then(()=>{
     const b=document.querySelector('.btn.pri'), o=b.textContent;
     b.textContent=L.copied; setTimeout(()=>b.textContent=o,1600);
   });
 }
+
+// --- arquivo .json
+function dl(){
+  const d=new Date(), pad=n=>String(n).padStart(2,'0');
+  const stamp=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+  const payload={app:'te-viabilidade',v:3,saved:d.toISOString(),values:vals()};
+  const blob=new Blob([JSON.stringify(payload,null,1)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`viabilidade-TE_${stamp}.json`;
+  a.click(); URL.revokeObjectURL(a.href);
+}
+function upload(ev){
+  const f=ev.target.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const d=JSON.parse(r.result);
+      const a=Array.isArray(d)?d:d.values;
+      if(load(a)) calc(); else alertBar();
+    }catch(e){ alertBar(); }
+    ev.target.value='';
+  };
+  r.readAsText(f);
+}
+function alertBar(){
+  const b=document.querySelector('.bar2'); const o=b.style.borderColor;
+  b.style.borderColor='#b91c1c'; setTimeout(()=>b.style.borderColor=o,2000);
+}
+
+// --- cenários nomeados
+function scnAll(){ try{ return JSON.parse(localStorage.getItem(XKEY))||{}; }catch(e){ return {}; } }
+function scnFill(sel){
+  const all=scnAll(), s=$('scnsel'), names=Object.keys(all).sort();
+  s.innerHTML = names.length ? names.map(n=>`<option>${n}</option>`).join('')
+                             : `<option value="">${L.none}</option>`;
+  if(sel && names.includes(sel)) s.value=sel;
+}
+function scnSave(){
+  const n=$('scnname').value.trim(); if(!n) { $('scnname').focus(); return; }
+  const all=scnAll(); all[n]=vals();
+  try{ localStorage.setItem(XKEY, JSON.stringify(all)); }catch(e){}
+  $('scnname').value=''; scnFill(n);
+}
+function scnLoad(){
+  const n=$('scnsel').value; if(!n) return;
+  const all=scnAll(); if(all[n] && load(all[n])) calc();
+}
+function scnDel(){
+  const n=$('scnsel').value; if(!n) return;
+  const all=scnAll(); delete all[n];
+  try{ localStorage.setItem(XKEY, JSON.stringify(all)); }catch(e){}
+  scnFill();
+}
+
 // mantém o cenário ao trocar de idioma
 document.querySelectorAll('.lang a').forEach(a=>a.addEventListener('click',e=>{
   if(a.classList.contains('on')) return;
   e.preventDefault();
-  const h=btoa(unescape(encodeURIComponent(JSON.stringify(inputs().map(i=>i.value)))));
-  location.href=a.getAttribute('href')+'#'+h;
+  location.href=a.getAttribute('href')+'#v1='+enc(vals());
 }));
 (function init(){
   let ok=false;
-  if(location.hash.length>1){
-    try{ ok=load(JSON.parse(decodeURIComponent(escape(atob(location.hash.slice(1)))))); }catch(e){}
-  }
+  const fromUrl=readHash();
+  if(fromUrl) ok=load(fromUrl);
   if(!ok){ try{ load(JSON.parse(localStorage.getItem(KEY))); }catch(e){} }
-  loadSec(); calc();
+  loadSec(); scnFill(); calc();
 })();
 </script>
 </div></body>
