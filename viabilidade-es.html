@@ -106,6 +106,16 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 .blab{font-size:10.5px;color:var(--muted);margin-top:6px}
 .bval{font-size:10.5px;font-weight:650;line-height:1.3;white-space:nowrap}
 .zero{border-top:1px solid #c9cdd4;margin:0}
+@media(max-width:680px){
+body{padding:16px 12px 50px}
+.sticky{margin:0 -12px;padding:7px 12px;gap:10px 14px}
+.kpi .kv{font-size:12px}.kpi .kl{font-size:8.5px}
+.snav{display:none}
+h1{font-size:18px}
+table td:first-child,table th:first-child{white-space:normal;min-width:110px}
+.bar2 select{min-width:130px}.bar2 input{width:130px}
+.tiles{grid-template-columns:1fr 1fr}
+}
 @media print{.bar,.bar2,.lang,.sticky{display:none}.sec.off{display:block}body{padding:0}}
 </style>
 </head>
@@ -269,7 +279,7 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 <div class="sec" id="s3">
 <div class="note">Distribuya el stock importado entre los puntos de venta. Cada uno entrega un margen distinto porque el margen del socio se aplica sobre el SRP. El precio y el costo usados son el promedio ponderado por la importación de cada categoría.</div>
 <div class="warn" id="w_alloc">Stock asignado por encima de lo importado — <span id="w_alloc_d"></span></div>
-<table style="max-width:920px">
+<div class="scroll"><table style="min-width:720px">
 <thead><tr><th>Unidades asignadas</th><th class="num">Importado</th><th class="c">Showroom</th><th class="c">Matalab (mayorista)</th><th class="c">E-commerce</th>
 <th class="num">Total</th><th class="num">No asignado</th></tr></thead>
 <tbody><tr><td>Calzado</td><td class="num sk" id="ai_0"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_sh_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_mt_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_ec_0" value="0" oninput="calc()"></td><td class="num" id="at_0"></td><td class="num" id="af_0"></td></tr>
@@ -278,7 +288,7 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 <tr><td>Camperas</td><td class="num sk" id="ai_3"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_sh_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_mt_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_ec_3" value="0" oninput="calc()"></td><td class="num" id="at_3"></td><td class="num" id="af_3"></td></tr>
 <tr><td>Gorras</td><td class="num sk" id="ai_4"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_sh_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_mt_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_ec_4" value="0" oninput="calc()"></td><td class="num" id="at_4"></td><td class="num" id="af_4"></td></tr>
 <tr><td>Accesorios</td><td class="num sk" id="ai_5"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_sh_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_mt_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_ec_5" value="0" oninput="calc()"></td><td class="num" id="at_5"></td><td class="num" id="af_5"></td></tr>
-<tr class="tot"><td>Total</td><td class="num sk" id="ai_t"></td><td class="c" id="ac_sh"></td><td class="c" id="ac_mt"></td><td class="c" id="ac_ec"></td><td class="num" id="at_t"></td><td class="num" id="af_t"></td></tr></tbody></table>
+<tr class="tot"><td>Total</td><td class="num sk" id="ai_t"></td><td class="c" id="ac_sh"></td><td class="c" id="ac_mt"></td><td class="c" id="ac_ec"></td><td class="num" id="at_t"></td><td class="num" id="af_t"></td></tr></tbody></table></div>
 </div>
 
 <h2 id="h4" onclick="tog('s4')"><span class="chev">▾</span>4. Sell-out por trimestre</h2>
@@ -342,7 +352,7 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 
 <h2 id="h8" onclick="tog('s8')"><span class="chev">▾</span>8. Costos operativos</h2>
 <div class="sec" id="s8">
-<table style="max-width:700px">
+<div class="scroll"><table style="min-width:560px;max-width:700px">
 <thead><tr><th>Rubro</th><th class="num">R$/mes · Q3 26–Q2 27</th><th class="num">R$/mes · Q3 27–Q3 28</th>
 <th class="num">Total</th></tr></thead>
 <tbody><tr><td>Equipo</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_0" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_0" value="0" oninput="calc()"></td><td class="num" id="opt_0"></td></tr>
@@ -350,7 +360,7 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 <tr><td>Plataforma e-commerce</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_2" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_2" value="0" oninput="calc()"></td><td class="num" id="opt_2"></td></tr>
 <tr><td>Showroom (alquiler y estructura)</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_3" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_3" value="0" oninput="calc()"></td><td class="num" id="opt_3"></td></tr>
 <tr><td>Contabilidad y legal</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_4" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_4" value="0" oninput="calc()"></td><td class="num" id="opt_4"></td></tr>
-<tr><td>Otros</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_5" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_5" value="0" oninput="calc()"></td><td class="num" id="opt_5"></td></tr><tr class="tot"><td>Total</td><td class="num" id="op1t"></td><td class="num" id="op2t"></td><td class="num" id="optt"></td></tr></tbody></table>
+<tr><td>Otros</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_5" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_5" value="0" oninput="calc()"></td><td class="num" id="opt_5"></td></tr><tr class="tot"><td>Total</td><td class="num" id="op1t"></td><td class="num" id="op2t"></td><td class="num" id="optt"></td></tr></tbody></table></div>
 </div>
 
 <h2 id="h9" onclick="tog('s9')"><span class="chev">▾</span>9. Estado de resultados trimestral</h2>
@@ -386,10 +396,10 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
   <hr class="zero">
   <div style="display:flex;gap:8px"><div class="blab" style="flex:1;text-align:center">Q3 26</div><div class="blab" style="flex:1;text-align:center">Q4 26</div><div class="blab" style="flex:1;text-align:center">Q1 27</div><div class="blab" style="flex:1;text-align:center">Q2 27</div><div class="blab" style="flex:1;text-align:center">Q3 27</div><div class="blab" style="flex:1;text-align:center">Q4 27</div><div class="blab" style="flex:1;text-align:center">Q1 28</div><div class="blab" style="flex:1;text-align:center">Q2 28</div><div class="blab" style="flex:1;text-align:center">Q3 28</div></div>
 </div>
-<table style="max-width:940px;margin-top:20px">
+<div class="scroll" style="margin-top:20px"><table style="min-width:720px;max-width:940px">
 <thead><tr><th>Comparación entre puntos de venta</th><th class="num">Unidades</th><th class="num">Ingresos brutos</th>
 <th class="num">Margen de contribución</th><th class="num">% sobre ingresos</th><th class="num">MC por unidad</th></tr></thead>
-<tbody id="chcmp"></tbody></table>
+<tbody id="chcmp"></tbody></table></div>
 <div class="tiles" style="margin-top:18px;max-width:400px">
   <div class="tile r"><div class="k">Punto de equilibrio</div><div class="v" id="k_be"></div><div class="s" id="k_be_s"></div></div>
 </div>
