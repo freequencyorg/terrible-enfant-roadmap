@@ -14,7 +14,7 @@ color:var(--ink);background:#fff;margin:0;padding:26px 22px 70px;font-size:14px;
 .wrap{max-width:1280px;margin:0 auto}
 .head{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap}
 h1{font-size:21px;margin:0 0 4px;font-weight:680;letter-spacing:-.01em}
-h2{font-size:15px;margin:30px 0 0;font-weight:660;padding:8px 0;border-bottom:1px solid var(--line);
+h2{font-size:15px;margin:30px 0 0;scroll-margin-top:56px;font-weight:660;padding:8px 0;border-bottom:1px solid var(--line);
 cursor:pointer;user-select:none;display:flex;align-items:center;gap:9px}
 h2:hover{color:var(--blue)}
 .chev{font-size:11px;color:var(--muted);transition:transform .15s;display:inline-block}
@@ -27,6 +27,21 @@ h2.off .chev{transform:rotate(-90deg)}
 font-weight:650;color:var(--muted);text-decoration:none}
 .lang a:hover{background:var(--soft);color:var(--ink)}
 .lang a.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+/* barra fixa de resultado */
+.sticky{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.94);
+backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin:0 -22px 0;padding:9px 22px;
+display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.sticky.stuck{box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.kpi{display:flex;align-items:baseline;gap:6px;white-space:nowrap}
+.kpi .kl{font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+.kpi .kv{font-size:14.5px;font-weight:720;letter-spacing:-.01em}
+.snav{margin-left:auto;display:flex;gap:3px;flex-wrap:wrap}
+.snav a{width:23px;height:23px;display:flex;align-items:center;justify-content:center;
+border:1px solid var(--line);border-radius:6px;font-size:11px;font-weight:700;color:var(--muted);
+text-decoration:none}
+.snav a:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+.snav .nl{font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
+font-weight:700;align-self:center;margin-right:4px}
 .bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0 6px}
 .bar2{display:flex;gap:7px;align-items:center;flex-wrap:wrap;margin:8px 0 4px;
 padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:var(--soft);font-size:12.5px}
@@ -85,7 +100,7 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 .blab{font-size:10.5px;color:var(--muted);margin-top:6px}
 .bval{font-size:10.5px;font-weight:650;line-height:1.3;white-space:nowrap}
 .zero{border-top:1px solid #c9cdd4;margin:0}
-@media print{.bar,.lang{display:none}.sec.off{display:block}body{padding:0}}
+@media print{.bar,.bar2,.lang,.sticky{display:none}.sec.off{display:block}body{padding:0}}
 </style>
 </head>
 <body><div class="wrap">
@@ -94,6 +109,16 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
   <div><h1>Viability & ROI — Brazil Operation</h1><div class="sub">Test-phase viability model · Q3 2026 to Q2 2028 · Brazilian Simples Nacional tax regime (Annex I, retail)</div></div>
   <div class="lang"><a href="./viabilidade.html" class="">PT</a><a href="./viabilidade-en.html" class="on">EN</a><a href="./viabilidade-es.html" class="">ES</a></div>
 </div>
+<div class="sticky" id="sticky">
+  <div class="kpi"><span class="kl">EBITDA</span><span class="kv" id="sk_eb">—</span></div>
+  <div class="kpi"><span class="kl">ROI</span><span class="kv" id="sk_roi">—</span></div>
+  <div class="kpi"><span class="kl">Payback</span><span class="kv" id="sk_pay">—</span></div>
+  <div class="kpi"><span class="kl">Cum. flow</span><span class="kv" id="sk_cum">—</span></div>
+  <nav class="snav"><span class="nl">Go to</span>
+    <a href="#h1" title="1. General assumptions">1</a><a href="#h2" title="2. Catalogue and inventory investment">2</a><a href="#h3" title="3. Inventory allocation by point of sale">3</a><a href="#h4" title="4. Sell-out by quarter">4</a><a href="#h5" title="5. Communications">5</a><a href="#h6" title="6. Agency fee (Freequency)">6</a><a href="#h7" title="7. Operating costs">7</a><a href="#h8" title="8. Quarterly P&L">8</a><a href="#h9" title="9. Results">9</a>
+  </nav>
+</div>
+
 <div class="bar">
   <button class="btn pri" onclick="share()">Copy scenario link</button>
   <button class="btn" onclick="dl()">Download scenario</button>
@@ -115,7 +140,7 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 </div>
 <div class="note" style="margin-top:8px">Your data is saved automatically in this browser as you type. So you are not tied to a single computer, use <b>Download scenario</b> (a .json file you can keep in Drive or e-mail) or <b>Copy scenario link</b>. You can also store several named versions — conservative, optimistic — and switch between them. <span style="opacity:.7">Yellow fields are editable · everything else is calculated · changes are saved in this browser</span></div>
 
-<h2 onclick="tog('s1')"><span class="chev">▾</span>1. General assumptions</h2>
+<h2 id="h1" onclick="tog('s1')"><span class="chev">▾</span>1. General assumptions</h2>
 <div class="sec" id="s1">
 <table style="width:auto">
 <tr><td>FX rate US$ → R$</td><td class="num"><input class="e" type="number" step="0.0001" id="fx" value="5.0891" oninput="calc()"></td><td></td></tr>
@@ -131,7 +156,7 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 <div class="note">The Simples rate applies to invoiced gross revenue and is the same for retail and wholesale — what changes is the base: Matalab is invoiced at wholesale (SRP less the partner margin), while showroom and e-commerce are invoiced at the consumer price. The effective rate comes from the bracket of the trailing 12-month revenue (previous four quarters; annualised in the early quarters).</div>
 </div>
 
-<h2 onclick="tog('s2')"><span class="chev">▾</span>2. Catalogue and inventory investment</h2>
+<h2 id="h2" onclick="tog('s2')"><span class="chev">▾</span>2. Catalogue and inventory investment</h2>
 <div class="sec" id="s2">
 <div class="note">SRP in US dollars, converted to reais at the FX rate in the assumptions. Pre-loaded with Matalab’s suggested price where available (37 SKUs), otherwise the catalogue price. Cost as per the COST column of the stock sheet.</div>
 <div class="scroll"><table>
@@ -222,7 +247,7 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 </tbody></table></div>
 </div>
 
-<h2 onclick="tog('s3')"><span class="chev">▾</span>3. Inventory allocation by point of sale</h2>
+<h2 id="h3" onclick="tog('s3')"><span class="chev">▾</span>3. Inventory allocation by point of sale</h2>
 <div class="sec" id="s3">
 <div class="note">Distribute the imported inventory across points of sale. Each one delivers a different margin because the partner margin applies to the SRP. Price and cost are the averages weighted by each category’s imported volume.</div>
 <div class="warn" id="w_alloc">Allocated inventory exceeds units imported — <span id="w_alloc_d"></span></div>
@@ -238,7 +263,7 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 <tr class="tot"><td>Total</td><td class="num sk" id="ai_t"></td><td class="c" id="ac_sh"></td><td class="c" id="ac_mt"></td><td class="c" id="ac_ec"></td><td class="num" id="at_t"></td><td class="num" id="af_t"></td></tr></tbody></table>
 </div>
 
-<h2 onclick="tog('s4')"><span class="chev">▾</span>4. Sell-out by quarter</h2>
+<h2 id="h4" onclick="tog('s4')"><span class="chev">▾</span>4. Sell-out by quarter</h2>
 <div class="sec" id="s4">
 <div class="note">Share of the allocated inventory sold in each quarter. The cumulative figure per point of sale should not exceed 100% — whatever remains stays as unsold inventory.</div>
 <div class="warn" id="w_sell">Cumulative sell-out above 100% of allocated inventory — <span id="w_sell_d"></span></div>
@@ -250,13 +275,12 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 <tr class="tot"><td>Units sold — Total</td><td class="c" id="sq_0"></td><td class="c" id="sq_1"></td><td class="c" id="sq_2"></td><td class="c" id="sq_3"></td><td class="c" id="sq_4"></td><td class="c" id="sq_5"></td><td class="c" id="sq_6"></td><td class="c" id="sq_7"></td><td class="num" id="sq_t"></td></tr></tbody></table></div>
 </div>
 
-<h2 onclick="tog('s5')"><span class="chev">▾</span>5. Communications</h2>
+<h2 id="h5" onclick="tog('s5')"><span class="chev">▾</span>5. Communications</h2>
 <div class="sec" id="s5">
 <div class="scroll"><table>
 <thead><tr><th>R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="num">Total</th></tr></thead>
 <tbody><tr class="cat"><td colspan="10">Brand</td></tr>
 <tr><td>Collabs</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_7" value="0" oninput="calc()"></td><td class="num" id="cm_colabs_t"></td></tr>
-<tr><td>PR</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_pr_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_pr_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_pr_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_pr_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_pr_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_pr_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_pr_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_pr_7" value="0" oninput="calc()"></td><td class="num" id="cm_pr_t"></td></tr>
 <tr><td>Seeding</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_7" value="0" oninput="calc()"></td><td class="num" id="cm_seeding_t"></td></tr>
 <tr><td>Events</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_7" value="0" oninput="calc()"></td><td class="num" id="cm_events_t"></td></tr>
 <tr><td>Other</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_7" value="0" oninput="calc()"></td><td class="num" id="cm_other_t"></td></tr>
@@ -267,8 +291,18 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 <tr class="tot"><td>Total</td><td class="c" id="cm_q_0"></td><td class="c" id="cm_q_1"></td><td class="c" id="cm_q_2"></td><td class="c" id="cm_q_3"></td><td class="c" id="cm_q_4"></td><td class="c" id="cm_q_5"></td><td class="c" id="cm_q_6"></td><td class="c" id="cm_q_7"></td><td class="num" id="cm_tt"></td></tr></tbody></table></div>
 </div>
 
-<h2 onclick="tog('s6')"><span class="chev">▾</span>6. Operating costs</h2>
+<h2 id="h6" onclick="tog('s6')"><span class="chev">▾</span>6. Agency fee (Freequency)</h2>
 <div class="sec" id="s6">
+<div class="note">Freequency’s fee by workstream, as a monthly figure for each period. It sits in the P&L as its own expense, separate from the communications budget — so you can see how much of the cost is agency service and how much is media and activations.</div>
+<div class="scroll"><table>
+<thead><tr><th>R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="num">Total</th></tr></thead>
+<tbody><tr><td>Administration</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_adm_7" value="0" oninput="calc()"></td><td class="num" id="fe_adm_t"></td></tr>
+<tr><td>PR</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_fpr_7" value="0" oninput="calc()"></td><td class="num" id="fe_fpr_t"></td></tr>
+<tr><td>Social</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="fe_social_7" value="0" oninput="calc()"></td><td class="num" id="fe_social_t"></td></tr><tr class="tot"><td>Total</td><td class="c" id="fe_q_0"></td><td class="c" id="fe_q_1"></td><td class="c" id="fe_q_2"></td><td class="c" id="fe_q_3"></td><td class="c" id="fe_q_4"></td><td class="c" id="fe_q_5"></td><td class="c" id="fe_q_6"></td><td class="c" id="fe_q_7"></td><td class="num" id="fe_tt"></td></tr></tbody></table></div>
+</div>
+
+<h2 id="h7" onclick="tog('s7')"><span class="chev">▾</span>7. Operating costs</h2>
+<div class="sec" id="s7">
 <table style="max-width:700px">
 <thead><tr><th>Line item</th><th class="num">R$/month · Q3 26–Q2 27</th><th class="num">R$/month · Q3 27–Q2 28</th>
 <th class="num">Total</th></tr></thead>
@@ -280,8 +314,8 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 <tr><td>Other</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_5" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_5" value="0" oninput="calc()"></td><td class="num" id="opt_5"></td></tr><tr class="tot"><td>Total</td><td class="num" id="op1t"></td><td class="num" id="op2t"></td><td class="num" id="optt"></td></tr></tbody></table>
 </div>
 
-<h2 onclick="tog('s7')"><span class="chev">▾</span>7. Quarterly P&L</h2>
-<div class="sec" id="s7">
+<h2 id="h8" onclick="tog('s8')"><span class="chev">▾</span>8. Quarterly P&L</h2>
+<div class="sec" id="s8">
 <div class="warn" id="w_simples">Annual revenue above the Simples Nacional ceiling (R$ 4.8m)</div>
 <div class="scroll"><table>
 <thead><tr><th>R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="num">Total</th></tr></thead>
@@ -291,13 +325,14 @@ border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none
 <tr class=""><td>(−) COGS</td><td class="num" id="d_cmv_0"></td><td class="num" id="d_cmv_1"></td><td class="num" id="d_cmv_2"></td><td class="num" id="d_cmv_3"></td><td class="num" id="d_cmv_4"></td><td class="num" id="d_cmv_5"></td><td class="num" id="d_cmv_6"></td><td class="num" id="d_cmv_7"></td><td class="num" id="d_cmv_t"></td></tr>
 <tr class="sb"><td>= Contribution margin</td><td class="num" id="d_mc_0"></td><td class="num" id="d_mc_1"></td><td class="num" id="d_mc_2"></td><td class="num" id="d_mc_3"></td><td class="num" id="d_mc_4"></td><td class="num" id="d_mc_5"></td><td class="num" id="d_mc_6"></td><td class="num" id="d_mc_7"></td><td class="num" id="d_mc_t"></td></tr>
 <tr class=""><td>(−) Communications</td><td class="num" id="d_com_0"></td><td class="num" id="d_com_1"></td><td class="num" id="d_com_2"></td><td class="num" id="d_com_3"></td><td class="num" id="d_com_4"></td><td class="num" id="d_com_5"></td><td class="num" id="d_com_6"></td><td class="num" id="d_com_7"></td><td class="num" id="d_com_t"></td></tr>
+<tr class=""><td>(−) Agency fee</td><td class="num" id="d_fee_0"></td><td class="num" id="d_fee_1"></td><td class="num" id="d_fee_2"></td><td class="num" id="d_fee_3"></td><td class="num" id="d_fee_4"></td><td class="num" id="d_fee_5"></td><td class="num" id="d_fee_6"></td><td class="num" id="d_fee_7"></td><td class="num" id="d_fee_t"></td></tr>
 <tr class=""><td>(−) Operating costs</td><td class="num" id="d_op_0"></td><td class="num" id="d_op_1"></td><td class="num" id="d_op_2"></td><td class="num" id="d_op_3"></td><td class="num" id="d_op_4"></td><td class="num" id="d_op_5"></td><td class="num" id="d_op_6"></td><td class="num" id="d_op_7"></td><td class="num" id="d_op_t"></td></tr>
 <tr class="tot"><td>= EBITDA</td><td class="num" id="d_eb_0"></td><td class="num" id="d_eb_1"></td><td class="num" id="d_eb_2"></td><td class="num" id="d_eb_3"></td><td class="num" id="d_eb_4"></td><td class="num" id="d_eb_5"></td><td class="num" id="d_eb_6"></td><td class="num" id="d_eb_7"></td><td class="num" id="d_eb_t"></td></tr>
 <tr class="hl"><td>Cumulative cash flow</td><td class="num" id="d_cum_0"></td><td class="num" id="d_cum_1"></td><td class="num" id="d_cum_2"></td><td class="num" id="d_cum_3"></td><td class="num" id="d_cum_4"></td><td class="num" id="d_cum_5"></td><td class="num" id="d_cum_6"></td><td class="num" id="d_cum_7"></td><td class="num" id="d_cum_t"></td></tr><tr><td class="sk">Trailing 12m revenue (tax base)</td><td class="num sk" id="d_rbt_0"></td><td class="num sk" id="d_rbt_1"></td><td class="num sk" id="d_rbt_2"></td><td class="num sk" id="d_rbt_3"></td><td class="num sk" id="d_rbt_4"></td><td class="num sk" id="d_rbt_5"></td><td class="num sk" id="d_rbt_6"></td><td class="num sk" id="d_rbt_7"></td><td></td></tr><tr><td class="sk">Effective tax rate</td><td class="num sk" id="d_rate_0"></td><td class="num sk" id="d_rate_1"></td><td class="num sk" id="d_rate_2"></td><td class="num sk" id="d_rate_3"></td><td class="num sk" id="d_rate_4"></td><td class="num sk" id="d_rate_5"></td><td class="num sk" id="d_rate_6"></td><td class="num sk" id="d_rate_7"></td><td></td></tr></tbody></table></div>
 </div>
 
-<h2 onclick="tog('s8')"><span class="chev">▾</span>8. Results</h2>
-<div class="sec" id="s8">
+<h2 id="h9" onclick="tog('s9')"><span class="chev">▾</span>9. Results</h2>
+<div class="sec" id="s9">
 <div class="tiles">
   <div class="tile k2"><div class="k">Total investment</div><div class="v" id="k_inv"></div><div class="s" id="k_inv_s"></div></div>
   <div class="tile b"><div class="k">Gross revenue</div><div class="v" id="k_rev"></div><div class="s" id="k_rev_s"></div></div>
@@ -326,9 +361,10 @@ const SKUS=[{"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "C
 const CATS=["Calçados", "Cintos", "Marroquinaria", "Camperas", "Bonés", "Acessórios"];
 const CH=["sh", "mt", "ec"];
 const CHL={"sh": "Showroom", "mt": "Matalab (wholesale)", "ec": "E-commerce"};
-const CKEYS=["colabs", "pr", "seeding", "events", "other", "paid"];
-const CGRP={"colabs": "b", "pr": "b", "seeding": "b", "events": "b", "other": "b", "paid": "p"};
+const CKEYS=["colabs", "seeding", "events", "other", "paid"];
+const CGRP={"colabs": "b", "seeding": "b", "events": "b", "other": "b", "paid": "p"};
 const NQ=8;
+const FKEYS=["adm", "fpr", "social"];
 const QYEAR=[2026, 2026, 2027, 2027, 2027, 2027, 2028, 2028];
 const QLAB=["Q3 26", "Q4 26", "Q1 27", "Q2 27", "Q3 27", "Q4 27", "Q1 28", "Q2 28"];
 const L={never:"not reached",units:"units/quarter",
@@ -340,8 +376,8 @@ const L={never:"not reached",units:"units/quarter",
  tot:"Total",inq:"at",
  confirm:"Confirm?",reset:"Reset",
  none:"— no saved scenarios —"};
-const XKEY='te-viab-v3-scn-en';
-const KEY='te-viab-v3-en', SKEY='te-viab-v3-sec-en';
+const XKEY='te-viab-v5-scn-en';
+const KEY='te-viab-v5-en', SKEY='te-viab-v5-sec-en';
 const FAIXAS=[[180000,.04,0],[360000,.073,5940],[720000,.095,13860],
               [1800000,.107,22500],[3600000,.143,87300],[4800000,.19,378000]];
 function aliq(r){ if(r<=0) return .04;
@@ -452,6 +488,17 @@ function calc(){
   for(let q=0;q<NQ;q++){ $('cm_q_'+q).textContent=R(com[q]); comT+=com[q]; }
   $('cm_tt').textContent=R(comT);
 
+  // ---------- agency fee (por trimestre)
+  const fee=[]; for(let q=0;q<NQ;q++) fee[q]=0;
+  let feeT=0;
+  FKEYS.forEach(k=>{
+    let sK=0;
+    for(let q=0;q<NQ;q++){ const v=V(`fe_${k}_${q}`); sK+=v; fee[q]+=v; }
+    $(`fe_${k}_t`).textContent=R(sK); feeT+=sK;
+  });
+  for(let q=0;q<NQ;q++) $('fe_q_'+q).textContent=R(fee[q]);
+  $('fe_tt').textContent=R(feeT);
+
   // ---------- operacional
   const op=[]; let o1=0,o2=0;
   for(let i=0;i<6;i++){
@@ -492,7 +539,7 @@ function calc(){
     else rbt=rev[q-1]+rev[q-2]+rev[q-3]+rev[q-4];
     const rt=aliq(rbt); rbtA[q]=rbt; rtA[q]=rt;
     tax[q]=rev[q]*rt; net[q]=rev[q]-tax[q]; mc[q]=net[q]-cmv[q];
-    eb[q]=mc[q]-com[q]-op[q];
+    eb[q]=mc[q]-com[q]-fee[q]-op[q];
     acc+=eb[q]; cum[q]=acc;
     if(payback<0 && acc>=0) payback=q;
     byYear[QYEAR[q]]=(byYear[QYEAR[q]]||0)+rev[q];
@@ -502,7 +549,7 @@ function calc(){
     $(`d_${k}_t`).textContent=R(s); return s; };
   const Trev=put('rev',rev); put('tax',tax.map(v=>-v)); put('net',net);
   put('cmv',cmv.map(v=>-v)); const Tmc=put('mc',mc);
-  put('com',com.map(v=>-v)); put('op',op.map(v=>-v));
+  put('com',com.map(v=>-v)); put('fee',fee.map(v=>-v)); put('op',op.map(v=>-v));
   const Teb=put('eb',eb);
   for(let q=0;q<NQ;q++){
     const e=$(`d_cum_${q}`); e.textContent=R(cum[q]); e.className='num '+sig(cum[q]);
@@ -531,8 +578,15 @@ function calc(){
   const leftV=totImp>0?tInv/totImp*left:0;
   $('k_left').textContent=N(left)+' un';
   $('k_left_s').textContent=totImp>0?R(leftV)+' '+L.atcost+' · '+P0(left/totImp)+' '+L.ofimp:'—';
+  // barra fixa
+  $('sk_eb').textContent=Rk(Teb); $('sk_eb').className='kv '+sig(Teb);
+  $('sk_roi').textContent=invTotal>0?P(roi):'—'; $('sk_roi').className='kv '+sig(roi);
+  $('sk_pay').textContent=payback>=0?QLAB[payback]:L.never;
+  $('sk_pay').className='kv '+(payback>=0?'pos':'neg');
+  $('sk_cum').textContent=Rk(cum[NQ-1]); $('sk_cum').className='kv '+sig(cum[NQ-1]);
+
   const mcu=totSold>0?Tmc/totSold:0;
-  const fixQ=(comT+op.reduce((a,b)=>a+b,0))/NQ;
+  const fixQ=(comT+fee.reduce((a,b)=>a+b,0)+op.reduce((a,b)=>a+b,0))/NQ;
   $('k_be').textContent=mcu>0?N(fixQ/mcu):'—';
   $('k_be_s').textContent=mcu>0?L.units+' · MC '+R(mcu)+'/un':'—';
 
@@ -592,7 +646,22 @@ function loadSec(){
 const inputs=()=>Array.from(document.querySelectorAll('input.e'));
 const vals=()=>inputs().map(i=>i.value);
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(vals())); }catch(e){} }
-function load(a){ const el=inputs(); if(!a||a.length!==el.length) return false;
+// migrações: v3 (306, PR na comunicação e sem fee) e v4 (304, fee mensal) -> v5 (322, fee por trimestre)
+function migrate(a){
+  if(!Array.isArray(a)) return a;
+  if(a.length===306) a=a.slice(0,254).concat(a.slice(262,294),['0','0','0','0','0','0'],a.slice(294,306));
+  if(a.length===304){
+    const pre=a.slice(0,286), mo=a.slice(286,292), op=a.slice(292,304), fq=[];
+    for(let i=0;i<3;i++){
+      const p1=String(Math.round((parseFloat(mo[i*2])||0)*3)), p2=String(Math.round((parseFloat(mo[i*2+1])||0)*3));
+      for(let q=0;q<4;q++) fq.push(p1);
+      for(let q=0;q<4;q++) fq.push(p2);
+    }
+    a=pre.concat(fq,op);
+  }
+  return a;
+}
+function load(a){ a=migrate(a); const el=inputs(); if(!a||a.length!==el.length) return false;
   el.forEach((i,n)=>i.value=a[n]); return true; }
 
 // --- restaurar padrões em dois cliques (sem diálogo do navegador)
@@ -646,7 +715,7 @@ function share(){
 function dl(){
   const d=new Date(), pad=n=>String(n).padStart(2,'0');
   const stamp=`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-  const payload={app:'te-viabilidade',v:3,saved:d.toISOString(),values:vals()};
+  const payload={app:'te-viabilidade',v:5,saved:d.toISOString(),values:vals()};
   const blob=new Blob([JSON.stringify(payload,null,1)],{type:'application/json'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
@@ -708,6 +777,8 @@ document.querySelectorAll('.lang a').forEach(a=>a.addEventListener('click',e=>{
   if(fromUrl) ok=load(fromUrl);
   if(!ok){ try{ load(JSON.parse(localStorage.getItem(KEY))); }catch(e){} }
   loadSec(); scnFill(); calc();
+  const sk=$('sticky'), top=sk.offsetTop;
+  addEventListener('scroll',()=>sk.classList.toggle('stuck',scrollY>top+2),{passive:true});
 })();
 </script>
 </div></body>
