@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viability & ROI — Terrible Enfant Brazil</title>
+<style>
+:root{--ink:#16181d;--muted:#6b7280;--line:#e5e7eb;--soft:#f7f8fa;
+--blue:#1d4ed8;--blue-bg:#eff4ff;--green:#047857;--red:#b91c1c;--red-bg:#fef2f2;
+--edit:#fffbeb;--edit-br:#e8d9a0}
+*{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+color:var(--ink);background:#fff;margin:0;padding:26px 22px 70px;font-size:14px;line-height:1.45}
+.wrap{max-width:1280px;margin:0 auto}
+.head{display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap}
+h1{font-size:21px;margin:0 0 4px;font-weight:680;letter-spacing:-.01em}
+h2{font-size:15px;margin:30px 0 0;font-weight:660;padding:8px 0;border-bottom:1px solid var(--line);
+cursor:pointer;user-select:none;display:flex;align-items:center;gap:9px}
+h2:hover{color:var(--blue)}
+.chev{font-size:11px;color:var(--muted);transition:transform .15s;display:inline-block}
+h2.off .chev{transform:rotate(-90deg)}
+.sec{padding-top:12px} .sec.off{display:none}
+.sub{color:var(--muted);font-size:12.5px;margin-bottom:6px}
+.note{color:var(--muted);font-size:12px;line-height:1.5;margin:0 0 14px;max-width:960px}
+.lang{margin-left:auto;display:flex;gap:4px;flex-shrink:0}
+.lang a{border:1px solid var(--line);border-radius:7px;padding:5px 11px;font-size:12px;
+font-weight:650;color:var(--muted);text-decoration:none}
+.lang a:hover{background:var(--soft);color:var(--ink)}
+.lang a.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:16px 0 6px}
+.btn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:8px;
+padding:7px 13px;font-size:12.5px;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--soft)}
+.btn.pri{background:var(--ink);color:#fff;border-color:var(--ink)}
+.lnk{color:var(--muted);text-decoration:none;font-size:12.5px}
+.lnk:hover{color:var(--ink)}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);
+font-weight:650;border-bottom:1.5px solid var(--ink);padding:6px 7px;text-align:left;white-space:nowrap}
+th.num,td.num{text-align:right} th.c,td.c{text-align:center}
+td{padding:4px 7px;border-bottom:1px solid var(--line);white-space:nowrap}
+tr.cat td{background:var(--soft);font-weight:650;font-size:12.5px}
+tr.sb td{border-top:1px solid #d5d8dd;font-weight:650;background:#fcfcfd}
+tr.tot td{border-top:2px solid var(--ink);border-bottom:none;font-weight:700;background:#fff}
+tr.hl td{background:var(--blue-bg)}
+.sk{color:var(--muted);font-size:11px}
+input.e{background:var(--edit);border:1px solid var(--edit-br);border-radius:6px;
+padding:3px 6px;font-size:12.5px;font-weight:600;text-align:right;color:var(--ink);
+font-family:inherit;width:74px}
+input.e:focus{outline:2px solid #93b4fd;border-color:#93b4fd}
+input.e.w{width:56px} input.e.n{width:100px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(186px,1fr));gap:10px;margin:2px 0 4px}
+.tile{border:1px solid var(--line);border-radius:11px;padding:12px 14px}
+.tile .k{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:650;margin-bottom:5px}
+.tile .v{font-size:20px;font-weight:720;letter-spacing:-.02em}
+.tile .v.sm{font-size:15px;line-height:1.25}
+.tile .s{font-size:11.5px;color:var(--muted);margin-top:3px}
+.tile.g{border-top:3px solid var(--green)} .tile.b{border-top:3px solid var(--blue)}
+.tile.r{border-top:3px solid var(--red)} .tile.k2{border-top:3px solid var(--ink)}
+.pos{color:var(--green)} .neg{color:var(--red)}
+.warn{background:var(--red-bg);border:1px solid #f6c9c9;color:var(--red);
+border-radius:8px;padding:8px 11px;font-size:12.5px;margin:0 0 12px;display:none}
+.warn.on{display:block}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+.scroll table{min-width:820px}
+.scroll th:first-child,.scroll td:first-child{position:sticky;left:0;background:#fff;z-index:1}
+.scroll tr.cat td:first-child{background:var(--soft)}
+.scroll tr.tot td:first-child,.scroll tr.sb td:first-child{background:#fcfcfd}
+.chart{margin-top:16px;border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.clab{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:650}
+.bars{display:flex;gap:8px;margin-top:12px}
+.bcol{flex:1;display:flex;flex-direction:column;align-items:center}
+.bup{display:flex;flex-direction:column;justify-content:flex-end;width:100%}
+.bdn{display:flex;flex-direction:column;justify-content:flex-start;width:100%}
+.bfill{width:100%;min-height:2px}
+.bfill.up{border-radius:4px 4px 0 0;background:var(--green);opacity:.85}
+.bfill.dn{border-radius:0 0 4px 4px;background:var(--red);opacity:.85}
+.blab{font-size:10.5px;color:var(--muted);margin-top:6px}
+.bval{font-size:10.5px;font-weight:650;line-height:1.3;white-space:nowrap}
+.zero{border-top:1px solid #c9cdd4;margin:0}
+@media print{.bar,.lang{display:none}.sec.off{display:block}body{padding:0}}
+</style>
+</head>
+<body><div class="wrap">
+
+<div class="head">
+  <div><h1>Viability & ROI — Brazil Operation</h1><div class="sub">Test-phase viability model · Q3 2026 to Q2 2028 · Brazilian Simples Nacional tax regime (Annex I, retail)</div></div>
+  <div class="lang"><a href="./viabilidade.html" class="">PT</a><a href="./viabilidade-en.html" class="on">EN</a><a href="./viabilidade-es.html" class="">ES</a></div>
+</div>
+<div class="bar">
+  <button class="btn pri" onclick="share()">Copy scenario link</button>
+  <button class="btn" onclick="allSec(1)">Expand all</button>
+  <button class="btn" onclick="allSec(0)">Collapse all</button>
+  <button class="btn" onclick="reset()">Reset</button>
+  <a class="lnk" href="./">← Roadmap</a>
+  <span class="lnk" style="margin-left:auto">Yellow fields are editable · everything else is calculated · changes are saved in this browser</span>
+</div>
+
+<h2 onclick="tog('s1')"><span class="chev">▾</span>1. General assumptions</h2>
+<div class="sec" id="s1">
+<table style="width:auto">
+<tr><td>FX rate US$ → R$</td><td class="num"><input class="e" type="number" step="0.0001" id="fx" value="5.0891" oninput="calc()"></td><td></td></tr>
+<tr><td>Partner margin on SRP · Showroom</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="m_sh" value="0" oninput="calc()"></td><td class="sk">%</td></tr>
+<tr><td>Partner margin on SRP · Matalab (wholesale)</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="m_mt" value="55" oninput="calc()"></td><td class="sk">%</td></tr>
+<tr><td>Partner margin on SRP · E-commerce</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="m_ec" value="0" oninput="calc()"></td><td class="sk">%</td></tr>
+<tr class="cat"><td colspan="3">Investment already made (R$)</td></tr>
+<tr><td>Communications</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_com" value="0" oninput="calc()"></td><td class="sk">R$</td></tr>
+<tr><td>Showroom</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_show" value="0" oninput="calc()"></td><td class="sk">R$</td></tr>
+<tr class="sb"><td>Total</td><td class="num" id="rz_t"></td><td class="sk">R$</td></tr>
+</table>
+<div class="note" style="margin-top:12px">Capital deployed before the start of the horizon (September 2026). It counts towards ROI and payback but does not flow through the projected quarterly P&L.</div>
+<div class="note">The Simples rate applies to invoiced gross revenue and is the same for retail and wholesale — what changes is the base: Matalab is invoiced at wholesale (SRP less the partner margin), while showroom and e-commerce are invoiced at the consumer price. The effective rate comes from the bracket of the trailing 12-month revenue (previous four quarters; annualised in the early quarters).</div>
+</div>
+
+<h2 onclick="tog('s2')"><span class="chev">▾</span>2. Catalogue and inventory investment</h2>
+<div class="sec" id="s2">
+<div class="note">SRP in US dollars, converted to reais at the FX rate in the assumptions. Pre-loaded with Matalab’s suggested price where available (37 SKUs), otherwise the catalogue price. Cost as per the COST column of the stock sheet.</div>
+<div class="scroll"><table>
+<thead><tr><th>Model / SKU</th><th class="num">SRP (US$)</th><th class="num">SRP (R$)</th>
+<th class="num">Cost (US$)</th><th class="num">Cost (R$)</th><th class="num">Gross margin</th>
+<th class="num">Units imported</th><th class="num">Investment</th></tr></thead>
+<tbody><tr class="cat"><td colspan="8">Footwear · 30 SKUs</td></tr>
+<tr><td>Raptor Reptil · Blanco<br><span class="sk">TE.Z.B.T1.004</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_0" value="545" oninput="calc()"></td><td class="num sk" id="sb_0"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_0" value="85" oninput="calc()"></td><td class="num sk" id="cb_0"></td><td class="num" id="gm_0"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_0" value="0" oninput="calc()"></td><td class="num" id="iv_0"></td></tr>
+<tr><td>Sante · Leopardo<br><span class="sk">TE.Z.C.M.T1.0027</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_1" value="527" oninput="calc()"></td><td class="num sk" id="sb_1"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_1" value="85" oninput="calc()"></td><td class="num sk" id="cb_1"></td><td class="num" id="gm_1"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_1" value="0" oninput="calc()"></td><td class="num" id="iv_1"></td></tr>
+<tr><td>Sukhoi · Negra<br><span class="sk">TE.Z.B.T1.0033</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_2" value="566" oninput="calc()"></td><td class="num sk" id="sb_2"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_2" value="85" oninput="calc()"></td><td class="num sk" id="cb_2"></td><td class="num" id="gm_2"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_2" value="0" oninput="calc()"></td><td class="num" id="iv_2"></td></tr>
+<tr><td>Monsieur Jeannot · Bordo<br><span class="sk">TE.Z.I.T1.009</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_3" value="450" oninput="calc()"></td><td class="num sk" id="sb_3"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_3" value="85" oninput="calc()"></td><td class="num sk" id="cb_3"></td><td class="num" id="gm_3"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_3" value="0" oninput="calc()"></td><td class="num" id="iv_3"></td></tr>
+<tr><td>Pantera · Leopardo<br><span class="sk">TE.Z.B.T1.005</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_4" value="664" oninput="calc()"></td><td class="num sk" id="sb_4"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_4" value="85" oninput="calc()"></td><td class="num sk" id="cb_4"></td><td class="num" id="gm_4"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_4" value="0" oninput="calc()"></td><td class="num" id="iv_4"></td></tr>
+<tr><td>Politburo · Suela Blanco<br><span class="sk">TE.Z.I.T1.0011</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_5" value="487" oninput="calc()"></td><td class="num sk" id="sb_5"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_5" value="85" oninput="calc()"></td><td class="num sk" id="cb_5"></td><td class="num" id="gm_5"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_5" value="0" oninput="calc()"></td><td class="num" id="iv_5"></td></tr>
+<tr><td>Belladona · Crocco Negro<br><span class="sk">TE.Z.B.T1.0028</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_6" value="507" oninput="calc()"></td><td class="num sk" id="sb_6"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_6" value="85" oninput="calc()"></td><td class="num sk" id="cb_6"></td><td class="num" id="gm_6"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_6" value="0" oninput="calc()"></td><td class="num" id="iv_6"></td></tr>
+<tr><td>Garavano · Negro<br><span class="sk">TE.Z.F.T1.001</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_7" value="546" oninput="calc()"></td><td class="num sk" id="sb_7"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_7" value="85" oninput="calc()"></td><td class="num sk" id="cb_7"></td><td class="num" id="gm_7"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_7" value="0" oninput="calc()"></td><td class="num" id="iv_7"></td></tr>
+<tr><td>Lou · Negro<br><span class="sk">TE.Z.I.T1.0010</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_8" value="527" oninput="calc()"></td><td class="num sk" id="sb_8"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_8" value="85" oninput="calc()"></td><td class="num sk" id="cb_8"></td><td class="num" id="gm_8"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_8" value="0" oninput="calc()"></td><td class="num" id="iv_8"></td></tr>
+<tr><td>Mefistofeles · Negro<br><span class="sk">TE.Z.F.T1.002</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_9" value="565" oninput="calc()"></td><td class="num sk" id="sb_9"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_9" value="85" oninput="calc()"></td><td class="num sk" id="cb_9"></td><td class="num" id="gm_9"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_9" value="0" oninput="calc()"></td><td class="num" id="iv_9"></td></tr>
+<tr><td>Rambler · Bordo<br><span class="sk">TE.Z.C.T2.005</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_10" value="450" oninput="calc()"></td><td class="num sk" id="sb_10"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_10" value="85" oninput="calc()"></td><td class="num sk" id="cb_10"></td><td class="num" id="gm_10"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_10" value="0" oninput="calc()"></td><td class="num" id="iv_10"></td></tr>
+<tr><td>Rambler · Azul<br><span class="sk">TE.Z.C.T2.007</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_11" value="395" oninput="calc()"></td><td class="num sk" id="sb_11"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_11" value="85" oninput="calc()"></td><td class="num sk" id="cb_11"></td><td class="num" id="gm_11"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_11" value="0" oninput="calc()"></td><td class="num" id="iv_11"></td></tr>
+<tr><td>Rambler · Negro<br><span class="sk">TE.Z.C.T2.006</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_12" value="411" oninput="calc()"></td><td class="num sk" id="sb_12"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_12" value="85" oninput="calc()"></td><td class="num sk" id="cb_12"></td><td class="num" id="gm_12"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_12" value="0" oninput="calc()"></td><td class="num" id="iv_12"></td></tr>
+<tr><td>Rambler · London Beige<br><span class="sk">TE.Z.C.T2.008</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_13" value="411" oninput="calc()"></td><td class="num sk" id="sb_13"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_13" value="85" oninput="calc()"></td><td class="num sk" id="cb_13"></td><td class="num" id="gm_13"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_13" value="0" oninput="calc()"></td><td class="num" id="iv_13"></td></tr>
+<tr><td>Sputnik · Bordo<br><span class="sk">TE.Z.C.T2.0040</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_14" value="430" oninput="calc()"></td><td class="num sk" id="sb_14"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_14" value="85" oninput="calc()"></td><td class="num sk" id="cb_14"></td><td class="num" id="gm_14"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_14" value="0" oninput="calc()"></td><td class="num" id="iv_14"></td></tr>
+<tr><td>Volodya · Negro<br><span class="sk">TE.Z.C.T2.0022</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_15" value="527" oninput="calc()"></td><td class="num sk" id="sb_15"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_15" value="85" oninput="calc()"></td><td class="num sk" id="cb_15"></td><td class="num" id="gm_15"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_15" value="0" oninput="calc()"></td><td class="num" id="iv_15"></td></tr>
+<tr><td>Monaco · Suela<br><span class="sk">TE.Z.C.T2.0021</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_16" value="425" oninput="calc()"></td><td class="num sk" id="sb_16"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_16" value="85" oninput="calc()"></td><td class="num sk" id="cb_16"></td><td class="num" id="gm_16"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_16" value="0" oninput="calc()"></td><td class="num" id="iv_16"></td></tr>
+<tr><td>Monaco · Negro<br><span class="sk">TE.Z.C.T2.0020</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_17" value="425" oninput="calc()"></td><td class="num sk" id="sb_17"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_17" value="85" oninput="calc()"></td><td class="num sk" id="cb_17"></td><td class="num" id="gm_17"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_17" value="0" oninput="calc()"></td><td class="num" id="iv_17"></td></tr>
+<tr><td>Bacan · Negro<br><span class="sk">TE.Z.C.T2.002</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_18" value="448" oninput="calc()"></td><td class="num sk" id="sb_18"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_18" value="85" oninput="calc()"></td><td class="num sk" id="cb_18"></td><td class="num" id="gm_18"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_18" value="0" oninput="calc()"></td><td class="num" id="iv_18"></td></tr>
+<tr><td>Bucanor · Bordo<br><span class="sk">TE.Z.C.T2.0029</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_19" value="425" oninput="calc()"></td><td class="num sk" id="sb_19"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_19" value="85" oninput="calc()"></td><td class="num sk" id="cb_19"></td><td class="num" id="gm_19"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_19" value="0" oninput="calc()"></td><td class="num" id="iv_19"></td></tr>
+<tr><td>Bucanor · London Beige<br><span class="sk">TE.Z.C.T2.0017</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_20" value="487" oninput="calc()"></td><td class="num sk" id="sb_20"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_20" value="85" oninput="calc()"></td><td class="num sk" id="cb_20"></td><td class="num" id="gm_20"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_20" value="0" oninput="calc()"></td><td class="num" id="iv_20"></td></tr>
+<tr><td>California · Ice<br><span class="sk">TE.Z.C.T2.0019</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_21" value="405" oninput="calc()"></td><td class="num sk" id="sb_21"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_21" value="85" oninput="calc()"></td><td class="num sk" id="cb_21"></td><td class="num" id="gm_21"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_21" value="0" oninput="calc()"></td><td class="num" id="iv_21"></td></tr>
+<tr><td>Crucero · Suela<br><span class="sk">TE.Z.C.T2.0018</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_22" value="411" oninput="calc()"></td><td class="num sk" id="sb_22"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_22" value="85" oninput="calc()"></td><td class="num sk" id="cb_22"></td><td class="num" id="gm_22"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_22" value="0" oninput="calc()"></td><td class="num" id="iv_22"></td></tr>
+<tr><td>Diablo · Negro<br><span class="sk">TE.Z.C.T2.0014</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_23" value="448" oninput="calc()"></td><td class="num sk" id="sb_23"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_23" value="85" oninput="calc()"></td><td class="num sk" id="cb_23"></td><td class="num" id="gm_23"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_23" value="0" oninput="calc()"></td><td class="num" id="iv_23"></td></tr>
+<tr><td>Faisan · Suela<br><span class="sk">TE.Z.C.T2.0016</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_24" value="450" oninput="calc()"></td><td class="num sk" id="sb_24"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_24" value="85" oninput="calc()"></td><td class="num sk" id="cb_24"></td><td class="num" id="gm_24"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_24" value="0" oninput="calc()"></td><td class="num" id="iv_24"></td></tr>
+<tr><td>Mao · Negro<br><span class="sk">TE.Z.C.T2.003</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_25" value="410" oninput="calc()"></td><td class="num sk" id="sb_25"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_25" value="85" oninput="calc()"></td><td class="num sk" id="cb_25"></td><td class="num" id="gm_25"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_25" value="0" oninput="calc()"></td><td class="num" id="iv_25"></td></tr>
+<tr><td>Sante · Suela<br><span class="sk">TE.Z.M.T3.0011</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_26" value="335" oninput="calc()"></td><td class="num sk" id="sb_26"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_26" value="85" oninput="calc()"></td><td class="num sk" id="cb_26"></td><td class="num" id="gm_26"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_26" value="0" oninput="calc()"></td><td class="num" id="iv_26"></td></tr>
+<tr><td>Sante · Piton Gris<br><span class="sk">TE.Z.C.M.T3.0012</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_27" value="468" oninput="calc()"></td><td class="num sk" id="sb_27"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_27" value="85" oninput="calc()"></td><td class="num sk" id="cb_27"></td><td class="num" id="gm_27"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_27" value="0" oninput="calc()"></td><td class="num" id="iv_27"></td></tr>
+<tr><td>Sante Trois · Blanco Suela Negro<br><span class="sk">TE.Z.C.M.T3.004</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_28" value="405" oninput="calc()"></td><td class="num sk" id="sb_28"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_28" value="85" oninput="calc()"></td><td class="num sk" id="cb_28"></td><td class="num" id="gm_28"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_28" value="0" oninput="calc()"></td><td class="num" id="iv_28"></td></tr>
+<tr><td>Sante · Piton Suela<br><span class="sk">TE.Z.C.M.T3.005</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_29" value="405" oninput="calc()"></td><td class="num sk" id="sb_29"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_29" value="85" oninput="calc()"></td><td class="num sk" id="cb_29"></td><td class="num" id="gm_29"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_29" value="0" oninput="calc()"></td><td class="num" id="iv_29"></td></tr>
+<tr class="sb"><td>Subtotal Footwear</td><td class="num" id="s_su_Calçados"></td><td class="num sk" id="s_sb_Calçados"></td><td class="num" id="s_cu_Calçados"></td><td class="num sk" id="s_cb_Calçados"></td><td class="num" id="s_gm_Calçados"></td><td class="num" id="s_qt_Calçados"></td><td class="num" id="s_iv_Calçados"></td></tr>
+<tr class="cat"><td colspan="8">Belts · 19 SKUs</td></tr>
+<tr><td>Clasico · Bordo<br><span class="sk">TE.A.C.C.T2.9101</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_30" value="105" oninput="calc()"></td><td class="num sk" id="sb_30"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_30" value="20" oninput="calc()"></td><td class="num sk" id="cb_30"></td><td class="num" id="gm_30"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_30" value="0" oninput="calc()"></td><td class="num" id="iv_30"></td></tr>
+<tr><td>Clasico · Floter Azul<br><span class="sk">TE.A.C.C.T2.9102</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_31" value="105" oninput="calc()"></td><td class="num sk" id="sb_31"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_31" value="20" oninput="calc()"></td><td class="num sk" id="cb_31"></td><td class="num" id="gm_31"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_31" value="0" oninput="calc()"></td><td class="num" id="iv_31"></td></tr>
+<tr><td>Clasico · Bridge Negro<br><span class="sk">TE.A.C.C.T2.9103</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_32" value="105" oninput="calc()"></td><td class="num sk" id="sb_32"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_32" value="20" oninput="calc()"></td><td class="num sk" id="cb_32"></td><td class="num" id="gm_32"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_32" value="0" oninput="calc()"></td><td class="num" id="iv_32"></td></tr>
+<tr><td>Clasico · Bridge Suela<br><span class="sk">TE.A.C.C.T2.9104</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_33" value="105" oninput="calc()"></td><td class="num sk" id="sb_33"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_33" value="20" oninput="calc()"></td><td class="num sk" id="cb_33"></td><td class="num" id="gm_33"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_33" value="0" oninput="calc()"></td><td class="num" id="iv_33"></td></tr>
+<tr><td>Clasico · Charol Negro<br><span class="sk">TE.A.C.C.T2.9105</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_34" value="134" oninput="calc()"></td><td class="num sk" id="sb_34"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_34" value="20" oninput="calc()"></td><td class="num sk" id="cb_34"></td><td class="num" id="gm_34"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_34" value="0" oninput="calc()"></td><td class="num" id="iv_34"></td></tr>
+<tr><td>Clasico · Floter Suela<br><span class="sk">TE.A.C.C.T2.9106</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_35" value="105" oninput="calc()"></td><td class="num sk" id="sb_35"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_35" value="20" oninput="calc()"></td><td class="num sk" id="cb_35"></td><td class="num" id="gm_35"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_35" value="0" oninput="calc()"></td><td class="num" id="iv_35"></td></tr>
+<tr><td>Clasico · London Azul<br><span class="sk">TE.A.C.C.T2.9107</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_36" value="105" oninput="calc()"></td><td class="num sk" id="sb_36"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_36" value="20" oninput="calc()"></td><td class="num sk" id="cb_36"></td><td class="num" id="gm_36"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_36" value="0" oninput="calc()"></td><td class="num" id="iv_36"></td></tr>
+<tr><td>Clasico · London Bordo<br><span class="sk">TE.A.C.C.T2.9108</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_37" value="132" oninput="calc()"></td><td class="num sk" id="sb_37"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_37" value="20" oninput="calc()"></td><td class="num sk" id="cb_37"></td><td class="num" id="gm_37"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_37" value="0" oninput="calc()"></td><td class="num" id="iv_37"></td></tr>
+<tr><td>Clasico · London Suela<br><span class="sk">TE.A.C.C.T2.9109</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_38" value="132" oninput="calc()"></td><td class="num sk" id="sb_38"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_38" value="20" oninput="calc()"></td><td class="num sk" id="cb_38"></td><td class="num" id="gm_38"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_38" value="0" oninput="calc()"></td><td class="num" id="iv_38"></td></tr>
+<tr><td>Clasico · Negro<br><span class="sk">TE.A.C.C.T2.9110</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_39" value="105" oninput="calc()"></td><td class="num sk" id="sb_39"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_39" value="20" oninput="calc()"></td><td class="num sk" id="cb_39"></td><td class="num" id="gm_39"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_39" value="0" oninput="calc()"></td><td class="num" id="iv_39"></td></tr>
+<tr><td>Clasico · Oxido<br><span class="sk">TE.A.C.C.T2.9111</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_40" value="132" oninput="calc()"></td><td class="num sk" id="sb_40"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_40" value="20" oninput="calc()"></td><td class="num sk" id="cb_40"></td><td class="num" id="gm_40"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_40" value="0" oninput="calc()"></td><td class="num" id="iv_40"></td></tr>
+<tr><td>Clasico · Rubi<br><span class="sk">TE.A.C.S.T2.9112</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_41" value="132" oninput="calc()"></td><td class="num sk" id="sb_41"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_41" value="20" oninput="calc()"></td><td class="num sk" id="cb_41"></td><td class="num" id="gm_41"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_41" value="0" oninput="calc()"></td><td class="num" id="iv_41"></td></tr>
+<tr><td>Clasico · Suela<br><span class="sk">TE.A.C.S.T2.9113</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_42" value="132" oninput="calc()"></td><td class="num sk" id="sb_42"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_42" value="20" oninput="calc()"></td><td class="num sk" id="cb_42"></td><td class="num" id="gm_42"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_42" value="0" oninput="calc()"></td><td class="num" id="iv_42"></td></tr>
+<tr><td>Snake · Croco Negro<br><span class="sk">TE.A.C.S.T1.9114</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_43" value="153" oninput="calc()"></td><td class="num sk" id="sb_43"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_43" value="20" oninput="calc()"></td><td class="num sk" id="cb_43"></td><td class="num" id="gm_43"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_43" value="0" oninput="calc()"></td><td class="num" id="iv_43"></td></tr>
+<tr><td>Snake · Negro<br><span class="sk">TE.A.C.S.T1.9115</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_44" value="153" oninput="calc()"></td><td class="num sk" id="sb_44"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_44" value="20" oninput="calc()"></td><td class="num sk" id="cb_44"></td><td class="num" id="gm_44"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_44" value="0" oninput="calc()"></td><td class="num" id="iv_44"></td></tr>
+<tr><td>Snake · Piton Suela<br><span class="sk">TE.A.C.S.T1.9116</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_45" value="153" oninput="calc()"></td><td class="num sk" id="sb_45"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_45" value="20" oninput="calc()"></td><td class="num sk" id="cb_45"></td><td class="num" id="gm_45"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_45" value="0" oninput="calc()"></td><td class="num" id="iv_45"></td></tr>
+<tr><td>Snake · Reptil Blanco<br><span class="sk">TE.A.C.S.T1.9117</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_46" value="135" oninput="calc()"></td><td class="num sk" id="sb_46"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_46" value="20" oninput="calc()"></td><td class="num sk" id="cb_46"></td><td class="num" id="gm_46"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_46" value="0" oninput="calc()"></td><td class="num" id="iv_46"></td></tr>
+<tr><td>Snake · Rubi<br><span class="sk">TE.A.C.S.T1.9118</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_47" value="153" oninput="calc()"></td><td class="num sk" id="sb_47"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_47" value="20" oninput="calc()"></td><td class="num sk" id="cb_47"></td><td class="num" id="gm_47"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_47" value="0" oninput="calc()"></td><td class="num" id="iv_47"></td></tr>
+<tr><td>Snake · Suela<br><span class="sk">TE.A.C.S.T1.9119</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_48" value="153" oninput="calc()"></td><td class="num sk" id="sb_48"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_48" value="20" oninput="calc()"></td><td class="num sk" id="cb_48"></td><td class="num" id="gm_48"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_48" value="0" oninput="calc()"></td><td class="num" id="iv_48"></td></tr>
+<tr class="sb"><td>Subtotal Belts</td><td class="num" id="s_su_Cintos"></td><td class="num sk" id="s_sb_Cintos"></td><td class="num" id="s_cu_Cintos"></td><td class="num sk" id="s_cb_Cintos"></td><td class="num" id="s_gm_Cintos"></td><td class="num" id="s_qt_Cintos"></td><td class="num" id="s_iv_Cintos"></td></tr>
+<tr class="cat"><td colspan="8">Leather goods · 9 SKUs</td></tr>
+<tr><td>Big Bag · Crocco Negro<br><span class="sk">TE.M.BB.T1.001</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_49" value="725" oninput="calc()"></td><td class="num sk" id="sb_49"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_49" value="95" oninput="calc()"></td><td class="num sk" id="cb_49"></td><td class="num" id="gm_49"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_49" value="0" oninput="calc()"></td><td class="num" id="iv_49"></td></tr>
+<tr><td>Big Bag · Negro<br><span class="sk">TE.M.BB.T1.002</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_50" value="725" oninput="calc()"></td><td class="num sk" id="sb_50"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_50" value="95" oninput="calc()"></td><td class="num sk" id="cb_50"></td><td class="num" id="gm_50"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_50" value="0" oninput="calc()"></td><td class="num" id="iv_50"></td></tr>
+<tr><td>Big Bag · Pitón Gris<br><span class="sk">TE.M.BB.T1.003</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_51" value="665" oninput="calc()"></td><td class="num sk" id="sb_51"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_51" value="95" oninput="calc()"></td><td class="num sk" id="cb_51"></td><td class="num" id="gm_51"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_51" value="0" oninput="calc()"></td><td class="num" id="iv_51"></td></tr>
+<tr><td>Bowling · Negro<br><span class="sk">TE.M.BW.T2.001</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_52" value="535" oninput="calc()"></td><td class="num sk" id="sb_52"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_52" value="85" oninput="calc()"></td><td class="num sk" id="cb_52"></td><td class="num" id="gm_52"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_52" value="0" oninput="calc()"></td><td class="num" id="iv_52"></td></tr>
+<tr><td>Bowling · Gris Y Negro<br><span class="sk">TE.M.BW.T2.002</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_53" value="550" oninput="calc()"></td><td class="num sk" id="sb_53"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_53" value="85" oninput="calc()"></td><td class="num sk" id="cb_53"></td><td class="num" id="gm_53"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_53" value="0" oninput="calc()"></td><td class="num" id="iv_53"></td></tr>
+<tr><td>Bowling · Suela Y Negro<br><span class="sk">TE.M.BW.T2.003</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_54" value="550" oninput="calc()"></td><td class="num sk" id="sb_54"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_54" value="85" oninput="calc()"></td><td class="num sk" id="cb_54"></td><td class="num" id="gm_54"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_54" value="0" oninput="calc()"></td><td class="num" id="iv_54"></td></tr>
+<tr><td>Necessaire Cuero · Negro<br><span class="sk">TE.M.NC.T3.001</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_55" value="173" oninput="calc()"></td><td class="num sk" id="sb_55"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_55" value="35" oninput="calc()"></td><td class="num sk" id="cb_55"></td><td class="num" id="gm_55"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_55" value="0" oninput="calc()"></td><td class="num" id="iv_55"></td></tr>
+<tr><td>Necessaire Cuero · Crocco Verde<br><span class="sk">TE.M.NC.T3.002</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_56" value="210" oninput="calc()"></td><td class="num sk" id="sb_56"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_56" value="35" oninput="calc()"></td><td class="num sk" id="cb_56"></td><td class="num" id="gm_56"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_56" value="0" oninput="calc()"></td><td class="num" id="iv_56"></td></tr>
+<tr><td>Necessarie Cuero · Reptil Marron<br><span class="sk">TE.M.NC.T3.003</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_57" value="173" oninput="calc()"></td><td class="num sk" id="sb_57"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_57" value="35" oninput="calc()"></td><td class="num sk" id="cb_57"></td><td class="num" id="gm_57"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_57" value="0" oninput="calc()"></td><td class="num" id="iv_57"></td></tr>
+<tr class="sb"><td>Subtotal Leather goods</td><td class="num" id="s_su_Marroquinaria"></td><td class="num sk" id="s_sb_Marroquinaria"></td><td class="num" id="s_cu_Marroquinaria"></td><td class="num sk" id="s_cb_Marroquinaria"></td><td class="num" id="s_gm_Marroquinaria"></td><td class="num" id="s_qt_Marroquinaria"></td><td class="num" id="s_iv_Marroquinaria"></td></tr>
+<tr class="cat"><td colspan="8">Jackets · 1 SKUs</td></tr>
+<tr><td>Comando · Negro<br><span class="sk">TE.C.T1.002</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_58" value="1513" oninput="calc()"></td><td class="num sk" id="sb_58"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_58" value="300" oninput="calc()"></td><td class="num sk" id="cb_58"></td><td class="num" id="gm_58"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_58" value="0" oninput="calc()"></td><td class="num" id="iv_58"></td></tr>
+<tr class="sb"><td>Subtotal Jackets</td><td class="num" id="s_su_Camperas"></td><td class="num sk" id="s_sb_Camperas"></td><td class="num" id="s_cu_Camperas"></td><td class="num sk" id="s_cb_Camperas"></td><td class="num" id="s_gm_Camperas"></td><td class="num" id="s_qt_Camperas"></td><td class="num" id="s_iv_Camperas"></td></tr>
+<tr class="cat"><td colspan="8">Caps · 6 SKUs</td></tr>
+<tr><td>Peaky · Vintage<br><span class="sk">TE.A.G.T3.001</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_59" value="110" oninput="calc()"></td><td class="num sk" id="sb_59"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_59" value="22" oninput="calc()"></td><td class="num sk" id="cb_59"></td><td class="num" id="gm_59"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_59" value="0" oninput="calc()"></td><td class="num" id="iv_59"></td></tr>
+<tr><td>Peaky · Suela<br><span class="sk">TE.A.G.T3.002</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_60" value="110" oninput="calc()"></td><td class="num sk" id="sb_60"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_60" value="22" oninput="calc()"></td><td class="num sk" id="cb_60"></td><td class="num" id="gm_60"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_60" value="0" oninput="calc()"></td><td class="num" id="iv_60"></td></tr>
+<tr><td>Peaky · Marron<br><span class="sk">TE.A.G.T3.003</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_61" value="110" oninput="calc()"></td><td class="num sk" id="sb_61"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_61" value="22" oninput="calc()"></td><td class="num sk" id="cb_61"></td><td class="num" id="gm_61"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_61" value="0" oninput="calc()"></td><td class="num" id="iv_61"></td></tr>
+<tr><td>Peaky · Gris<br><span class="sk">TE.A.G.T3.004</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_62" value="110" oninput="calc()"></td><td class="num sk" id="sb_62"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_62" value="22" oninput="calc()"></td><td class="num sk" id="cb_62"></td><td class="num" id="gm_62"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_62" value="0" oninput="calc()"></td><td class="num" id="iv_62"></td></tr>
+<tr><td>Peaky · Camel<br><span class="sk">TE.A.G.T3.005</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_63" value="110" oninput="calc()"></td><td class="num sk" id="sb_63"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_63" value="22" oninput="calc()"></td><td class="num sk" id="cb_63"></td><td class="num" id="gm_63"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_63" value="0" oninput="calc()"></td><td class="num" id="iv_63"></td></tr>
+<tr><td>Peaky · Chocolate<br><span class="sk">TE.A.G.T3.006</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_64" value="110" oninput="calc()"></td><td class="num sk" id="sb_64"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_64" value="22" oninput="calc()"></td><td class="num sk" id="cb_64"></td><td class="num" id="gm_64"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_64" value="0" oninput="calc()"></td><td class="num" id="iv_64"></td></tr>
+<tr class="sb"><td>Subtotal Caps</td><td class="num" id="s_su_Bonés"></td><td class="num sk" id="s_sb_Bonés"></td><td class="num" id="s_cu_Bonés"></td><td class="num sk" id="s_cb_Bonés"></td><td class="num" id="s_gm_Bonés"></td><td class="num" id="s_qt_Bonés"></td><td class="num" id="s_iv_Bonés"></td></tr>
+<tr class="cat"><td colspan="8">Accessories · 1 SKUs</td></tr>
+<tr><td>Calzador · Plateado<br><span class="sk">TE.A.C.T3.001</span></td><td class="num"><input class="e w" type="number" min="0" step="1" id="srp_65" value="265" oninput="calc()"></td><td class="num sk" id="sb_65"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="cst_65" value="0" oninput="calc()"></td><td class="num sk" id="cb_65"></td><td class="num" id="gm_65"></td><td class="num"><input class="e w" type="number" min="0" step="1" id="qty_65" value="0" oninput="calc()"></td><td class="num" id="iv_65"></td></tr>
+<tr class="sb"><td>Subtotal Accessories</td><td class="num" id="s_su_Acessórios"></td><td class="num sk" id="s_sb_Acessórios"></td><td class="num" id="s_cu_Acessórios"></td><td class="num sk" id="s_cb_Acessórios"></td><td class="num" id="s_gm_Acessórios"></td><td class="num" id="s_qt_Acessórios"></td><td class="num" id="s_iv_Acessórios"></td></tr>
+<tr class="tot"><td>Total</td><td class="num" id="c_su"></td><td class="num sk" id="c_sb"></td>
+<td class="num" id="c_cu"></td><td class="num sk" id="c_cb"></td><td class="num" id="c_gm"></td>
+<td class="num" id="c_qt"></td><td class="num" id="c_iv"></td></tr>
+</tbody></table></div>
+</div>
+
+<h2 onclick="tog('s3')"><span class="chev">▾</span>3. Inventory allocation by point of sale</h2>
+<div class="sec" id="s3">
+<div class="note">Distribute the imported inventory across points of sale. Each one delivers a different margin because the partner margin applies to the SRP. Price and cost are the averages weighted by each category’s imported volume.</div>
+<div class="warn" id="w_alloc">Allocated inventory exceeds units imported — <span id="w_alloc_d"></span></div>
+<table style="max-width:920px">
+<thead><tr><th>Units allocated</th><th class="num">Imported</th><th class="c">Showroom</th><th class="c">Matalab (wholesale)</th><th class="c">E-commerce</th>
+<th class="num">Total</th><th class="num">Unallocated</th></tr></thead>
+<tbody><tr><td>Footwear</td><td class="num sk" id="ai_0"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_sh_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_mt_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_ec_0" value="0" oninput="calc()"></td><td class="num" id="at_0"></td><td class="num" id="af_0"></td></tr>
+<tr><td>Belts</td><td class="num sk" id="ai_1"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_sh_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_mt_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_ec_1" value="0" oninput="calc()"></td><td class="num" id="at_1"></td><td class="num" id="af_1"></td></tr>
+<tr><td>Leather goods</td><td class="num sk" id="ai_2"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_sh_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_mt_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_ec_2" value="0" oninput="calc()"></td><td class="num" id="at_2"></td><td class="num" id="af_2"></td></tr>
+<tr><td>Jackets</td><td class="num sk" id="ai_3"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_sh_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_mt_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_ec_3" value="0" oninput="calc()"></td><td class="num" id="at_3"></td><td class="num" id="af_3"></td></tr>
+<tr><td>Caps</td><td class="num sk" id="ai_4"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_sh_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_mt_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_ec_4" value="0" oninput="calc()"></td><td class="num" id="at_4"></td><td class="num" id="af_4"></td></tr>
+<tr><td>Accessories</td><td class="num sk" id="ai_5"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_sh_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_mt_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="a_ec_5" value="0" oninput="calc()"></td><td class="num" id="at_5"></td><td class="num" id="af_5"></td></tr>
+<tr class="tot"><td>Total</td><td class="num sk" id="ai_t"></td><td class="c" id="ac_sh"></td><td class="c" id="ac_mt"></td><td class="c" id="ac_ec"></td><td class="num" id="at_t"></td><td class="num" id="af_t"></td></tr></tbody></table>
+</div>
+
+<h2 onclick="tog('s4')"><span class="chev">▾</span>4. Sell-out by quarter</h2>
+<div class="sec" id="s4">
+<div class="note">Share of the allocated inventory sold in each quarter. The cumulative figure per point of sale should not exceed 100% — whatever remains stays as unsold inventory.</div>
+<div class="warn" id="w_sell">Cumulative sell-out above 100% of allocated inventory — <span id="w_sell_d"></span></div>
+<div class="scroll"><table>
+<thead><tr><th>Sell-out (% of allocated)</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="num">Cumulative</th></tr></thead>
+<tbody><tr><td>Showroom</td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_sh_7" value="0" oninput="calc()"></td><td class="num" id="so_sh_t"></td></tr><tr><td class="sk">↳ Units sold</td><td class="c sk" id="su_sh_0"></td><td class="c sk" id="su_sh_1"></td><td class="c sk" id="su_sh_2"></td><td class="c sk" id="su_sh_3"></td><td class="c sk" id="su_sh_4"></td><td class="c sk" id="su_sh_5"></td><td class="c sk" id="su_sh_6"></td><td class="c sk" id="su_sh_7"></td><td class="num sk" id="su_sh_t"></td></tr>
+<tr><td>Matalab (wholesale)</td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_mt_7" value="0" oninput="calc()"></td><td class="num" id="so_mt_t"></td></tr><tr><td class="sk">↳ Units sold</td><td class="c sk" id="su_mt_0"></td><td class="c sk" id="su_mt_1"></td><td class="c sk" id="su_mt_2"></td><td class="c sk" id="su_mt_3"></td><td class="c sk" id="su_mt_4"></td><td class="c sk" id="su_mt_5"></td><td class="c sk" id="su_mt_6"></td><td class="c sk" id="su_mt_7"></td><td class="num sk" id="su_mt_t"></td></tr>
+<tr><td>E-commerce</td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" max="100" step="1" id="so_ec_7" value="0" oninput="calc()"></td><td class="num" id="so_ec_t"></td></tr><tr><td class="sk">↳ Units sold</td><td class="c sk" id="su_ec_0"></td><td class="c sk" id="su_ec_1"></td><td class="c sk" id="su_ec_2"></td><td class="c sk" id="su_ec_3"></td><td class="c sk" id="su_ec_4"></td><td class="c sk" id="su_ec_5"></td><td class="c sk" id="su_ec_6"></td><td class="c sk" id="su_ec_7"></td><td class="num sk" id="su_ec_t"></td></tr>
+<tr class="tot"><td>Units sold — Total</td><td class="c" id="sq_0"></td><td class="c" id="sq_1"></td><td class="c" id="sq_2"></td><td class="c" id="sq_3"></td><td class="c" id="sq_4"></td><td class="c" id="sq_5"></td><td class="c" id="sq_6"></td><td class="c" id="sq_7"></td><td class="num" id="sq_t"></td></tr></tbody></table></div>
+</div>
+
+<h2 onclick="tog('s5')"><span class="chev">▾</span>5. Communications</h2>
+<div class="sec" id="s5">
+<div class="scroll"><table>
+<thead><tr><th>R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="num">Total</th></tr></thead>
+<tbody><tr class="cat"><td colspan="10">Brand</td></tr>
+<tr><td>Collabs</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_colabs_7" value="0" oninput="calc()"></td><td class="num" id="cm_colabs_t"></td></tr>
+<tr><td>PR</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_pr_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_pr_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_pr_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_pr_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_pr_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_pr_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_pr_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_pr_7" value="0" oninput="calc()"></td><td class="num" id="cm_pr_t"></td></tr>
+<tr><td>Seeding</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_seeding_7" value="0" oninput="calc()"></td><td class="num" id="cm_seeding_t"></td></tr>
+<tr><td>Events</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_events_7" value="0" oninput="calc()"></td><td class="num" id="cm_events_t"></td></tr>
+<tr><td>Other</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_other_7" value="0" oninput="calc()"></td><td class="num" id="cm_other_t"></td></tr>
+<tr class="sb"><td>Subtotal Brand</td><td class="c" id="cg_b_0"></td><td class="c" id="cg_b_1"></td><td class="c" id="cg_b_2"></td><td class="c" id="cg_b_3"></td><td class="c" id="cg_b_4"></td><td class="c" id="cg_b_5"></td><td class="c" id="cg_b_6"></td><td class="c" id="cg_b_7"></td><td class="num" id="cg_b_t"></td></tr>
+<tr class="cat"><td colspan="10">Performance</td></tr>
+<tr><td>Paid media</td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_0" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_1" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_2" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_3" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_4" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_5" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_6" value="0" oninput="calc()"></td><td class="c"><input class="e n" type="number" min="0" step="1000" id="cm_paid_7" value="0" oninput="calc()"></td><td class="num" id="cm_paid_t"></td></tr>
+<tr class="sb"><td>Subtotal Performance</td><td class="c" id="cg_p_0"></td><td class="c" id="cg_p_1"></td><td class="c" id="cg_p_2"></td><td class="c" id="cg_p_3"></td><td class="c" id="cg_p_4"></td><td class="c" id="cg_p_5"></td><td class="c" id="cg_p_6"></td><td class="c" id="cg_p_7"></td><td class="num" id="cg_p_t"></td></tr>
+<tr class="tot"><td>Total</td><td class="c" id="cm_q_0"></td><td class="c" id="cm_q_1"></td><td class="c" id="cm_q_2"></td><td class="c" id="cm_q_3"></td><td class="c" id="cm_q_4"></td><td class="c" id="cm_q_5"></td><td class="c" id="cm_q_6"></td><td class="c" id="cm_q_7"></td><td class="num" id="cm_tt"></td></tr></tbody></table></div>
+</div>
+
+<h2 onclick="tog('s6')"><span class="chev">▾</span>6. Operating costs</h2>
+<div class="sec" id="s6">
+<table style="max-width:700px">
+<thead><tr><th>Line item</th><th class="num">R$/month · Q3 26–Q2 27</th><th class="num">R$/month · Q3 27–Q2 28</th>
+<th class="num">Total</th></tr></thead>
+<tbody><tr><td>Team</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_0" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_0" value="0" oninput="calc()"></td><td class="num" id="opt_0"></td></tr>
+<tr><td>Logistics and warehousing</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_1" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_1" value="0" oninput="calc()"></td><td class="num" id="opt_1"></td></tr>
+<tr><td>E-commerce platform</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_2" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_2" value="0" oninput="calc()"></td><td class="num" id="opt_2"></td></tr>
+<tr><td>Showroom (rent and fit-out)</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_3" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_3" value="0" oninput="calc()"></td><td class="num" id="opt_3"></td></tr>
+<tr><td>Accounting and legal</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_4" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_4" value="0" oninput="calc()"></td><td class="num" id="opt_4"></td></tr>
+<tr><td>Other</td><td class="num"><input class="e n" type="number" min="0" step="100" id="op1_5" value="0" oninput="calc()"></td><td class="num"><input class="e n" type="number" min="0" step="100" id="op2_5" value="0" oninput="calc()"></td><td class="num" id="opt_5"></td></tr><tr class="tot"><td>Total</td><td class="num" id="op1t"></td><td class="num" id="op2t"></td><td class="num" id="optt"></td></tr></tbody></table>
+</div>
+
+<h2 onclick="tog('s7')"><span class="chev">▾</span>7. Quarterly P&L</h2>
+<div class="sec" id="s7">
+<div class="warn" id="w_simples">Annual revenue above the Simples Nacional ceiling (R$ 4.8m)</div>
+<div class="scroll"><table>
+<thead><tr><th>R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="num">Total</th></tr></thead>
+<tbody><tr class=""><td>Gross revenue</td><td class="num" id="d_rev_0"></td><td class="num" id="d_rev_1"></td><td class="num" id="d_rev_2"></td><td class="num" id="d_rev_3"></td><td class="num" id="d_rev_4"></td><td class="num" id="d_rev_5"></td><td class="num" id="d_rev_6"></td><td class="num" id="d_rev_7"></td><td class="num" id="d_rev_t"></td></tr>
+<tr class=""><td>(−) Simples Nacional tax</td><td class="num" id="d_tax_0"></td><td class="num" id="d_tax_1"></td><td class="num" id="d_tax_2"></td><td class="num" id="d_tax_3"></td><td class="num" id="d_tax_4"></td><td class="num" id="d_tax_5"></td><td class="num" id="d_tax_6"></td><td class="num" id="d_tax_7"></td><td class="num" id="d_tax_t"></td></tr>
+<tr class="sb"><td>Net revenue</td><td class="num" id="d_net_0"></td><td class="num" id="d_net_1"></td><td class="num" id="d_net_2"></td><td class="num" id="d_net_3"></td><td class="num" id="d_net_4"></td><td class="num" id="d_net_5"></td><td class="num" id="d_net_6"></td><td class="num" id="d_net_7"></td><td class="num" id="d_net_t"></td></tr>
+<tr class=""><td>(−) COGS</td><td class="num" id="d_cmv_0"></td><td class="num" id="d_cmv_1"></td><td class="num" id="d_cmv_2"></td><td class="num" id="d_cmv_3"></td><td class="num" id="d_cmv_4"></td><td class="num" id="d_cmv_5"></td><td class="num" id="d_cmv_6"></td><td class="num" id="d_cmv_7"></td><td class="num" id="d_cmv_t"></td></tr>
+<tr class="sb"><td>= Contribution margin</td><td class="num" id="d_mc_0"></td><td class="num" id="d_mc_1"></td><td class="num" id="d_mc_2"></td><td class="num" id="d_mc_3"></td><td class="num" id="d_mc_4"></td><td class="num" id="d_mc_5"></td><td class="num" id="d_mc_6"></td><td class="num" id="d_mc_7"></td><td class="num" id="d_mc_t"></td></tr>
+<tr class=""><td>(−) Communications</td><td class="num" id="d_com_0"></td><td class="num" id="d_com_1"></td><td class="num" id="d_com_2"></td><td class="num" id="d_com_3"></td><td class="num" id="d_com_4"></td><td class="num" id="d_com_5"></td><td class="num" id="d_com_6"></td><td class="num" id="d_com_7"></td><td class="num" id="d_com_t"></td></tr>
+<tr class=""><td>(−) Operating costs</td><td class="num" id="d_op_0"></td><td class="num" id="d_op_1"></td><td class="num" id="d_op_2"></td><td class="num" id="d_op_3"></td><td class="num" id="d_op_4"></td><td class="num" id="d_op_5"></td><td class="num" id="d_op_6"></td><td class="num" id="d_op_7"></td><td class="num" id="d_op_t"></td></tr>
+<tr class="tot"><td>= EBITDA</td><td class="num" id="d_eb_0"></td><td class="num" id="d_eb_1"></td><td class="num" id="d_eb_2"></td><td class="num" id="d_eb_3"></td><td class="num" id="d_eb_4"></td><td class="num" id="d_eb_5"></td><td class="num" id="d_eb_6"></td><td class="num" id="d_eb_7"></td><td class="num" id="d_eb_t"></td></tr>
+<tr class="hl"><td>Cumulative cash flow</td><td class="num" id="d_cum_0"></td><td class="num" id="d_cum_1"></td><td class="num" id="d_cum_2"></td><td class="num" id="d_cum_3"></td><td class="num" id="d_cum_4"></td><td class="num" id="d_cum_5"></td><td class="num" id="d_cum_6"></td><td class="num" id="d_cum_7"></td><td class="num" id="d_cum_t"></td></tr><tr><td class="sk">Trailing 12m revenue (tax base)</td><td class="num sk" id="d_rbt_0"></td><td class="num sk" id="d_rbt_1"></td><td class="num sk" id="d_rbt_2"></td><td class="num sk" id="d_rbt_3"></td><td class="num sk" id="d_rbt_4"></td><td class="num sk" id="d_rbt_5"></td><td class="num sk" id="d_rbt_6"></td><td class="num sk" id="d_rbt_7"></td><td></td></tr><tr><td class="sk">Effective tax rate</td><td class="num sk" id="d_rate_0"></td><td class="num sk" id="d_rate_1"></td><td class="num sk" id="d_rate_2"></td><td class="num sk" id="d_rate_3"></td><td class="num sk" id="d_rate_4"></td><td class="num sk" id="d_rate_5"></td><td class="num sk" id="d_rate_6"></td><td class="num sk" id="d_rate_7"></td><td></td></tr></tbody></table></div>
+</div>
+
+<h2 onclick="tog('s8')"><span class="chev">▾</span>8. Results</h2>
+<div class="sec" id="s8">
+<div class="tiles">
+  <div class="tile k2"><div class="k">Total investment</div><div class="v" id="k_inv"></div><div class="s" id="k_inv_s"></div></div>
+  <div class="tile b"><div class="k">Gross revenue</div><div class="v" id="k_rev"></div><div class="s" id="k_rev_s"></div></div>
+  <div class="tile g"><div class="k">Cumulative EBITDA</div><div class="v" id="k_eb"></div><div class="s" id="k_eb_s"></div></div>
+  <div class="tile g"><div class="k">ROI on investment</div><div class="v" id="k_roi"></div><div class="s" id="k_roi_s"></div></div>
+  <div class="tile b"><div class="k">Payback</div><div class="v" id="k_pay"></div><div class="s" id="k_pay_s"></div></div>
+  <div class="tile r"><div class="k">Unsold inventory</div><div class="v" id="k_left"></div><div class="s" id="k_left_s"></div></div>
+</div>
+<div class="chart">
+  <div class="clab">Cumulative cash flow — R$</div>
+  <div class="bars" id="bars"></div>
+  <hr class="zero">
+  <div style="display:flex;gap:8px"><div class="blab" style="flex:1;text-align:center">Q3 26</div><div class="blab" style="flex:1;text-align:center">Q4 26</div><div class="blab" style="flex:1;text-align:center">Q1 27</div><div class="blab" style="flex:1;text-align:center">Q2 27</div><div class="blab" style="flex:1;text-align:center">Q3 27</div><div class="blab" style="flex:1;text-align:center">Q4 27</div><div class="blab" style="flex:1;text-align:center">Q1 28</div><div class="blab" style="flex:1;text-align:center">Q2 28</div></div>
+</div>
+<table style="max-width:940px;margin-top:20px">
+<thead><tr><th>Comparison by point of sale</th><th class="num">Units</th><th class="num">Gross revenue</th>
+<th class="num">Contribution margin</th><th class="num">% of revenue</th><th class="num">CM per unit</th></tr></thead>
+<tbody id="chcmp"></tbody></table>
+<div class="tiles" style="margin-top:18px;max-width:400px">
+  <div class="tile r"><div class="k">Break-even</div><div class="v" id="k_be"></div><div class="s" id="k_be_s"></div></div>
+</div>
+</div>
+
+<script>
+const SKUS=[{"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Calçados"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Cintos"}, {"c": "Marroquinaria"}, {"c": "Marroquinaria"}, {"c": "Marroquinaria"}, {"c": "Marroquinaria"}, {"c": "Marroquinaria"}, {"c": "Marroquinaria"}, {"c": "Marroquinaria"}, {"c": "Marroquinaria"}, {"c": "Marroquinaria"}, {"c": "Camperas"}, {"c": "Bonés"}, {"c": "Bonés"}, {"c": "Bonés"}, {"c": "Bonés"}, {"c": "Bonés"}, {"c": "Bonés"}, {"c": "Acessórios"}];
+const CATS=["Calçados", "Cintos", "Marroquinaria", "Camperas", "Bonés", "Acessórios"];
+const CH=["sh", "mt", "ec"];
+const CHL={"sh": "Showroom", "mt": "Matalab (wholesale)", "ec": "E-commerce"};
+const CKEYS=["colabs", "pr", "seeding", "events", "other", "paid"];
+const CGRP={"colabs": "b", "pr": "b", "seeding": "b", "events": "b", "other": "b", "paid": "p"};
+const NQ=8;
+const QYEAR=[2026, 2026, 2027, 2027, 2027, 2027, 2028, 2028];
+const QLAB=["Q3 26", "Q4 26", "Q1 27", "Q2 27", "Q3 27", "Q4 27", "Q1 28", "Q2 28"];
+const L={never:"not reached",units:"units/quarter",
+ copied:"Link copied",stock:"inventory",
+ sold:"units sold",atcost:"at cost",
+ ofimp:"of units imported",invested:"invested",
+ ofrev:"of revenue",sellthru:"sell-through",
+ com:"Communications",show:"Showroom",
+ tot:"Total",inq:"at"};
+const KEY='te-viab-v3-en', SKEY='te-viab-v3-sec-en';
+const FAIXAS=[[180000,.04,0],[360000,.073,5940],[720000,.095,13860],
+              [1800000,.107,22500],[3600000,.143,87300],[4800000,.19,378000]];
+function aliq(r){ if(r<=0) return .04;
+  for(const [l,n,d] of FAIXAS){ if(r<=l) return Math.max(0,(r*n-d)/r); } return .19; }
+const $=id=>document.getElementById(id);
+const V=id=>{const e=$(id);return e?(parseFloat(e.value)||0):0;};
+const R=v=>'R$ '+Math.round(v).toLocaleString('pt-BR');
+const U=v=>'US$ '+Math.round(v).toLocaleString('pt-BR');
+const Rk=v=>Math.abs(v)>=1000000?'R$ '+(v/1000000).toFixed(2).replace('.',',')+' mi'
+        :Math.abs(v)>=10000?'R$ '+Math.round(v/1000).toLocaleString('pt-BR')+' mil':R(v);
+const P=v=>(v*100).toFixed(1).replace('.',',')+'%';
+const P0=v=>Math.round(v*100)+'%';
+const N=v=>Math.round(v).toLocaleString('pt-BR');
+const sig=v=>v>0?'pos':(v<0?'neg':'');
+
+function calc(){
+  const fx=V('fx')||1;
+  const mg={sh:V('m_sh')/100, mt:V('m_mt')/100, ec:V('m_ec')/100};
+  const rzC=V('rz_com'), rzS=V('rz_show'), rzT=rzC+rzS;
+  $('rz_t').textContent=N(rzT);
+
+  // ---------- catálogo
+  const A={}; CATS.forEach(c=>A[c]={q:0,su:0,cu:0,sq:0,cq:0,inv:0,n:0});
+  let tQ=0,tInv=0,tSU=0,tCU=0;
+  SKUS.forEach((s,i)=>{
+    const su=V('srp_'+i), cu=V('cst_'+i), q=V('qty_'+i);
+    const sb=su*fx, cb=cu*fx, iv=q*cb;
+    $('sb_'+i).textContent=R(sb); $('cb_'+i).textContent=R(cb);
+    $('gm_'+i).textContent=su>0?P((su-cu)/su):'—';
+    $('iv_'+i).textContent=iv?R(iv):'—';
+    const a=A[s.c];
+    a.q+=q; a.sq+=su*q; a.cq+=cu*q; a.su+=su; a.cu+=cu; a.inv+=iv; a.n++;
+    tQ+=q; tInv+=iv; tSU+=su; tCU+=cu;
+  });
+  CATS.forEach(c=>{
+    const a=A[c];
+    a.srp = a.q>0 ? a.sq/a.q : a.su/a.n;
+    a.cst = a.q>0 ? a.cq/a.q : a.cu/a.n;
+    $('s_su_'+c).textContent=U(a.srp); $('s_sb_'+c).textContent=R(a.srp*fx);
+    $('s_cu_'+c).textContent=U(a.cst); $('s_cb_'+c).textContent=R(a.cst*fx);
+    $('s_gm_'+c).textContent=a.srp>0?P((a.srp-a.cst)/a.srp):'—';
+    $('s_qt_'+c).textContent=N(a.q); $('s_iv_'+c).textContent=R(a.inv);
+  });
+  const n=SKUS.length;
+  $('c_su').textContent=U(tSU/n); $('c_sb').textContent=R(tSU/n*fx);
+  $('c_cu').textContent=U(tCU/n); $('c_cb').textContent=R(tCU/n*fx);
+  $('c_gm').textContent=tSU>0?P((tSU-tCU)/tSU):'—';
+  $('c_qt').textContent=N(tQ); $('c_iv').textContent=R(tInv);
+
+  // ---------- alocação
+  const alloc={}; CH.forEach(ch=>alloc[ch]={});
+  let totAl=0, totImp=0, totFree=0; const over=[];
+  const chTot={}; CH.forEach(ch=>chTot[ch]=0);
+  CATS.forEach((c,ci)=>{
+    let sum=0;
+    CH.forEach(ch=>{ const v=V(`a_${ch}_${ci}`); alloc[ch][c]=v; sum+=v; chTot[ch]+=v; });
+    const imp=A[c].q, free=imp-sum;
+    $('ai_'+ci).textContent=N(imp); $('at_'+ci).textContent=N(sum);
+    const f=$('af_'+ci); f.textContent=N(free); f.className='num '+(free<0?'neg':'');
+    if(free<0) over.push(`${c}: ${N(sum)} / ${N(imp)}`);
+    totAl+=sum; totImp+=imp; totFree+=free;
+  });
+  CH.forEach(ch=>$('ac_'+ch).textContent=N(chTot[ch]));
+  $('ai_t').textContent=N(totImp); $('at_t').textContent=N(totAl);
+  $('af_t').textContent=N(totFree); $('af_t').className='num '+(totFree<0?'neg':'');
+  $('w_alloc').className='warn'+(over.length?' on':'');
+  if(over.length) $('w_alloc_d').textContent=over.join(' · ');
+
+  // ---------- sell-out
+  const soPct={}, sold={}, overSell=[];
+  CH.forEach(ch=>{
+    soPct[ch]=[]; sold[ch]=[];
+    let acc=0, tot=0;
+    for(let q=0;q<NQ;q++){
+      const p=V(`so_${ch}_${q}`)/100;
+      soPct[ch][q]=p; acc+=p;
+      let u=0; CATS.forEach(c=>u+=alloc[ch][c]*p);
+      sold[ch][q]=u; tot+=u;
+      $(`su_${ch}_${q}`).textContent=u?N(u):'—';
+    }
+    const e=$(`so_${ch}_t`); e.textContent=P0(acc); e.className='num '+(acc>1.0001?'neg':'');
+    $(`su_${ch}_t`).textContent=N(tot);
+    if(acc>1.0001) overSell.push(`${CHL[ch]}: ${P0(acc)}`);
+  });
+  for(let q=0;q<NQ;q++){
+    let s=0; CH.forEach(ch=>s+=sold[ch][q]);
+    $('sq_'+q).textContent=s?N(s):'—';
+  }
+  let totSold=0; CH.forEach(ch=>sold[ch].forEach(v=>totSold+=v));
+  $('sq_t').textContent=N(totSold);
+  $('w_sell').className='warn'+(overSell.length?' on':'');
+  if(overSell.length) $('w_sell_d').textContent=overSell.join(' · ');
+
+  // ---------- comunicação
+  const com=[]; const grpT={b:[],p:[]};
+  for(let q=0;q<NQ;q++){ com[q]=0; grpT.b[q]=0; grpT.p[q]=0; }
+  CKEYS.forEach(k=>{
+    let s=0;
+    for(let q=0;q<NQ;q++){ const v=V(`cm_${k}_${q}`); s+=v; com[q]+=v; grpT[CGRP[k]][q]+=v; }
+    $(`cm_${k}_t`).textContent=R(s);
+  });
+  ['b','p'].forEach(g=>{
+    let s=0;
+    for(let q=0;q<NQ;q++){ $(`cg_${g}_${q}`).textContent=R(grpT[g][q]); s+=grpT[g][q]; }
+    $(`cg_${g}_t`).textContent=R(s);
+  });
+  let comT=0;
+  for(let q=0;q<NQ;q++){ $('cm_q_'+q).textContent=R(com[q]); comT+=com[q]; }
+  $('cm_tt').textContent=R(comT);
+
+  // ---------- operacional
+  const op=[]; let o1=0,o2=0;
+  for(let i=0;i<6;i++){
+    const a=V('op1_'+i), b=V('op2_'+i);
+    o1+=a; o2+=b; $('opt_'+i).textContent=R(a*12+b*12);
+  }
+  $('op1t').textContent=R(o1); $('op2t').textContent=R(o2); $('optt').textContent=R(o1*12+o2*12);
+  for(let q=0;q<NQ;q++) op[q]=(q<4?o1:o2)*3;
+
+  // ---------- receita / CMV
+  const rev=[],cmv=[],un=[];
+  const cAgg={}; CH.forEach(ch=>cAgg[ch]={u:0,r:0,mc:0});
+  for(let q=0;q<NQ;q++){ rev[q]=0; cmv[q]=0; un[q]=0; }
+  CH.forEach(ch=>{
+    CATS.forEach(c=>{
+      const base=alloc[ch][c];
+      if(!base) return;
+      for(let q=0;q<NQ;q++){
+        const u=base*soPct[ch][q];
+        if(!u) continue;
+        const r=u*A[c].srp*fx*(1-mg[ch]);
+        const m=u*A[c].cst*fx;
+        rev[q]+=r; cmv[q]+=m; un[q]+=u;
+        cAgg[ch].u+=u; cAgg[ch].r+=r; cAgg[ch].mc+=r-m;
+      }
+    });
+  });
+
+  // ---------- DRE
+  const tax=[],net=[],mc=[],eb=[],cum=[],rbtA=[],rtA=[];
+  const invTotal=tInv+rzT;
+  let acc=-invTotal, payback=-1;
+  const byYear={};
+  for(let q=0;q<NQ;q++){
+    let rbt;
+    if(q===0) rbt=rev[0]*4;
+    else if(q<4){ let s=0; for(let j=0;j<q;j++) s+=rev[j]; rbt=(s/q)*4; }
+    else rbt=rev[q-1]+rev[q-2]+rev[q-3]+rev[q-4];
+    const rt=aliq(rbt); rbtA[q]=rbt; rtA[q]=rt;
+    tax[q]=rev[q]*rt; net[q]=rev[q]-tax[q]; mc[q]=net[q]-cmv[q];
+    eb[q]=mc[q]-com[q]-op[q];
+    acc+=eb[q]; cum[q]=acc;
+    if(payback<0 && acc>=0) payback=q;
+    byYear[QYEAR[q]]=(byYear[QYEAR[q]]||0)+rev[q];
+  }
+  const put=(k,arr)=>{ let s=0;
+    for(let q=0;q<NQ;q++){ $(`d_${k}_${q}`).textContent=R(arr[q]); s+=arr[q]; }
+    $(`d_${k}_t`).textContent=R(s); return s; };
+  const Trev=put('rev',rev); put('tax',tax.map(v=>-v)); put('net',net);
+  put('cmv',cmv.map(v=>-v)); const Tmc=put('mc',mc);
+  put('com',com.map(v=>-v)); put('op',op.map(v=>-v));
+  const Teb=put('eb',eb);
+  for(let q=0;q<NQ;q++){
+    const e=$(`d_cum_${q}`); e.textContent=R(cum[q]); e.className='num '+sig(cum[q]);
+    $(`d_rbt_${q}`).textContent=Rk(rbtA[q]);
+    $(`d_rate_${q}`).textContent=P(rtA[q]);
+  }
+  $('d_cum_t').textContent=R(cum[NQ-1]); $('d_cum_t').className='num '+sig(cum[NQ-1]);
+  $('d_eb_t').className='num '+sig(Teb);
+  const overLimit=Object.values(byYear).some(v=>v>4800000);
+  $('w_simples').className='warn'+(overLimit?' on':'');
+
+  // ---------- indicadores
+  $('k_inv').textContent=Rk(invTotal);
+  $('k_inv_s').textContent=L.stock+' '+Rk(tInv)+(rzT>0?` · ${L.com} ${Rk(rzC)} · ${L.show} ${Rk(rzS)}`:'');
+  $('k_rev').textContent=Rk(Trev);
+  $('k_rev_s').textContent=N(totSold)+' '+L.sold+(totImp>0?' · '+L.sellthru+' '+P0(totSold/totImp):'');
+  $('k_eb').textContent=Rk(Teb); $('k_eb').className='v '+sig(Teb);
+  $('k_eb_s').textContent=Trev>0?P(Teb/Trev)+' '+L.ofrev:'—';
+  const roi=invTotal>0?Teb/invTotal:0;
+  $('k_roi').textContent=invTotal>0?P(roi):'—'; $('k_roi').className='v '+sig(roi);
+  $('k_roi_s').textContent=invTotal>0?R(invTotal)+' '+L.invested:'—';
+  $('k_pay').textContent=payback>=0?QLAB[payback]:L.never;
+  $('k_pay').className='v '+(payback>=0?'pos':'neg sm');
+  $('k_pay_s').textContent=payback>=0?'':R(cum[NQ-1])+' '+L.inq+' '+QLAB[NQ-1];
+  const left=Math.max(0,totImp-totSold);
+  const leftV=totImp>0?tInv/totImp*left:0;
+  $('k_left').textContent=N(left)+' un';
+  $('k_left_s').textContent=totImp>0?R(leftV)+' '+L.atcost+' · '+P0(left/totImp)+' '+L.ofimp:'—';
+  const mcu=totSold>0?Tmc/totSold:0;
+  const fixQ=(comT+op.reduce((a,b)=>a+b,0))/NQ;
+  $('k_be').textContent=mcu>0?N(fixQ/mcu):'—';
+  $('k_be_s').textContent=mcu>0?L.units+' · MC '+R(mcu)+'/un':'—';
+
+  // ---------- gráfico
+  const bars=$('bars'); bars.innerHTML='';
+  const H=150;
+  const pMax=Math.max(0,...cum), nMax=Math.max(0,...cum.map(v=>-v));
+  const span=(pMax+nMax)||1;
+  const upH=Math.round(pMax/span*H), dnH=H-upH;
+  for(let q=0;q<NQ;q++){
+    const v=cum[q];
+    const hp=v>0?Math.max(2,v/span*H):0, hn=v<0?Math.max(2,-v/span*H):0;
+    const up=v>0?`<div class="bval pos" style="margin-bottom:3px">${Rk(v)}</div><div class="bfill up" style="height:${hp}px"></div>`:'';
+    const dn=v<=0?`<div class="bfill dn" style="height:${hn}px"></div><div class="bval ${sig(v)}" style="margin-top:3px">${Rk(v)}</div>`:'';
+    bars.insertAdjacentHTML('beforeend',
+      `<div class="bcol"><div class="bup" style="height:${upH}px">${up}</div>`+
+      `<div class="bdn" style="height:${dnH}px">${dn}</div></div>`);
+  }
+
+  // ---------- canais
+  const tb=$('chcmp'); tb.innerHTML='';
+  CH.forEach(ch=>{
+    const a=cAgg[ch];
+    tb.insertAdjacentHTML('beforeend',
+      `<tr><td>${CHL[ch]}</td><td class="num">${N(a.u)}</td><td class="num">${R(a.r)}</td>`+
+      `<td class="num">${R(a.mc)}</td><td class="num">${a.r>0?P(a.mc/a.r):'—'}</td>`+
+      `<td class="num">${a.u>0?R(a.mc/a.u):'—'}</td></tr>`);
+  });
+  const tu=CH.reduce((s,c)=>s+cAgg[c].u,0), tr2=CH.reduce((s,c)=>s+cAgg[c].r,0),
+        tm=CH.reduce((s,c)=>s+cAgg[c].mc,0);
+  tb.insertAdjacentHTML('beforeend',
+    `<tr class="tot"><td>${L.tot}</td><td class="num">${N(tu)}</td><td class="num">${R(tr2)}</td>`+
+    `<td class="num">${R(tm)}</td><td class="num">${tr2>0?P(tm/tr2):'—'}</td>`+
+    `<td class="num">${tu>0?R(tm/tu):'—'}</td></tr>`);
+
+  save();
+}
+
+function tog(id){
+  const s=$(id), h=s.previousElementSibling;
+  s.classList.toggle('off'); h.classList.toggle('off'); saveSec();
+}
+function allSec(open){
+  document.querySelectorAll('.sec').forEach(s=>{
+    s.classList.toggle('off',!open); s.previousElementSibling.classList.toggle('off',!open);
+  });
+  saveSec();
+}
+function saveSec(){ try{ localStorage.setItem(SKEY,
+  JSON.stringify(Array.from(document.querySelectorAll('.sec')).map(s=>s.classList.contains('off')?1:0))); }catch(e){} }
+function loadSec(){
+  try{ const a=JSON.parse(localStorage.getItem(SKEY)); if(!a) return;
+    document.querySelectorAll('.sec').forEach((s,i)=>{
+      if(a[i]){ s.classList.add('off'); s.previousElementSibling.classList.add('off'); } });
+  }catch(e){}
+}
+const inputs=()=>Array.from(document.querySelectorAll('input.e'));
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(inputs().map(i=>i.value))); }catch(e){} }
+function load(a){ const el=inputs(); if(!a||a.length!==el.length) return false;
+  el.forEach((i,n)=>i.value=a[n]); return true; }
+function reset(){ try{localStorage.removeItem(KEY);}catch(e){} location.href=location.pathname; }
+function share(){
+  const h=btoa(unescape(encodeURIComponent(JSON.stringify(inputs().map(i=>i.value)))));
+  navigator.clipboard.writeText(location.origin+location.pathname+'#'+h).then(()=>{
+    const b=document.querySelector('.btn.pri'), o=b.textContent;
+    b.textContent=L.copied; setTimeout(()=>b.textContent=o,1600);
+  });
+}
+// mantém o cenário ao trocar de idioma
+document.querySelectorAll('.lang a').forEach(a=>a.addEventListener('click',e=>{
+  if(a.classList.contains('on')) return;
+  e.preventDefault();
+  const h=btoa(unescape(encodeURIComponent(JSON.stringify(inputs().map(i=>i.value)))));
+  location.href=a.getAttribute('href')+'#'+h;
+}));
+(function init(){
+  let ok=false;
+  if(location.hash.length>1){
+    try{ ok=load(JSON.parse(decodeURIComponent(escape(atob(location.hash.slice(1)))))); }catch(e){}
+  }
+  if(!ok){ try{ load(JSON.parse(localStorage.getItem(KEY))); }catch(e){} }
+  loadSec(); calc();
+})();
+</script>
+</div></body>
+</html>
