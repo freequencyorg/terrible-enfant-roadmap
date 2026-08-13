@@ -196,14 +196,16 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 </div>
 <div class="bar2">
   <span class="ttl">Escenarios guardados</span>
-  <select id="scnsel"></select>
+  <select id="scnsel" onchange="scnInfo()"></select>
   <button class="btn" onclick="scnLoad()">Aplicar</button>
   <button class="btn" onclick="scnDel()">Eliminar</button>
   <span style="width:10px"></span>
   <input id="scnname" placeholder="nombre del escenario">
-  <button class="btn" onclick="scnSave()">Guardar</button>
+  <button class="btn" id="scnsb" onclick="scnSave()">Guardar</button>
+  <span class="sk" id="scninfo" style="margin-left:4px"></span>
+  <span class="sk" id="savedot" style="margin-left:auto;opacity:.75"></span>
 </div>
-<div class="note" style="margin-top:8px">Los datos se guardan automáticamente en este navegador mientras escribe. Para no depender de una sola computadora, use <b>Descargar escenario</b> (genera un archivo .json que puede guardar en Drive o enviar por correo) o <b>Copiar enlace del escenario</b>. También puede guardar varias versiones con nombre — conservador, optimista — y alternar entre ellas. <span style="opacity:.7">Los campos en amarillo son editables · el resto se calcula · los cambios se guardan en este navegador</span></div>
+<div class="note" style="margin-top:8px">Los datos se guardan automáticamente en este navegador mientras escribe, y son los mismos en los tres idiomas — cambiar de idioma cambia solo las etiquetas, nunca los números. Para no depender de una sola computadora, use <b>Descargar escenario</b> (genera un archivo .json que puede guardar en Drive o enviar por correo) o <b>Copiar enlace del escenario</b>. También puede guardar varias versiones con nombre — conservador, optimista — y alternar entre ellas. <span style="opacity:.7">Los campos en amarillo son editables · el resto se calcula · los cambios se guardan en este navegador</span></div>
 
 <h2 id="h1" onclick="tog('s1')"><span class="chev">▾</span>1. Premisas generales</h2>
 <div class="sec" id="s1">
@@ -378,7 +380,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 
 <h2 id="h5" onclick="tog('s5')"><span class="chev">▾</span>5. Stock y OTB (cuándo recomprar)</h2>
 <div class="sec" id="s5">
-<div class="note">La cobertura es el stock final dividido por la venta promedio de los trimestres siguientes — cuántos trimestres aguanta el stock al ritmo proyectado. Cuando cae por debajo del objetivo hay que recomprar; como la mercadería tarda el lead time en llegar, el pedido debe salir antes. El OTB sugerido es cuánto comprar para volver al nivel de cobertura objetivo.</div>
+<div class="note">La cobertura es el stock final dividido por la venta promedio proyectada de los próximos trimestres (la ventana es la propia cobertura objetivo) — cuántos trimestres aguanta el stock al ritmo proyectado. Cuando cae por debajo del objetivo hay que recomprar; como la mercadería tarda el lead time en llegar, el pedido debe salir antes. El OTB sugerido es cuánto comprar para volver al nivel de cobertura objetivo.</div>
 <table style="width:auto;margin-bottom:14px">
 <tr><td>Lead time de reposición (trimestres)</td><td class="num"><input class="e w" type="number" min="0" max="4" step="1" id="lead" value="1" oninput="calc()"></td></tr>
 <tr><td>Cobertura objetivo (trimestres de venta)</td><td class="num"><input class="e w" type="number" min="0" step="0.5" id="cover" value="2" oninput="calc()"></td></tr>
@@ -388,6 +390,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 <tbody><tr class=""><td>Stock inicial</td><td class="c" id="ot_st_ini_0"></td><td class="c" id="ot_st_ini_1"></td><td class="c" id="ot_st_ini_2"></td><td class="c" id="ot_st_ini_3"></td><td class="c" id="ot_st_ini_4"></td><td class="c" id="ot_st_ini_5"></td><td class="c" id="ot_st_ini_6"></td><td class="c" id="ot_st_ini_7"></td><td class="c" id="ot_st_ini_8"></td><td></td></tr>
 <tr class=""><td>Ventas</td><td class="c" id="ot_st_sold_0"></td><td class="c" id="ot_st_sold_1"></td><td class="c" id="ot_st_sold_2"></td><td class="c" id="ot_st_sold_3"></td><td class="c" id="ot_st_sold_4"></td><td class="c" id="ot_st_sold_5"></td><td class="c" id="ot_st_sold_6"></td><td class="c" id="ot_st_sold_7"></td><td class="c" id="ot_st_sold_8"></td><td></td></tr>
 <tr class="sb"><td>Stock final</td><td class="c" id="ot_st_end_0"></td><td class="c" id="ot_st_end_1"></td><td class="c" id="ot_st_end_2"></td><td class="c" id="ot_st_end_3"></td><td class="c" id="ot_st_end_4"></td><td class="c" id="ot_st_end_5"></td><td class="c" id="ot_st_end_6"></td><td class="c" id="ot_st_end_7"></td><td class="c" id="ot_st_end_8"></td><td></td></tr>
+<tr class="sk"><td>Venta promedio proyectada</td><td class="c" id="ot_st_rate_0"></td><td class="c" id="ot_st_rate_1"></td><td class="c" id="ot_st_rate_2"></td><td class="c" id="ot_st_rate_3"></td><td class="c" id="ot_st_rate_4"></td><td class="c" id="ot_st_rate_5"></td><td class="c" id="ot_st_rate_6"></td><td class="c" id="ot_st_rate_7"></td><td class="c" id="ot_st_rate_8"></td><td></td></tr>
 <tr class="hl"><td>Cobertura (trimestres)</td><td class="c" id="ot_st_cov_0"></td><td class="c" id="ot_st_cov_1"></td><td class="c" id="ot_st_cov_2"></td><td class="c" id="ot_st_cov_3"></td><td class="c" id="ot_st_cov_4"></td><td class="c" id="ot_st_cov_5"></td><td class="c" id="ot_st_cov_6"></td><td class="c" id="ot_st_cov_7"></td><td class="c" id="ot_st_cov_8"></td><td></td></tr></tbody></table></div>
 <div class="tiles" style="margin-top:14px">
   <div class="tile r"><div class="k">Cobertura por debajo del objetivo en</div><div class="v" id="ot_alert">—</div><div class="s" id="ot_alert_s"></div></div>
@@ -395,6 +398,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
   <div class="tile k2"><div class="k">OTB sugerido</div><div class="v" id="ot_size">—</div><div class="s" id="ot_size_s"></div></div>
 </div>
 <div class="note" style="margin-top:10px" id="ot_mixw"><b>Sugerencia por categoría (proporcional al mix vendido)</b> <span id="ot_mix"></span></div>
+<div class="warn" id="w_otb" style="margin-top:10px"><b id="w_otb_d"></b></div>
 </div>
 
 <h2 id="h6" onclick="tog('s6')"><span class="chev">▾</span>6. Comunicación</h2>
@@ -500,9 +504,52 @@ const L={never:"no alcanzado",units:"un/trimestre",
  tot:"Total",inq:"en",
  confirm:"¿Confirmar?",reset:"Restaurar valores",
  none:"— sin escenarios guardados —",
- atcost2:"a costo",otbok:"cobertura mantenida en el horizonte",un:"un",clr:"Poner ventas en cero"};
-const XKEY='te-viab-v8-scn-es';
-const KEY='te-viab-v10-es', OLDKEY='te-viab-v8-es', SKEY='te-viab-v8-sec-es', CKEY='te-viab-v8-cur-es';
+ scn_at:"guardado el",overwrite:"¿Sobrescribir?",
+ scn_ok:"escenario guardado",saved:"guardado",
+ scn_save:"Guardar",
+ atcost2:"a costo",otbok:"cobertura mantenida en el horizonte",
+ otbrate:"ritmo proyectado",otbnow:"inmediato — no cabe el lead time",
+ nodem:"Sin venta proyectada desde {q}: la cobertura queda infinita y ninguna alerta se dispara. Completá las ventas de los trimestres finales en el punto 4 para que el OTB funcione.",otbcalc:"cálculo",
+ otbinf:"stock sin demanda proyectada por delante",un:"un",clr:"Poner ventas en cero"};
+// armazenamento ÚNICO para os 3 idiomas — idioma é tradução, não versão
+const XKEY='te-viab-scn', KEY='te-viab', SKEY='te-viab-sec', CKEY='te-viab-cur';
+const OLDKEY='te-viab-v8-es';
+// migração única: junta os cofres separados por idioma num só, sem perder nada
+function migrateStore(){
+  try{
+    if(localStorage.getItem(KEY)!==null) return;
+    const LGS=['pt','en','es'], all={}, seen=[];
+    LGS.forEach(l=>{
+      let s={}; try{ s=JSON.parse(localStorage.getItem('te-viab-v8-scn-'+l))||{}; }catch(e){}
+      Object.keys(s).forEach(n=>{
+        const j=JSON.stringify(s[n]); if(seen.indexOf(j)>=0) return;
+        let k=n; if(all[k]) k=n+' ('+l+')';
+        all[k]={v:s[n],t:0}; seen.push(j);
+      });
+    });
+    LGS.forEach(l=>{
+      const raw=localStorage.getItem('te-viab-v10-'+l);
+      if(!raw||seen.indexOf(raw)>=0) return;
+      seen.push(raw);
+      try{ all['auto · '+l]={v:JSON.parse(raw),t:0}; }catch(e){}
+    });
+    localStorage.setItem(XKEY, JSON.stringify(all));
+    // adota o cenário mais completo (preferência explícita primeiro)
+    let act=null;
+    for(const p of ['PESSIM_1']) if(all[p]){ act=all[p].v; break; }
+    if(!act){
+      let best=-1;
+      Object.keys(all).forEach(k=>{
+        const c=(all[k].v||[]).filter(x=>parseFloat(x)>0).length;
+        if(c>best){ best=c; act=all[k].v; }
+      });
+    }
+    if(act) localStorage.setItem(KEY, JSON.stringify(act));
+    for(const l of LGS){ const s=localStorage.getItem('te-viab-v8-sec-'+l); if(s){ localStorage.setItem(SKEY,s); break; } }
+    for(const l of LGS){ const c=localStorage.getItem('te-viab-v8-cur-'+l); if(c){ localStorage.setItem(CKEY,c); break; } }
+  }catch(e){}
+}
+migrateStore();
 const LOC="es-ES";
 const FXL={upd:"Actualizar",src:"mid-market (la misma referencia que usa Wise)",
  man:"tasa manual",fail:"no se pudo obtener — usando tasa manual",
@@ -762,36 +809,46 @@ function calc(){
 
   // ---------- estoque / OTB
   const lead=Math.max(0,Math.round(V('lead'))), covT=Math.max(0,V('cover'));
-  const stIni=[],stEnd=[],cov=[];
+  // ritmo futuro medido na janela da própria cobertura alvo (e não até o fim do horizonte,
+  // que diluía a média com trimestres vazios e deixava o alerta mudo)
+  const win=Math.max(1,Math.round(covT));
+  const stIni=[],stEnd=[],cov=[],rate=[];
   let sIni=totImp;
   for(let q=0;q<NQ;q++){
     stIni[q]=sIni; stEnd[q]=Math.max(0,sIni-un[q]); sIni=stEnd[q];
     let fut=0,nf=0;
-    for(let j=q+1;j<NQ;j++){ fut+=un[j]; nf++; }
-    const avg=nf>0?fut/nf:0;
-    cov[q]=avg>0?stEnd[q]/avg:null;
+    for(let j=q+1;j<NQ&&nf<win;j++){ fut+=un[j]; nf++; }
+    rate[q]=nf>0?fut/nf:0;
+    cov[q]=rate[q]>0?stEnd[q]/rate[q]:(stEnd[q]>0?Infinity:0);
     $(`ot_st_ini_${q}`).textContent=N(stIni[q]);
     $(`ot_st_sold_${q}`).textContent=un[q]?N(un[q]):'—';
     $(`ot_st_end_${q}`).textContent=N(stEnd[q]);
+    $(`ot_st_rate_${q}`).textContent=rate[q]>0?N(Math.round(rate[q])):'—';
     const ce=$(`ot_st_cov_${q}`);
-    ce.textContent=cov[q]===null?'—':D1(cov[q]);
-    ce.className='c '+(cov[q]!==null&&cov[q]<covT?'neg':'');
+    ce.textContent=cov[q]===Infinity?'∞':D1(cov[q]);
+    ce.className='c '+(cov[q]<covT?'neg':'');
   }
+  // aviso quando a curva de venda acaba antes do horizonte — é o que cala o OTB
+  let lastSale=-1; for(let q=0;q<NQ;q++) if(un[q]>0) lastSale=q;
+  const semDemanda = lastSale>=0 && lastSale<NQ-1;
   let alert=-1;
-  for(let q=0;q<NQ;q++){ if(cov[q]!==null&&cov[q]<covT){ alert=q; break; } }
+  for(let q=0;q<NQ;q++){ if(rate[q]>0&&cov[q]<covT){ alert=q; break; } }
+  // só avisa quando a lacuna de demanda é justamente o que cala o OTB
+  const mudo = semDemanda && alert<0;
+  $('w_otb').className='warn'+(mudo?' on':'');
+  if(mudo) $('w_otb_d').textContent=L.nodem.replace('{q}',QLAB[lastSale+1]);
   if(alert>=0){
-    let fut=0,nf=0;
-    for(let j=alert+1;j<NQ;j++){ fut+=un[j]; nf++; }
-    const avg=nf>0?fut/nf:0;
-    const need=Math.max(0,Math.round(avg*covT-stEnd[alert]));
-    const oq=Math.max(0,alert-lead);
+    const need=Math.max(0,Math.round(rate[alert]*covT-stEnd[alert]));
+    const oq=alert-lead;
     const unitCost=totImp>0?tInv/totImp:0;
     $('ot_alert').textContent=QLAB[alert]; $('ot_alert').className='v neg';
-    $('ot_alert_s').textContent=N(stEnd[alert])+' un · '+D1(cov[alert])+' / '+covT;
-    $('ot_order').textContent=QLAB[oq]; $('ot_order').className='v';
-    $('ot_order_s').textContent='lead time '+lead+'T';
+    $('ot_alert_s').textContent=N(stEnd[alert])+' un · '+D1(cov[alert])+' / '+covT+' · '
+      +N(Math.round(rate[alert]))+' un/T '+L.otbrate;
+    $('ot_order').textContent=oq>=0?QLAB[oq]:QLAB[0]; $('ot_order').className='v'+(oq<0?' neg':'');
+    $('ot_order_s').textContent=oq<0?L.otbnow:('lead time '+lead+'T');
     $('ot_size').textContent=N(need)+' un';
-    $('ot_size_s').textContent=R(need*unitCost)+' '+L.atcost2;
+    $('ot_size_s').textContent=R(need*unitCost)+' '+L.atcost2+' · '+L.otbcalc+': '
+      +N(Math.round(rate[alert]))+' × '+D1(covT)+' − '+N(stEnd[alert]);
     let mix='';
     if(need>0&&totSold>0){
       mix=CATS.filter(c=>catSold[c]>0).map(c=>`${c} ${N(Math.round(need*catSold[c]/totSold))}`).join(' · ');
@@ -801,6 +858,7 @@ function calc(){
   } else {
     $('ot_alert').textContent='—'; $('ot_alert').className='v';
     $('ot_alert_s').textContent=L.otbok;
+    if(semDemanda) $('ot_alert_s').textContent=L.otbinf;
     $('ot_order').textContent='—'; $('ot_order_s').textContent='';
     $('ot_size').textContent='—'; $('ot_size_s').textContent='';
     $('ot_mixw').style.display='none';
@@ -925,7 +983,9 @@ function loadSec(){
 }
 const inputs=()=>Array.from(document.querySelectorAll('input.e'));
 const vals=()=>inputs().map(i=>i.classList.contains('n')?String(parseFloat(i.dataset.v)||0):i.value);
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(vals())); }catch(e){} }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(vals()));
+  const e=$('savedot'); if(e) e.textContent=L.saved+' '+stamp(Date.now());
+}catch(e){} }
 // --- rede de segurança: guarda o estado salvo antes de qualquer carga que o sobrescreva
 const BKEY=KEY+'-bak';
 function bak(){ try{ const p=localStorage.getItem(KEY); if(p) localStorage.setItem(BKEY,p); }catch(e){} }
@@ -1075,23 +1135,44 @@ function alertBar(){
 
 // --- cenários nomeados
 function scnAll(){ try{ return JSON.parse(localStorage.getItem(XKEY))||{}; }catch(e){ return {}; } }
+const scnV=e=>Array.isArray(e)?e:(e&&e.v)||null;          // aceita formato antigo (array puro)
+const scnT=e=>(e&&!Array.isArray(e)&&e.t)||0;
+const stamp=ms=>{ if(!ms) return ''; const d=new Date(ms);
+  const p=n=>String(n).padStart(2,'0');
+  return `${p(d.getDate())}/${p(d.getMonth()+1)} ${p(d.getHours())}:${p(d.getMinutes())}`; };
+function scnInfo(){
+  const e=$('scninfo'); if(!e) return;
+  const all=scnAll(), n=$('scnsel').value, t=scnT(all[n]);
+  e.textContent = n&&t ? L.scn_at+' '+stamp(t) : '';
+}
 function scnFill(sel){
   const all=scnAll(), s=$('scnsel'), names=Object.keys(all).sort();
   s.innerHTML = names.length ? names.map(n=>`<option>${n}</option>`).join('')
                              : `<option value="">${L.none}</option>`;
   if(sel && names.includes(sel)) s.value=sel;
+  scnInfo();
 }
+let scnArm='';
 function scnSave(){
-  const n=$('scnname').value.trim(); if(!n) { $('scnname').focus(); return; }
-  const all=scnAll(); all[n]=vals();
+  const n=$('scnname').value.trim()||$('scnsel').value; if(!n) { $('scnname').focus(); return; }
+  const all=scnAll(), b=$('scnsb');
+  if(all[n] && scnArm!==n){                                // sobrescrever pede confirmação
+    scnArm=n; b.textContent=L.overwrite;
+    b.style.background='#c8433a'; b.style.color='#fff'; b.style.borderColor='#c8433a';
+    setTimeout(()=>{ if(scnArm===n){ scnArm=''; b.textContent=L.scn_save; b.style.cssText=''; } },4000);
+    return;
+  }
+  scnArm=''; b.textContent=L.scn_save; b.style.cssText='';
+  all[n]={v:vals(), t:Date.now()};
   try{ localStorage.setItem(XKEY, JSON.stringify(all)); }catch(e){}
   $('scnname').value=''; scnFill(n);
+  const i=$('scninfo'); if(i){ const o=i.textContent; i.textContent=L.scn_ok; setTimeout(()=>scnInfo(),1800); }
 }
 function scnLoad(){
   const n=$('scnsel').value; if(!n) return;
-  const all=scnAll(); if(!all[n]) return;
+  const all=scnAll(), v=scnV(all[n]); if(!v) return;
   bak();
-  if(load(all[n],false)){ calc(); bakBtn(); }
+  if(load(v,false)){ calc(); bakBtn(); scnInfo(); }
 }
 function scnDel(){
   const n=$('scnsel').value; if(!n) return;
@@ -1100,12 +1181,8 @@ function scnDel(){
   scnFill();
 }
 
-// mantém o cenário ao trocar de idioma
-document.querySelectorAll('.lang a').forEach(a=>a.addEventListener('click',e=>{
-  if(a.classList.contains('on')) return;
-  e.preventDefault();
-  location.href=a.getAttribute('href')+(CUR==='usd'?'?cur=usd':'')+'#v2='+enc(vals());
-}));
+// idioma é só tradução: os dados são os mesmos, basta garantir que estão gravados
+document.querySelectorAll('.lang a').forEach(a=>a.addEventListener('click',()=>{ save(); }));
 (function init(){
   document.querySelectorAll('input.e.n').forEach(i=>{
     i.type='text'; i.inputMode='numeric'; i.autocomplete='off';
