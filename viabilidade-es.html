@@ -187,6 +187,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
   <button class="btn" onclick="allSec(1)">Abrir todo</button>
   <button class="btn" onclick="allSec(0)">Cerrar todo</button>
   <button class="btn" id="rstb" onclick="reset()">Restaurar valores</button>
+  <button class="btn" id="bakb" style="display:none" onclick="bakLoad()" title="Alterna entre el estado actual y el anterior a un enlace/importación">Volver versión</button>
   <span class="curtog" title="Moneda de visualización">
     <button id="cb_brl" class="on" onclick="setCur('brl')">R$</button>
     <button id="cb_usd" onclick="setCur('usd')">US$</button>
@@ -521,7 +522,8 @@ const toCanon=d=>CUR==='usd'?d*fxv():d;
 const FMT=v=>{const d=String(v).replace(/\D/g,'');return d?Number(d).toLocaleString(LOC):'';};
 function mask(e){
   const el=e.target;
-  setTimeout(()=>{ el.dataset.v=String(toCanon(parseFloat(String(el.value).replace(/[.,]/g,''))||0)); },0);
+  // grava o valor canônico ANTES de qualquer recálculo (senão calc() lê a tecla anterior)
+  el.dataset.v=String(toCanon(parseFloat(String(el.value).replace(/\D/g,''))||0));
   const before=el.value.slice(el.selectionStart||0).replace(/\D/g,'').length; // dígitos à direita do cursor
   el.value=FMT(el.value);
   let pos=el.value.length, seen=0;
@@ -924,6 +926,17 @@ function loadSec(){
 const inputs=()=>Array.from(document.querySelectorAll('input.e'));
 const vals=()=>inputs().map(i=>i.classList.contains('n')?String(parseFloat(i.dataset.v)||0):i.value);
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(vals())); }catch(e){} }
+// --- rede de segurança: guarda o estado salvo antes de qualquer carga que o sobrescreva
+const BKEY=KEY+'-bak';
+function bak(){ try{ const p=localStorage.getItem(KEY); if(p) localStorage.setItem(BKEY,p); }catch(e){} }
+function bakBtn(){ try{ $('bakb').style.display=localStorage.getItem(BKEY)?'':'none'; }catch(e){} }
+function bakLoad(){
+  try{
+    const a=JSON.parse(localStorage.getItem(BKEY)); if(!a) return;
+    const cur=JSON.stringify(vals());
+    if(load(a,false)){ localStorage.setItem(BKEY,cur); calc(); }   // troca: dá pra ir e voltar
+  }catch(e){}
+}
 // migrações encadeadas: v3 (306) -> v4 (304) -> v5 (322) -> v6 (333, 9 trimestres)
 function migrate(a){
   if(!Array.isArray(a)) return a;
@@ -1048,7 +1061,8 @@ function upload(ev){
       const d=JSON.parse(r.result);
       const a=Array.isArray(d)?d:d.values;
       const isPct=!(d&&d.v>=10);
-      if(load(a,isPct)) calc(); else alertBar();
+      bak();
+      if(load(a,isPct)){ calc(); bakBtn(); } else alertBar();
     }catch(e){ alertBar(); }
     ev.target.value='';
   };
@@ -1075,7 +1089,9 @@ function scnSave(){
 }
 function scnLoad(){
   const n=$('scnsel').value; if(!n) return;
-  const all=scnAll(); if(all[n] && load(all[n],false)) calc();
+  const all=scnAll(); if(!all[n]) return;
+  bak();
+  if(load(all[n],false)){ calc(); bakBtn(); }
 }
 function scnDel(){
   const n=$('scnsel').value; if(!n) return;
@@ -1093,7 +1109,9 @@ document.querySelectorAll('.lang a').forEach(a=>a.addEventListener('click',e=>{
 (function init(){
   document.querySelectorAll('input.e.n').forEach(i=>{
     i.type='text'; i.inputMode='numeric'; i.autocomplete='off';
-    i.addEventListener('input',mask);
+    // o oninput inline rodava ANTES do mask e recalculava com o valor da tecla anterior
+    i.removeAttribute('oninput');
+    i.addEventListener('input',e=>{ mask(e); calc(); });
     i.addEventListener('focus',()=>{ i.dataset.sel='1'; i.select(); });
     i.addEventListener('mouseup',e=>{ if(i.dataset.sel){ e.preventDefault(); delete i.dataset.sel; } });
   });
@@ -1103,9 +1121,15 @@ document.querySelectorAll('.lang a').forEach(a=>a.addEventListener('click',e=>{
   curLabels();
   let ok=false;
   const fromUrl=readHash();
-  if(fromUrl) ok=load(fromUrl.v, fromUrl.pct);
+  if(fromUrl){
+    bak();                       // guarda o estado atual antes de sobrescrever
+    ok=load(fromUrl.v, fromUrl.pct);
+    // remove o #v2= da URL: senão todo reload volta ao link antigo e apaga o trabalho novo
+    if(ok) try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){}
+  }
   if(!ok){ try{ ok=load(JSON.parse(localStorage.getItem(KEY)),false); }catch(e){} }
   if(!ok){ try{ load(JSON.parse(localStorage.getItem(OLDKEY)),true); }catch(e){} }
+  bakBtn();
   formatAll(); loadSec(); scnFill(); calc();
   $('fxinfo').textContent=FXL.man;
   const sk=$('sticky'), top=sk.offsetTop;
