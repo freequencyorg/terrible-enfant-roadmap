@@ -59,6 +59,10 @@ color:var(--ink2);border:1px solid #b9b4aa;padding:8px 14px;cursor:pointer;font-
 .btn:hover{border-color:var(--ink);color:var(--ink)}
 .btn.pri{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .btn.pri:hover{opacity:.85}
+.regsw{display:inline-flex;margin-left:8px;border:1px solid var(--line);border-radius:5px;overflow:hidden;vertical-align:middle}
+.regsw button{border:0;background:transparent;font:inherit;font-size:10.5px;letter-spacing:.04em;
+ padding:2px 7px;cursor:pointer;color:var(--muted)}
+.regsw button.on{background:var(--ink);color:var(--bg)}
 .curtog{display:inline-flex}
 .curtog button{font-size:11px;letter-spacing:.12em;background:transparent;color:var(--ink2);
 border:1px solid #b9b4aa;border-left-width:0;padding:8px 14px;cursor:pointer;font-family:var(--sans)}
@@ -215,20 +219,11 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 <tr><td>Margem do parceiro sobre o SRP · Showroom</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="m_sh" value="0" oninput="calc()"></td><td class="sk">%</td></tr>
 <tr><td>Margem do parceiro sobre o SRP · Matalab (atacado)</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="m_mt" value="55" oninput="calc()"></td><td class="sk">%</td></tr>
 <tr><td>Margem do parceiro sobre o SRP · E-commerce</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="m_ec" value="0" oninput="calc()"></td><td class="sk">%</td></tr>
-<tr class="cat"><td colspan="3">Impostos — Lucro Presumido (comércio)</td></tr>
-<tr><td>ICMS na venda</td><td class="num"><input class="e w" type="number" min="0" max="100" step="0.5" id="tx_icms" value="18" oninput="calc()"></td><td class="sk">%</td></tr>
-<tr><td>Crédito de ICMS sobre o CMV</td><td class="num"><input class="e w" type="number" min="0" max="100" step="0.5" id="tx_icmsc" value="18" oninput="calc()"></td><td class="sk">%</td></tr>
-<tr><td>PIS cumulativo</td><td class="num"><input class="e w" type="number" min="0" max="100" step="0.05" id="tx_pis" value="0.65" oninput="calc()"></td><td class="sk">%</td></tr>
-<tr><td>COFINS cumulativo</td><td class="num"><input class="e w" type="number" min="0" max="100" step="0.05" id="tx_cof" value="3" oninput="calc()"></td><td class="sk">%</td></tr>
-<tr><td>CBS (reforma)</td><td class="num"><input class="e w" type="number" min="0" max="100" step="0.1" id="tx_cbs" value="8.8" oninput="calc()"></td><td class="sk">%</td></tr>
-<tr><td>IBS (reforma)</td><td class="num"><input class="e w" type="number" min="0" max="100" step="0.1" id="tx_ibs" value="0.1" oninput="calc()"></td><td class="sk">%</td></tr>
-<tr><td>Trimestre em que CBS/IBS entram (1–9)</td><td class="num"><input class="e w" type="number" min="1" max="9" step="1" id="tx_q0" value="3" oninput="calc()"></td><td class="sk" id="tx_q0l"></td></tr>
-<tr><td>IRPJ · presunção</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="tx_irp" value="8" oninput="calc()"></td><td class="sk">%</td></tr>
-<tr><td>IRPJ · alíquota</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="tx_ira" value="15" oninput="calc()"></td><td class="sk">%</td></tr>
-<tr><td>IRPJ · adicional</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="tx_irad" value="10" oninput="calc()"></td><td class="sk">%</td></tr>
-<tr><td>IRPJ · limite trimestral do adicional</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="tx_irlim" value="60000" oninput="calc()"></td><td class="sk cl">R$</td></tr>
-<tr><td>CSLL · presunção</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="tx_csp" value="12" oninput="calc()"></td><td class="sk">%</td></tr>
-<tr><td>CSLL · alíquota</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="tx_csa" value="9" oninput="calc()"></td><td class="sk">%</td></tr>
+<tr class="cat"><td colspan="3">Carga tributária efetiva</td></tr>
+<tr><td>Carga tributária efetiva
+  <span class="regsw"><button id="rg_sn" onclick="setReg(7)">Simples Nacional</button><button id="rg_lp" onclick="setReg(23)">Lucro Presumido</button></span></td>
+<td class="num"><input class="e w" type="number" min="0" max="100" step="0.5" id="tx_ef" value="23" oninput="calc()"></td>
+<td class="sk">% · <span id="tx_efv"></span></td></tr>
 <tr class="cat"><td colspan="3">Investimento já realizado (<span class="cl">R$</span>)</td></tr>
 <tr class="cat"><td colspan="3" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Comunicação</td></tr>
 <tr><td>Creative direction fee 2025</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_1" value="0" oninput="calc()"></td><td class="sk cl">R$</td></tr>
@@ -244,7 +239,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 </table>
 <div class="note" style="margin-top:12px">A moeda de exibição muda todos os valores calculados e os campos de custo em reais. Os preços de catálogo continuam sendo lançados em dólar. O câmbio é o mesmo das premissas.</div>
 <div class="note">Capital já aplicado antes do início do horizonte (setembro/2026). Entra na base de cálculo do ROI e do payback, mas não passa pela DRE dos trimestres projetados.</div>
-<div class="note">Todas as alíquotas abaixo são editáveis — confirme com o contábil. PIS e COFINS são cumulativos (sem crédito) e incidem sobre a receita bruta. ICMS, CBS e IBS são não-cumulativos: incidem sobre a receita menos o CMV, ou seja, sobre o valor que você agrega. IRPJ e CSLL usam a presunção do comércio (8% e 12% da receita). Em 2026 a alíquota-teste de CBS/IBS é compensável com PIS/COFINS, então o efeito é neutro; por isso a reforma só entra a partir do trimestre indicado — o padrão é o Q1 27, quando PIS/COFINS são extintos e a CBS assume.</div>
+<div class="note">Um número só, sobre a receita bruta emitida em NF. No Lucro Presumido de comércio os 23% saem de ICMS líquido de crédito (~14%), CBS de 8,8% a partir de 2027 sobre o valor agregado (~5,6%) e IRPJ mais CSLL pela presunção do comércio (~2,3%); nos dois primeiros trimestres PIS e COFINS somam 3,65% no lugar da CBS, o que dá quase no mesmo. O campo é editável — se o contábil chegar a outro número, é só trocar.</div>
 </div>
 
 <h2 id="h2" onclick="tog('s2')"><span class="chev">▾</span>2. Catálogo e investimento em estoque</h2>
@@ -470,16 +465,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 <tr class=""><td>(−) Agency fee</td><td class="num" id="d_fee_0"></td><td class="num" id="d_fee_1"></td><td class="num" id="d_fee_2"></td><td class="num" id="d_fee_3"></td><td class="num" id="d_fee_4"></td><td class="num" id="d_fee_5"></td><td class="num" id="d_fee_6"></td><td class="num" id="d_fee_7"></td><td class="num" id="d_fee_8"></td><td class="num" id="d_fee_t"></td></tr>
 <tr class=""><td>(−) Operacional</td><td class="num" id="d_op_0"></td><td class="num" id="d_op_1"></td><td class="num" id="d_op_2"></td><td class="num" id="d_op_3"></td><td class="num" id="d_op_4"></td><td class="num" id="d_op_5"></td><td class="num" id="d_op_6"></td><td class="num" id="d_op_7"></td><td class="num" id="d_op_8"></td><td class="num" id="d_op_t"></td></tr>
 <tr class="tot"><td>= EBITDA</td><td class="num" id="d_eb_0"></td><td class="num" id="d_eb_1"></td><td class="num" id="d_eb_2"></td><td class="num" id="d_eb_3"></td><td class="num" id="d_eb_4"></td><td class="num" id="d_eb_5"></td><td class="num" id="d_eb_6"></td><td class="num" id="d_eb_7"></td><td class="num" id="d_eb_8"></td><td class="num" id="d_eb_t"></td></tr>
-<tr class="hl"><td>Fluxo acumulado</td><td class="num" id="d_cum_0"></td><td class="num" id="d_cum_1"></td><td class="num" id="d_cum_2"></td><td class="num" id="d_cum_3"></td><td class="num" id="d_cum_4"></td><td class="num" id="d_cum_5"></td><td class="num" id="d_cum_6"></td><td class="num" id="d_cum_7"></td><td class="num" id="d_cum_8"></td><td class="num" id="d_cum_t"></td></tr><tr><td class="sk">Carga efetiva</td><td class="num sk" id="d_rate_0"></td><td class="num sk" id="d_rate_1"></td><td class="num sk" id="d_rate_2"></td><td class="num sk" id="d_rate_3"></td><td class="num sk" id="d_rate_4"></td><td class="num sk" id="d_rate_5"></td><td class="num sk" id="d_rate_6"></td><td class="num sk" id="d_rate_7"></td><td class="num sk" id="d_rate_8"></td><td></td></tr></tbody></table></div>
-<div class="ttl" style="margin:16px 0 6px">Composição do imposto</div>
-<div class="scroll"><table>
-<thead><tr><th class="cl">R$</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Total</th></tr></thead>
-<tbody><tr class=""><td>PIS + COFINS</td><td class="num" id="tc_tc_pc_0"></td><td class="num" id="tc_tc_pc_1"></td><td class="num" id="tc_tc_pc_2"></td><td class="num" id="tc_tc_pc_3"></td><td class="num" id="tc_tc_pc_4"></td><td class="num" id="tc_tc_pc_5"></td><td class="num" id="tc_tc_pc_6"></td><td class="num" id="tc_tc_pc_7"></td><td class="num" id="tc_tc_pc_8"></td><td class="num" id="tc_tc_pc_t"></td></tr>
-<tr class=""><td>ICMS líquido de crédito</td><td class="num" id="tc_tc_icms_0"></td><td class="num" id="tc_tc_icms_1"></td><td class="num" id="tc_tc_icms_2"></td><td class="num" id="tc_tc_icms_3"></td><td class="num" id="tc_tc_icms_4"></td><td class="num" id="tc_tc_icms_5"></td><td class="num" id="tc_tc_icms_6"></td><td class="num" id="tc_tc_icms_7"></td><td class="num" id="tc_tc_icms_8"></td><td class="num" id="tc_tc_icms_t"></td></tr>
-<tr class=""><td>CBS + IBS</td><td class="num" id="tc_tc_cbs_0"></td><td class="num" id="tc_tc_cbs_1"></td><td class="num" id="tc_tc_cbs_2"></td><td class="num" id="tc_tc_cbs_3"></td><td class="num" id="tc_tc_cbs_4"></td><td class="num" id="tc_tc_cbs_5"></td><td class="num" id="tc_tc_cbs_6"></td><td class="num" id="tc_tc_cbs_7"></td><td class="num" id="tc_tc_cbs_8"></td><td class="num" id="tc_tc_cbs_t"></td></tr>
-<tr class=""><td>IRPJ</td><td class="num" id="tc_tc_irpj_0"></td><td class="num" id="tc_tc_irpj_1"></td><td class="num" id="tc_tc_irpj_2"></td><td class="num" id="tc_tc_irpj_3"></td><td class="num" id="tc_tc_irpj_4"></td><td class="num" id="tc_tc_irpj_5"></td><td class="num" id="tc_tc_irpj_6"></td><td class="num" id="tc_tc_irpj_7"></td><td class="num" id="tc_tc_irpj_8"></td><td class="num" id="tc_tc_irpj_t"></td></tr>
-<tr class=""><td>CSLL</td><td class="num" id="tc_tc_csll_0"></td><td class="num" id="tc_tc_csll_1"></td><td class="num" id="tc_tc_csll_2"></td><td class="num" id="tc_tc_csll_3"></td><td class="num" id="tc_tc_csll_4"></td><td class="num" id="tc_tc_csll_5"></td><td class="num" id="tc_tc_csll_6"></td><td class="num" id="tc_tc_csll_7"></td><td class="num" id="tc_tc_csll_8"></td><td class="num" id="tc_tc_csll_t"></td></tr>
-<tr class="tot"><td>Total de impostos</td><td class="num" id="tc_tc_tot_0"></td><td class="num" id="tc_tc_tot_1"></td><td class="num" id="tc_tc_tot_2"></td><td class="num" id="tc_tc_tot_3"></td><td class="num" id="tc_tc_tot_4"></td><td class="num" id="tc_tc_tot_5"></td><td class="num" id="tc_tc_tot_6"></td><td class="num" id="tc_tc_tot_7"></td><td class="num" id="tc_tc_tot_8"></td><td class="num" id="tc_tc_tot_t"></td></tr></tbody></table></div>
+<tr class="hl"><td>Fluxo acumulado</td><td class="num" id="d_cum_0"></td><td class="num" id="d_cum_1"></td><td class="num" id="d_cum_2"></td><td class="num" id="d_cum_3"></td><td class="num" id="d_cum_4"></td><td class="num" id="d_cum_5"></td><td class="num" id="d_cum_6"></td><td class="num" id="d_cum_7"></td><td class="num" id="d_cum_8"></td><td class="num" id="d_cum_t"></td></tr><tr><td class="sk">Carga efetiva</td><td class="num sk" id="d_rate_0"></td><td class="num sk" id="d_rate_1"></td><td class="num sk" id="d_rate_2"></td><td class="num sk" id="d_rate_3"></td><td class="num sk" id="d_rate_4"></td><td class="num sk" id="d_rate_5"></td><td class="num sk" id="d_rate_6"></td><td class="num sk" id="d_rate_7"></td><td class="num sk" id="d_rate_8"></td><td class="num sk" id="d_rate_t"></td></tr></tbody></table></div>
 </div>
 
 <h2 id="h10" onclick="tog('s10')"><span class="chev">▾</span>10. Resultado</h2>
@@ -526,6 +512,7 @@ const L={never:"não atingido",units:"un/trimestre",
  ofrev:"da receita",sellthru:"sell-through",
  com:"Comunicação",show:"Showroom",
  tot:"Total",inq:"em",
+ txper:"no período",
  confirm:"Confirmar?",reset:"Restaurar padrões",
  none:"— nenhum cenário salvo —",
  scn_at:"salvo em",overwrite:"Sobrescrever?",
@@ -886,41 +873,24 @@ function calc(){
 
   // ---------- DRE
   const tax=[],net=[],mc=[],eb=[],cum=[],rtA=[];
-  const TC={tc_pc:[],tc_icms:[],tc_cbs:[],tc_irpj:[],tc_csll:[],tc_tot:[]};
-  const pc=(V('tx_pis')+V('tx_cof'))/100, icR=V('tx_icms')/100, icC=V('tx_icmsc')/100,
-        cbs=(V('tx_cbs')+V('tx_ibs'))/100,
-        irP=V('tx_irp')/100, irA=V('tx_ira')/100, irD=V('tx_irad')/100, irL=V('tx_irlim'),
-        csP=V('tx_csp')/100, csA=V('tx_csa')/100;
-  const q0=Math.min(NQ,Math.max(1,Math.round(V('tx_q0'))))-1;   // trimestre em que a reforma entra
-  $('tx_q0l').textContent=QLAB[q0];
+  const efr=Math.max(0,V('tx_ef'))/100;              // carga tributária efetiva, um número só
+  regLabel();
   const invTotal=tInv+rzT;
   let acc=-invTotal, payback=-1;
   const byYear={};
   for(let q=0;q<NQ;q++){
-    const ref=q>=q0;                                  // CBS/IBS no lugar de PIS/COFINS
-    const agregado=Math.max(0,rev[q]-cmv[q]);         // base dos não-cumulativos
-    const t_pc  = ref?0:rev[q]*pc;
-    const t_cbs = ref?agregado*cbs:0;
-    const t_icms= Math.max(0, rev[q]*icR - cmv[q]*icC);
-    const baseIr= rev[q]*irP;
-    const t_ir  = baseIr*irA + Math.max(0,baseIr-irL)*irD;
-    const t_cs  = rev[q]*csP*csA;
-    TC.tc_pc[q]=t_pc; TC.tc_icms[q]=t_icms; TC.tc_cbs[q]=t_cbs; TC.tc_irpj[q]=t_ir; TC.tc_csll[q]=t_cs;
-    tax[q]=t_pc+t_cbs+t_icms+t_ir+t_cs; TC.tc_tot[q]=tax[q];
-    rtA[q]=rev[q]>0?tax[q]/rev[q]:0;
+    tax[q]=rev[q]*efr; rtA[q]=efr;
     net[q]=rev[q]-tax[q]; mc[q]=net[q]-cmv[q];
     eb[q]=mc[q]-com[q]-fee[q]-op[q];
     acc+=eb[q]; cum[q]=acc;
     if(payback<0 && acc>=0) payback=q;
     byYear[QYEAR[q]]=(byYear[QYEAR[q]]||0)+rev[q];
   }
-  Object.keys(TC).forEach(k=>{ let s=0;
-    for(let q=0;q<NQ;q++){ $(`tc_${k}_${q}`).textContent=R(TC[k][q]); s+=TC[k][q]; }
-    $(`tc_${k}_t`).textContent=R(s); });
   const put=(k,arr)=>{ let s=0;
     for(let q=0;q<NQ;q++){ $(`d_${k}_${q}`).textContent=R(arr[q]); s+=arr[q]; }
     $(`d_${k}_t`).textContent=R(s); return s; };
-  const Trev=put('rev',rev); put('tax',tax.map(v=>-v)); put('net',net);
+  const Trev=put('rev',rev); const Ttax=put('tax',tax.map(v=>-v)); put('net',net);
+  $('tx_efv').textContent=R(-Ttax)+' '+L.txper;
   put('cmv',cmv.map(v=>-v)); const Tmc=put('mc',mc);
   put('com',com.map(v=>-v)); put('fee',fee.map(v=>-v)); put('op',op.map(v=>-v));
   const Teb=put('eb',eb);
@@ -998,6 +968,13 @@ function calc(){
   save();
 }
 
+// chave de comparação entre regimes: só troca a carga efetiva
+function setReg(v){ const e=$('tx_ef'); e.value=String(v); calc(); }
+function regLabel(){
+  const v=V('tx_ef'), near=(a,b)=>Math.abs(a-b)<0.05;
+  $('rg_sn').className=near(v,7)?'on':'';
+  $('rg_lp').className=near(v,23)?'on':'';
+}
 function tog(id){
   const s=$(id), h=s.previousElementSibling;
   s.classList.toggle('off'); h.classList.toggle('off'); saveSec();
@@ -1073,14 +1050,15 @@ function migrate(a){
   }
   // v10: nova linha "produção de conteúdo" na comunicação, logo depois de colabs
   if(a.length===483) a=a.slice(0,399).concat(['0','0','0','0','0','0','0','0','0'], a.slice(399));
-  // v11: Simples Nacional -> Lucro Presumido (13 parâmetros de imposto entram após as margens)
-  if(a.length===492) a=a.slice(0,4).concat(
-    ['18','18','0.65','3','8.8','0.1','3','8','15','10','60000','12','9'], a.slice(4));
+  // v11: Simples Nacional -> Lucro Presumido, uma carga efetiva única após as margens
+  if(a.length===492) a=a.slice(0,4).concat(['23'], a.slice(4));
+  // v12: colapsa os 13 parâmetros detalhados de imposto na carga efetiva
+  if(a.length===505) a=a.slice(0,4).concat(['23'], a.slice(17));
   return a;
 }
 // converte o bloco de sell-out de % para unidades usando a alocação do próprio cenário
 function pctToUnits(a){
-  if(!a||a.length!==505) return a;
+  if(!a||a.length!==493) return a;
   const out=a.slice();
   for(let ch=0;ch<3;ch++) for(let ci=0;ci<6;ci++){
     const al=parseFloat(a[208+ci*3+ch])||0;
