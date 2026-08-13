@@ -983,7 +983,8 @@ function loadSec(){
   }catch(e){}
 }
 const inputs=()=>Array.from(document.querySelectorAll('input.e'));
-const vals=()=>inputs().map(i=>i.classList.contains('n')?String(parseFloat(i.dataset.v)||0):i.value);
+const R4=x=>{const f=parseFloat(x); return isFinite(f)?String(Math.round(f*1e4)/1e4):x;};
+const vals=()=>inputs().map(i=>R4(i.classList.contains('n')?String(parseFloat(i.dataset.v)||0):i.value));
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(vals()));
   const e=$('savedot'); if(e) e.textContent=L.saved+' '+stamp(Date.now());
 }catch(e){} }
@@ -1088,21 +1089,50 @@ function dec(str){
   });
   return out;
 }
-function scenarioUrl(){ return location.origin+location.pathname+(CUR==='usd'?'?cur=usd':'')+'#v2='+enc(vals()); }
-function readHash(){
+// --- compressão do link (deflate + base64url): corta o endereço em ~2/3
+const B64U=b=>btoa(String.fromCharCode.apply(null,new Uint8Array(b)))
+  .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const UNB64U=s=>{const b=atob(s.replace(/-/g,'+').replace(/_/g,'/'));
+  const u=new Uint8Array(b.length); for(let i=0;i<b.length;i++) u[i]=b.charCodeAt(i); return u;};
+async function zip(s){
+  const cs=new CompressionStream('deflate-raw'), w=cs.writable.getWriter();
+  w.write(new TextEncoder().encode(s)); w.close();
+  return B64U(await new Response(cs.readable).arrayBuffer());
+}
+async function unzip(s){
+  const ds=new DecompressionStream('deflate-raw'), w=ds.writable.getWriter();
+  w.write(UNB64U(s)); w.close();
+  return new TextDecoder().decode(await new Response(ds.readable).arrayBuffer());
+}
+async function scenarioUrl(){
+  const base=location.origin+location.pathname+(CUR==='usd'?'?cur=usd':'');
+  const raw=enc(vals());
+  try{ if(window.CompressionStream) return base+'#v3='+await zip(raw); }catch(e){}
+  return base+'#v2='+raw;                                   // navegador antigo: formato longo
+}
+async function readHash(){
   const h=location.hash.slice(1);
   if(!h) return null;
+  if(h.startsWith('v3=')){ try{ return {v:dec(await unzip(h.slice(3))), pct:false}; }catch(e){ return null; } }
   if(h.startsWith('v2=')) return {v:dec(h.slice(3)), pct:false};   // unidades
   if(h.startsWith('v1=')) return {v:dec(h.slice(3)), pct:true};    // percentual (legado)
   try{ return {v:JSON.parse(decodeURIComponent(escape(atob(h)))), pct:true}; }catch(e){ return null; }
 }
 // --- link
-function share(){
-  const url=scenarioUrl();
-  navigator.clipboard.writeText(url).then(()=>{
-    const b=document.querySelector('.btn.pri'), o=b.textContent;
-    b.textContent=L.copied; setTimeout(()=>b.textContent=o,1600);
+function copyTxt(t){
+  return (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).catch(()=>{
+    const a=document.createElement('textarea');            // fallback se o gesto expirou
+    a.value=t; a.style.position='fixed'; a.style.opacity='0';
+    document.body.appendChild(a); a.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    document.body.removeChild(a);
   });
+}
+async function share(){
+  const b=document.querySelector('.btn.pri'), o=b.textContent;
+  const url=await scenarioUrl();
+  await copyTxt(url);
+  b.textContent=L.copied; setTimeout(()=>b.textContent=o,1600);
 }
 
 // --- arquivo .json
@@ -1186,7 +1216,7 @@ function scnDel(){
 
 // idioma é só tradução: os dados são os mesmos, basta garantir que estão gravados
 document.querySelectorAll('.lang a').forEach(a=>a.addEventListener('click',()=>{ save(); }));
-(function init(){
+(async function init(){
   document.querySelectorAll('input.e.n').forEach(i=>{
     i.type='text'; i.inputMode='numeric'; i.autocomplete='off';
     // o oninput inline rodava ANTES do mask e recalculava com o valor da tecla anterior
@@ -1200,7 +1230,7 @@ document.querySelectorAll('.lang a').forEach(a=>a.addEventListener('click',()=>{
   $('cb_brl').className=CUR==='brl'?'on':''; $('cb_usd').className=CUR==='usd'?'on':'';
   curLabels();
   let ok=false;
-  const fromUrl=readHash();
+  const fromUrl=await readHash();
   if(fromUrl){
     bak();                       // guarda o estado atual antes de sobrescrever
     ok=load(fromUrl.v, fromUrl.pct);
