@@ -389,8 +389,16 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 
 <h2 id="h5" onclick="tog('s5')"><span class="chev">▾</span>5. Stock y OTB (cuándo recomprar)</h2>
 <div class="sec" id="s5">
-<div class="note">La cobertura es el stock final dividido por la venta promedio proyectada de los próximos trimestres (la ventana es la propia cobertura objetivo) — cuántos trimestres aguanta el stock al ritmo proyectado. Cuando cae por debajo del objetivo hay que recomprar; como la mercadería tarda el lead time en llegar, el pedido debe salir antes. El OTB sugerido es cuánto comprar para volver al nivel de cobertura objetivo.</div>
+<div class="note">Unidades que entran al stock en cada trimestre — es la segunda remesa que sugiere el OTB. Suman al stock disponible, habilitan venta en el punto 4 y el desembolso entra en el flujo acumulado en el trimestre de la compra, igual que la importación inicial. El costo se vuelve CMV recién cuando la pieza se vende. Dejá el costo unitario en blanco para usar el promedio del catálogo.</div>
+<div class="note" style="margin-bottom:12px">La cobertura es el stock final dividido por la venta promedio proyectada de los próximos trimestres (la ventana es la propia cobertura objetivo) — cuántos trimestres aguanta el stock al ritmo proyectado. Cuando cae por debajo del objetivo hay que recomprar; como la mercadería tarda el lead time en llegar, el pedido debe salir antes. El OTB sugerido es cuánto comprar para volver al nivel de cobertura objetivo.</div>
+<div class="ttl" style="margin:4px 0 6px">Reposición de stock</div>
+<div class="scroll"><table style="margin-bottom:6px">
+<thead><tr><th>Unidades repuestas</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Total</th></tr></thead>
+<tbody><tr><td>Unidades repuestas</td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_7" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_8" value="0" oninput="calc()"></td><td class="num" id="rp_t"></td></tr></tbody></table></div>
 <table style="width:auto;margin-bottom:14px">
+<tr><td>Costo unitario de la reposición</td><td class="num"><input class="e" type="number" min="0" step="1" id="rp_c" value="" oninput="calc()"></td>
+<td class="sk">US$ · <span id="rp_ch"></span></td></tr>
+<tr><td>Repuesto en el período</td><td class="num" id="rp_v"></td><td class="sk cl">R$</td></tr>
 <tr><td>Lead time de reposición (trimestres)</td><td class="num"><input class="e w" type="number" min="0" max="4" step="1" id="lead" value="1" oninput="calc()"></td></tr>
 <tr><td>Cobertura objetivo (trimestres de venta)</td><td class="num"><input class="e w" type="number" min="0" step="0.5" id="cover" value="2" oninput="calc()"></td></tr>
 </table>
@@ -512,7 +520,7 @@ const L={never:"no alcanzado",units:"un/trimestre",
  ofrev:"de los ingresos",sellthru:"sell-through",
  com:"Comunicación",show:"Showroom",
  tot:"Total",inq:"en",
- txper:"en el período",
+ txper:"en el período",rpauto:"en blanco = costo promedio del catálogo",
  confirm:"¿Confirmar?",reset:"Restaurar valores",
  none:"— sin escenarios guardados —",
  scn_at:"guardado el",overwrite:"¿Sobrescribir?",
@@ -722,6 +730,19 @@ function calc(){
   $('w_alloc').className='warn'+(over.length?' on':'');
   if(over.length) $('w_alloc_d').textContent=over.join(' · ');
 
+  // ---------- reposição de estoque
+  const cAvg = totImp>0 ? tInv/totImp : 0;                   // custo médio do catálogo, em BRL
+  const rpcIn = parseFloat($('rp_c').value);
+  const rpc = (isFinite(rpcIn)&&rpcIn>0) ? rpcIn*fx : cAvg;  // campo em US$; em branco usa a média
+  const rp=[], rpV=[]; let rpTot=0, rpVal=0;
+  for(let q=0;q<NQ;q++){
+    rp[q]=Math.max(0,V('rp_'+q)); rpV[q]=rp[q]*rpc;
+    rpTot+=rp[q]; rpVal+=rpV[q];
+  }
+  $('rp_t').textContent=rpTot?N(rpTot)+' '+L.un:'—';
+  $('rp_v').textContent=R(rpVal);
+  $('rp_ch').textContent=cAvg>0?L.rpauto+' · US$ '+N(Math.round(cAvg/fx)):L.rpauto;
+
   // ---------- vendas em unidades por categoria × canal
   const soU={}, sold={}, overSell=[];
   CH.forEach(ch=>{
@@ -730,7 +751,7 @@ function calc(){
     CATS.forEach((c,ci)=>{
       soU[ch][ci]=[];
       let uCat=0;
-      const base=alloc[ch][c];
+      const base=alloc[ch][c] + (totAl>0?rpTot*alloc[ch][c]/totAl:0);   // reposição rateada pela alocação
       for(let q=0;q<NQ;q++){
         const u=Math.max(0,V(`so_${ch}_${ci}_${q}`));
         soU[ch][ci][q]=u; sold[ch][q]+=u; uCat+=u;
@@ -822,7 +843,7 @@ function calc(){
   const stIni=[],stEnd=[],cov=[],rate=[];
   let sIni=totImp;
   for(let q=0;q<NQ;q++){
-    stIni[q]=sIni; stEnd[q]=Math.max(0,sIni-un[q]); sIni=stEnd[q];
+    stIni[q]=sIni+rp[q]; stEnd[q]=Math.max(0,stIni[q]-un[q]); sIni=stEnd[q];
     let fut=0,nf=0;
     for(let j=q+1;j<NQ&&nf<win;j++){ fut+=un[j]; nf++; }
     rate[q]=nf>0?fut/nf:0;
@@ -847,7 +868,7 @@ function calc(){
   if(alert>=0){
     const need=Math.max(0,Math.round(rate[alert]*covT-stEnd[alert]));
     const oq=alert-lead;
-    const unitCost=totImp>0?tInv/totImp:0;
+    const unitCost=(totImp+rpTot)>0?(tInv+rpVal)/(totImp+rpTot):0;
     $('ot_alert').textContent=QLAB[alert]; $('ot_alert').className='v neg';
     $('ot_alert_s').textContent=N(stEnd[alert])+' un · '+D1(cov[alert])+' / '+covT+' · '
       +N(Math.round(rate[alert]))+' un/T '+L.otbrate;
@@ -875,14 +896,14 @@ function calc(){
   const tax=[],net=[],mc=[],eb=[],cum=[],rtA=[];
   const efr=Math.max(0,V('tx_ef'))/100;              // carga tributária efetiva, um número só
   regLabel();
-  const invTotal=tInv+rzT;
-  let acc=-invTotal, payback=-1;
+  const invTotal=tInv+rzT+rpVal;
+  let acc=-(tInv+rzT), payback=-1;   // a reposição sai do caixa no trimestre em que é comprada
   const byYear={};
   for(let q=0;q<NQ;q++){
     tax[q]=rev[q]*efr; rtA[q]=efr;
     net[q]=rev[q]-tax[q]; mc[q]=net[q]-cmv[q];
     eb[q]=mc[q]-com[q]-fee[q]-op[q];
-    acc+=eb[q]; cum[q]=acc;
+    acc+=eb[q]-rpV[q]; cum[q]=acc;
     if(payback<0 && acc>=0) payback=q;
     byYear[QYEAR[q]]=(byYear[QYEAR[q]]||0)+rev[q];
   }
@@ -904,10 +925,11 @@ function calc(){
   $('w_lp').className='warn'+(overLimit?' on':'');
 
   // ---------- indicadores
+  const totUn0=totImp+rpTot;
   $('k_inv').textContent=Rk(invTotal);
-  $('k_inv_s').textContent=L.stock+' '+Rk(tInv)+(rzT>0?` · ${L.com} ${Rk(rzC)} · ${L.show} ${Rk(rzS)}`:'');
+  $('k_inv_s').textContent=L.stock+' '+Rk(tInv+rpVal)+(rzT>0?` · ${L.com} ${Rk(rzC)} · ${L.show} ${Rk(rzS)}`:'');
   $('k_rev').textContent=Rk(Trev);
-  $('k_rev_s').textContent=N(totSold)+' '+L.sold+(totImp>0?' · '+L.sellthru+' '+P0(totSold/totImp):'');
+  $('k_rev_s').textContent=N(totSold)+' '+L.sold+(totUn0>0?' · '+L.sellthru+' '+P0(totSold/totUn0):'');
   $('k_eb').textContent=Rk(Teb); $('k_eb').className='v '+sig(Teb);
   $('k_eb_s').textContent=Trev>0?P(Teb/Trev)+' '+L.ofrev:'—';
   const roi=invTotal>0?Teb/invTotal:0;
@@ -916,10 +938,11 @@ function calc(){
   $('k_pay').textContent=payback>=0?QLAB[payback]:L.never;
   $('k_pay').className='v '+(payback>=0?'pos':'neg sm');
   $('k_pay_s').textContent=payback>=0?'':R(cum[NQ-1])+' '+L.inq+' '+QLAB[NQ-1];
-  const left=Math.max(0,totImp-totSold);
-  const leftV=totImp>0?tInv/totImp*left:0;
+  const totUn=totImp+rpTot;
+  const left=Math.max(0,totUn-totSold);
+  const leftV=totUn>0?(tInv+rpVal)/totUn*left:0;
   $('k_left').textContent=N(left)+' un';
-  $('k_left_s').textContent=totImp>0?R(leftV)+' '+L.atcost+' · '+P0(left/totImp)+' '+L.ofimp:'—';
+  $('k_left_s').textContent=totUn>0?R(leftV)+' '+L.atcost+' · '+P0(left/totUn)+' '+L.ofimp:'—';
   // barra fixa
   $('sk_eb').textContent=Rk(Teb); $('sk_eb').className='kv '+sig(Teb);
   $('sk_roi').textContent=invTotal>0?P(roi):'—'; $('sk_roi').className='kv '+sig(roi);
@@ -1054,11 +1077,13 @@ function migrate(a){
   if(a.length===492) a=a.slice(0,4).concat(['23'], a.slice(4));
   // v12: colapsa os 13 parâmetros detalhados de imposto na carga efetiva
   if(a.length===505) a=a.slice(0,4).concat(['23'], a.slice(17));
+  // v13: reposição de estoque (9 trimestres + custo unitário) entra antes de lead/cobertura
+  if(a.length===493) a=a.slice(0,389).concat(['0','0','0','0','0','0','0','0','0',''], a.slice(389));
   return a;
 }
 // converte o bloco de sell-out de % para unidades usando a alocação do próprio cenário
 function pctToUnits(a){
-  if(!a||a.length!==493) return a;
+  if(!a||a.length!==503) return a;
   const out=a.slice();
   for(let ch=0;ch<3;ch++) for(let ci=0;ci<6;ci++){
     const al=parseFloat(a[208+ci*3+ch])||0;
