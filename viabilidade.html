@@ -59,6 +59,11 @@ color:var(--ink2);border:1px solid #b9b4aa;padding:8px 14px;cursor:pointer;font-
 .btn:hover{border-color:var(--ink);color:var(--ink)}
 .btn.pri{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .btn.pri:hover{opacity:.85}
+.rpbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 12px;
+ padding:8px 10px;background:var(--soft);border:1px solid var(--line);border-radius:6px}
+.rpbar input{width:80px}
+.rpbar .sep{flex:1}
+.rpbar b{font-variant-numeric:tabular-nums}
 .regsw{display:inline-flex;margin-left:8px;border:1px solid var(--line);border-radius:5px;overflow:hidden;vertical-align:middle}
 .regsw button{border:0;background:transparent;font:inherit;font-size:10.5px;letter-spacing:.04em;
  padding:2px 7px;cursor:pointer;color:var(--muted)}
@@ -211,6 +216,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 </div>
 <div class="note" style="margin-top:8px">Os dados são gravados automaticamente neste navegador enquanto você digita, e são os mesmos nos três idiomas — trocar de idioma troca só os rótulos, nunca os números. Para não depender de um único computador, use <b>Baixar cenário</b> (gera um arquivo .json que você guarda no Drive ou manda por e-mail) ou <b>Copiar link do cenário</b>. Você também pode salvar várias versões com nome — conservador, otimista — e alternar entre elas. <span style="opacity:.7">Campos em amarelo são editáveis · o resto é calculado · alterações salvas neste navegador</span></div>
 
+<input class="e" type="hidden" id="ver" value="14">
 <h2 id="h1" onclick="tog('s1')"><span class="chev">▾</span>1. Premissas gerais</h2>
 <div class="sec" id="s1">
 <table style="width:auto">
@@ -358,9 +364,18 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 <div class="note">Quantas unidades você acredita vender de cada categoria, em cada ponto de venda, trimestre a trimestre. À direita aparece o total vendido e quanto isso representa do estoque alocado — se passar de 100%, você está vendendo mais do que colocou ali. Categorias sem estoque alocado aparecem esmaecidas.</div>
 <div style="margin:0 0 12px"><button class="btn" id="clrb" onclick="clearSales()">Zerar vendas</button></div>
 <div class="warn" id="w_sell">Vendas acima do estoque alocado — <span id="w_sell_d"></span></div>
+<div class="warn" id="w_stock">Venda acima do estoque disponível no trimestre — <span id="w_stock_d"></span></div>
+<div class="rpbar">
+  <span>Custo unitário da reposição</span>
+  <input class="e" type="number" min="0" step="1" id="rp_c" value="" oninput="calc()">
+  <span class="sk">US$ · <span id="rp_ch"></span></span>
+  <span class="sep"></span>
+  <span class="sk">Reposto no período</span> <b id="rp_v"></b>
+</div>
 <div class="scroll"><table>
-<thead><tr><th>Vendas (unidades)</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Acumulado</th></tr></thead>
-<tbody><tr class="cat"><td colspan="11">Showroom<button class="minib" onclick="replRow('sh')">replicar 1ª linha</button></td></tr>
+<thead><tr><th>Estoque e vendas por trimestre</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Acumulado</th></tr></thead>
+<tbody><tr class="cat"><td colspan="11">Movimento de estoque</td></tr><tr><td>Estoque disponível</td><td class="c sk" id="mv_av_0"></td><td class="c sk" id="mv_av_1"></td><td class="c sk" id="mv_av_2"></td><td class="c sk" id="mv_av_3"></td><td class="c sk" id="mv_av_4"></td><td class="c sk" id="mv_av_5"></td><td class="c sk" id="mv_av_6"></td><td class="c sk" id="mv_av_7"></td><td class="c sk" id="mv_av_8"></td><td></td></tr><tr><td>Unidades repostas</td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_7" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_8" value="0" oninput="calc()"></td><td class="num" id="rp_t"></td></tr><tr class="cat"><td colspan="11">Vendas (unidades)</td></tr>
+<tr class="cat"><td colspan="11">Showroom<button class="minib" onclick="replRow('sh')">replicar 1ª linha</button></td></tr>
 <tr id="sor_sh_0"><td>Calçados</td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_0_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_0_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_0_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_0_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_0_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_0_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_0_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_0_7" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_0_8" value="0" oninput="calc()"></td><td class="num" id="so_sh_0_t"></td></tr>
 <tr id="sor_sh_1"><td>Cintos</td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_1_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_1_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_1_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_1_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_1_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_1_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_1_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_1_7" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_1_8" value="0" oninput="calc()"></td><td class="num" id="so_sh_1_t"></td></tr>
 <tr id="sor_sh_2"><td>Marroquinaria</td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_2_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_2_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_2_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_2_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_2_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_2_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_2_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_2_7" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_sh_2_8" value="0" oninput="calc()"></td><td class="num" id="so_sh_2_t"></td></tr>
@@ -384,29 +399,21 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 <tr id="sor_ec_4"><td>Bonés</td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_4_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_4_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_4_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_4_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_4_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_4_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_4_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_4_7" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_4_8" value="0" oninput="calc()"></td><td class="num" id="so_ec_4_t"></td></tr>
 <tr id="sor_ec_5"><td>Acessórios</td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_5_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_5_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_5_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_5_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_5_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_5_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_5_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_5_7" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="so_ec_5_8" value="0" oninput="calc()"></td><td class="num" id="so_ec_5_t"></td></tr>
 <tr class="sb"><td>Subtotal E-commerce — Unidades vendidas</td><td class="c" id="su_ec_0"></td><td class="c" id="su_ec_1"></td><td class="c" id="su_ec_2"></td><td class="c" id="su_ec_3"></td><td class="c" id="su_ec_4"></td><td class="c" id="su_ec_5"></td><td class="c" id="su_ec_6"></td><td class="c" id="su_ec_7"></td><td class="c" id="su_ec_8"></td><td class="num" id="su_ec_t"></td></tr>
-<tr class="tot"><td>Unidades vendidas — Total</td><td class="c" id="sq_0"></td><td class="c" id="sq_1"></td><td class="c" id="sq_2"></td><td class="c" id="sq_3"></td><td class="c" id="sq_4"></td><td class="c" id="sq_5"></td><td class="c" id="sq_6"></td><td class="c" id="sq_7"></td><td class="c" id="sq_8"></td><td class="num" id="sq_t"></td></tr></tbody></table></div>
+<tr class="tot"><td>Unidades vendidas — Total</td><td class="c" id="sq_0"></td><td class="c" id="sq_1"></td><td class="c" id="sq_2"></td><td class="c" id="sq_3"></td><td class="c" id="sq_4"></td><td class="c" id="sq_5"></td><td class="c" id="sq_6"></td><td class="c" id="sq_7"></td><td class="c" id="sq_8"></td><td class="num" id="sq_t"></td></tr>
+<tr class="hl"><td>Saldo no fim do trimestre</td><td class="c" id="mv_bal_0"></td><td class="c" id="mv_bal_1"></td><td class="c" id="mv_bal_2"></td><td class="c" id="mv_bal_3"></td><td class="c" id="mv_bal_4"></td><td class="c" id="mv_bal_5"></td><td class="c" id="mv_bal_6"></td><td class="c" id="mv_bal_7"></td><td class="c" id="mv_bal_8"></td><td></td></tr></tbody></table></div>
+<div class="note" style="margin-top:10px">A reposição entra no estoque do trimestre em que chega e libera venda dali para a frente — não para trás. O saldo abaixo da grade fica vermelho no trimestre em que a venda passa do que existe em estoque.</div>
 </div>
 
 <h2 id="h5" onclick="tog('s5')"><span class="chev">▾</span>5. Estoque e OTB (quando recomprar)</h2>
 <div class="sec" id="s5">
-<div class="note">Unidades que entram no estoque em cada trimestre — é a segunda remessa que o OTB sugere. Elas somam ao estoque disponível, liberam venda no item 4 e o desembolso entra no fluxo acumulado no trimestre da compra, igual à importação inicial. O custo vira CMV só quando a peça é vendida. Deixe o custo unitário em branco para usar o custo médio do catálogo atual.</div>
-<div class="note" style="margin-bottom:12px">A cobertura é o estoque final dividido pela venda média projetada para os próximos trimestres (a janela é a própria cobertura alvo) — quantos trimestres o estoque aguenta no ritmo projetado. Quando ela cai abaixo do alvo, é hora de recomprar; como a mercadoria demora o lead time para chegar, o pedido precisa sair antes. O OTB sugerido é quanto comprar para voltar ao nível de cobertura alvo.</div>
-<div class="ttl" style="margin:4px 0 6px">Reposição de estoque</div>
-<div class="scroll"><table style="margin-bottom:6px">
-<thead><tr><th>Unidades repostas</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Total</th></tr></thead>
-<tbody><tr><td>Unidades repostas</td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_7" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_8" value="0" oninput="calc()"></td><td class="num" id="rp_t"></td></tr></tbody></table></div>
+<div class="note">A cobertura é o estoque final dividido pela venda média projetada para os próximos trimestres (a janela é a própria cobertura alvo) — quantos trimestres o estoque aguenta no ritmo projetado. Quando ela cai abaixo do alvo, é hora de recomprar; como a mercadoria demora o lead time para chegar, o pedido precisa sair antes. O OTB sugerido é quanto comprar para voltar ao nível de cobertura alvo.</div>
 <table style="width:auto;margin-bottom:14px">
-<tr><td>Custo unitário da reposição</td><td class="num"><input class="e" type="number" min="0" step="1" id="rp_c" value="" oninput="calc()"></td>
-<td class="sk">US$ · <span id="rp_ch"></span></td></tr>
-<tr><td>Reposto no período</td><td class="num" id="rp_v"></td><td class="sk cl">R$</td></tr>
 <tr><td>Lead time de reposição (trimestres)</td><td class="num"><input class="e w" type="number" min="0" max="4" step="1" id="lead" value="1" oninput="calc()"></td></tr>
 <tr><td>Cobertura alvo (trimestres de venda)</td><td class="num"><input class="e w" type="number" min="0" step="0.5" id="cover" value="2" oninput="calc()"></td></tr>
 </table>
 <div class="scroll"><table>
-<thead><tr><th>Estoque inicial</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th></th></tr></thead>
-<tbody><tr class=""><td>Estoque inicial</td><td class="c" id="ot_st_ini_0"></td><td class="c" id="ot_st_ini_1"></td><td class="c" id="ot_st_ini_2"></td><td class="c" id="ot_st_ini_3"></td><td class="c" id="ot_st_ini_4"></td><td class="c" id="ot_st_ini_5"></td><td class="c" id="ot_st_ini_6"></td><td class="c" id="ot_st_ini_7"></td><td class="c" id="ot_st_ini_8"></td><td></td></tr>
-<tr class=""><td>Vendas</td><td class="c" id="ot_st_sold_0"></td><td class="c" id="ot_st_sold_1"></td><td class="c" id="ot_st_sold_2"></td><td class="c" id="ot_st_sold_3"></td><td class="c" id="ot_st_sold_4"></td><td class="c" id="ot_st_sold_5"></td><td class="c" id="ot_st_sold_6"></td><td class="c" id="ot_st_sold_7"></td><td class="c" id="ot_st_sold_8"></td><td></td></tr>
-<tr class="sb"><td>Estoque final</td><td class="c" id="ot_st_end_0"></td><td class="c" id="ot_st_end_1"></td><td class="c" id="ot_st_end_2"></td><td class="c" id="ot_st_end_3"></td><td class="c" id="ot_st_end_4"></td><td class="c" id="ot_st_end_5"></td><td class="c" id="ot_st_end_6"></td><td class="c" id="ot_st_end_7"></td><td class="c" id="ot_st_end_8"></td><td></td></tr>
+<thead><tr><th>Estoque final</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th></th></tr></thead>
+<tbody><tr class="sb"><td>Estoque final</td><td class="c" id="ot_st_end_0"></td><td class="c" id="ot_st_end_1"></td><td class="c" id="ot_st_end_2"></td><td class="c" id="ot_st_end_3"></td><td class="c" id="ot_st_end_4"></td><td class="c" id="ot_st_end_5"></td><td class="c" id="ot_st_end_6"></td><td class="c" id="ot_st_end_7"></td><td class="c" id="ot_st_end_8"></td><td></td></tr>
 <tr class="sk"><td>Venda média projetada</td><td class="c" id="ot_st_rate_0"></td><td class="c" id="ot_st_rate_1"></td><td class="c" id="ot_st_rate_2"></td><td class="c" id="ot_st_rate_3"></td><td class="c" id="ot_st_rate_4"></td><td class="c" id="ot_st_rate_5"></td><td class="c" id="ot_st_rate_6"></td><td class="c" id="ot_st_rate_7"></td><td class="c" id="ot_st_rate_8"></td><td></td></tr>
 <tr class="hl"><td>Cobertura (trimestres)</td><td class="c" id="ot_st_cov_0"></td><td class="c" id="ot_st_cov_1"></td><td class="c" id="ot_st_cov_2"></td><td class="c" id="ot_st_cov_3"></td><td class="c" id="ot_st_cov_4"></td><td class="c" id="ot_st_cov_5"></td><td class="c" id="ot_st_cov_6"></td><td class="c" id="ot_st_cov_7"></td><td class="c" id="ot_st_cov_8"></td><td></td></tr></tbody></table></div>
 <div class="tiles" style="margin-top:14px">
@@ -768,10 +775,20 @@ function calc(){
     for(let q=0;q<NQ;q++) $(`su_${ch}_${q}`).textContent=sold[ch][q]?N(sold[ch][q]):'—';
     $(`su_${ch}_t`).textContent=N(tot);
   });
+  const unQ=[], avail=[], bal=[]; let carry=totImp; const negQ=[];
   for(let q=0;q<NQ;q++){
     let sQ=0; CH.forEach(ch=>sQ+=sold[ch][q]);
+    unQ[q]=sQ;
     $('sq_'+q).textContent=sQ?N(sQ):'—';
+    // saldo cronológico: a reposição só libera venda do trimestre dela em diante
+    avail[q]=carry+rp[q]; bal[q]=avail[q]-sQ; carry=bal[q];
+    $('mv_av_'+q).textContent=N(avail[q]);
+    const be=$('mv_bal_'+q);
+    be.textContent=N(bal[q]); be.className='c '+(bal[q]<0?'neg':'');
+    if(bal[q]<0) negQ.push(`${QLAB[q]}: ${N(bal[q])}`);
   }
+  $('w_stock').className='warn'+(negQ.length?' on':'');
+  if(negQ.length) $('w_stock_d').textContent=negQ.join(' · ');
   let totSold=0; CH.forEach(ch=>sold[ch].forEach(v=>totSold+=v));
   $('sq_t').textContent=N(totSold);
   $('w_sell').className='warn'+(overSell.length?' on':'');
@@ -841,16 +858,13 @@ function calc(){
   // que diluía a média com trimestres vazios e deixava o alerta mudo)
   const win=Math.max(1,Math.round(covT));
   const stIni=[],stEnd=[],cov=[],rate=[];
-  let sIni=totImp;
   for(let q=0;q<NQ;q++){
-    stIni[q]=sIni+rp[q]; stEnd[q]=Math.max(0,stIni[q]-un[q]); sIni=stEnd[q];
+    stIni[q]=avail[q]; stEnd[q]=bal[q];
     let fut=0,nf=0;
     for(let j=q+1;j<NQ&&nf<win;j++){ fut+=un[j]; nf++; }
     rate[q]=nf>0?fut/nf:0;
-    cov[q]=rate[q]>0?stEnd[q]/rate[q]:(stEnd[q]>0?Infinity:0);
-    $(`ot_st_ini_${q}`).textContent=N(stIni[q]);
-    $(`ot_st_sold_${q}`).textContent=un[q]?N(un[q]):'—';
-    $(`ot_st_end_${q}`).textContent=N(stEnd[q]);
+    cov[q]=rate[q]>0?Math.max(0,stEnd[q])/rate[q]:(stEnd[q]>0?Infinity:0);
+    const ee=$(`ot_st_end_${q}`); ee.textContent=N(stEnd[q]); ee.className='c '+(stEnd[q]<0?'neg':'');
     $(`ot_st_rate_${q}`).textContent=rate[q]>0?N(Math.round(rate[q])):'—';
     const ce=$(`ot_st_cov_${q}`);
     ce.textContent=cov[q]===Infinity?'∞':D1(cov[q]);
@@ -866,17 +880,17 @@ function calc(){
   $('w_otb').className='warn'+(mudo?' on':'');
   if(mudo) $('w_otb_d').textContent=L.nodem.replace('{q}',QLAB[lastSale+1]);
   if(alert>=0){
-    const need=Math.max(0,Math.round(rate[alert]*covT-stEnd[alert]));
+    const need=Math.max(0,Math.round(rate[alert]*covT-Math.max(0,stEnd[alert])));
     const oq=alert-lead;
     const unitCost=(totImp+rpTot)>0?(tInv+rpVal)/(totImp+rpTot):0;
     $('ot_alert').textContent=QLAB[alert]; $('ot_alert').className='v neg';
-    $('ot_alert_s').textContent=N(stEnd[alert])+' un · '+D1(cov[alert])+' / '+covT+' · '
+    $('ot_alert_s').textContent=N(Math.max(0,stEnd[alert]))+' un · '+D1(cov[alert])+' / '+covT+' · '
       +N(Math.round(rate[alert]))+' un/T '+L.otbrate;
     $('ot_order').textContent=oq>=0?QLAB[oq]:QLAB[0]; $('ot_order').className='v'+(oq<0?' neg':'');
     $('ot_order_s').textContent=oq<0?L.otbnow:('lead time '+lead+'T');
     $('ot_size').textContent=N(need)+' un';
     $('ot_size_s').textContent=R(need*unitCost)+' '+L.atcost2+' · '+L.otbcalc+': '
-      +N(Math.round(rate[alert]))+' × '+D1(covT)+' − '+N(stEnd[alert]);
+      +N(Math.round(rate[alert]))+' × '+D1(covT)+' − '+N(Math.max(0,stEnd[alert]));
     let mix='';
     if(need>0&&totSold>0){
       mix=CATS.filter(c=>catSold[c]>0).map(c=>`${c} ${N(Math.round(need*catSold[c]/totSold))}`).join(' · ');
@@ -1079,11 +1093,13 @@ function migrate(a){
   if(a.length===505) a=a.slice(0,4).concat(['23'], a.slice(17));
   // v13: reposição de estoque (9 trimestres + custo unitário) entra antes de lead/cobertura
   if(a.length===493) a=a.slice(0,389).concat(['0','0','0','0','0','0','0','0','0',''], a.slice(389));
+  // v14: reposição sobe para o item 4 (antes do sell-out) e entra o carimbo de versão no índice 0
+  if(a.length===503) a=['14'].concat(a.slice(0,227), a.slice(389,399), a.slice(227,389), a.slice(399));
   return a;
 }
 // converte o bloco de sell-out de % para unidades usando a alocação do próprio cenário
 function pctToUnits(a){
-  if(!a||a.length!==503) return a;
+  if(!a||a.length!==504) return a;
   const out=a.slice();
   for(let ch=0;ch<3;ch++) for(let ci=0;ci<6;ci++){
     const al=parseFloat(a[208+ci*3+ch])||0;
