@@ -216,7 +216,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 </div>
 <div class="note" style="margin-top:8px">Os dados são gravados automaticamente neste navegador enquanto você digita, e são os mesmos nos três idiomas — trocar de idioma troca só os rótulos, nunca os números. Para não depender de um único computador, use <b>Baixar cenário</b> (gera um arquivo .json que você guarda no Drive ou manda por e-mail) ou <b>Copiar link do cenário</b>. Você também pode salvar várias versões com nome — conservador, otimista — e alternar entre elas. <span style="opacity:.7">Campos em amarelo são editáveis · o resto é calculado · alterações salvas neste navegador</span></div>
 
-<input class="e" type="hidden" id="ver" value="14">
+<input class="e" type="hidden" id="ver" value="15">
 <h2 id="h1" onclick="tog('s1')"><span class="chev">▾</span>1. Premissas gerais</h2>
 <div class="sec" id="s1">
 <table style="width:auto">
@@ -372,6 +372,19 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
   <span class="sep"></span>
   <span class="sk">Reposto no período</span> <b id="rp_v"></b>
 </div>
+<div class="warn" id="w_ra">Reposição alocada acima do total reposto — <span id="w_ra_d"></span></div>
+<div class="ttl" style="margin:2px 0 6px">Alocação da reposição</div>
+<div class="scroll"><table style="min-width:620px;max-width:820px;margin-bottom:6px">
+<thead><tr><th>Unidades alocadas</th><th class="c">Showroom</th><th class="c">Matalab (atacado)</th><th class="c">E-commerce</th><th class="num">Total</th></tr></thead>
+<tbody><tr><td>Calçados</td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_sh_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_mt_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_ec_0" value="0" oninput="calc()"></td><td class="num" id="rat_0"></td></tr>
+<tr><td>Cintos</td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_sh_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_mt_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_ec_1" value="0" oninput="calc()"></td><td class="num" id="rat_1"></td></tr>
+<tr><td>Marroquinaria</td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_sh_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_mt_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_ec_2" value="0" oninput="calc()"></td><td class="num" id="rat_2"></td></tr>
+<tr><td>Camperas</td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_sh_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_mt_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_ec_3" value="0" oninput="calc()"></td><td class="num" id="rat_3"></td></tr>
+<tr><td>Bonés</td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_sh_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_mt_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_ec_4" value="0" oninput="calc()"></td><td class="num" id="rat_4"></td></tr>
+<tr><td>Acessórios</td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_sh_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_mt_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="ra_ec_5" value="0" oninput="calc()"></td><td class="num" id="rat_5"></td></tr>
+<tr class="tot"><td>Total</td><td class="c" id="rac_sh"></td><td class="c" id="rac_mt"></td><td class="c" id="rac_ec"></td><td class="num" id="rat_t"></td></tr>
+<tr class="sb"><td>A alocar</td><td class="c sk" colspan="3" id="ra_rep"></td><td class="num" id="ra_free"></td></tr></tbody></table></div>
+<div class="note" style="margin:0 0 14px">Distribua o total reposto entre categorias e pontos de venda, como no item 3. É isso que define o teto de venda de cada linha da grade abaixo — sem essa distribuição, a ferramenta não sabe para qual estoque foi a segunda remessa.</div>
 <div class="scroll"><table>
 <thead><tr><th>Estoque e vendas por trimestre</th><th class="c">Q3 26</th><th class="c">Q4 26</th><th class="c">Q1 27</th><th class="c">Q2 27</th><th class="c">Q3 27</th><th class="c">Q4 27</th><th class="c">Q1 28</th><th class="c">Q2 28</th><th class="c">Q3 28</th><th class="num">Acumulado</th></tr></thead>
 <tbody><tr class="cat"><td colspan="11">Movimento de estoque</td></tr><tr><td>Estoque disponível</td><td class="c sk" id="mv_av_0"></td><td class="c sk" id="mv_av_1"></td><td class="c sk" id="mv_av_2"></td><td class="c sk" id="mv_av_3"></td><td class="c sk" id="mv_av_4"></td><td class="c sk" id="mv_av_5"></td><td class="c sk" id="mv_av_6"></td><td class="c sk" id="mv_av_7"></td><td class="c sk" id="mv_av_8"></td><td></td></tr><tr><td>Unidades repostas</td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_0" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_1" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_2" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_3" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_4" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_5" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_6" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_7" value="0" oninput="calc()"></td><td class="c"><input class="e w" type="number" min="0" step="1" id="rp_8" value="0" oninput="calc()"></td><td class="num" id="rp_t"></td></tr><tr class="cat"><td colspan="11">Vendas (unidades)</td></tr>
@@ -527,7 +540,7 @@ const L={never:"não atingido",units:"un/trimestre",
  ofrev:"da receita",sellthru:"sell-through",
  com:"Comunicação",show:"Showroom",
  tot:"Total",inq:"em",
- txper:"no período",rpauto:"em branco = custo médio do catálogo",
+ txper:"no período",rpauto:"em branco = custo médio do catálogo",rarep:"Total reposto",
  confirm:"Confirmar?",reset:"Restaurar padrões",
  none:"— nenhum cenário salvo —",
  scn_at:"salvo em",overwrite:"Sobrescrever?",
@@ -746,6 +759,23 @@ function calc(){
     rp[q]=Math.max(0,V('rp_'+q)); rpV[q]=rp[q]*rpc;
     rpTot+=rp[q]; rpVal+=rpV[q];
   }
+  // alocação da reposição por categoria × canal
+  const rAl={}; CH.forEach(ch=>rAl[ch]={});
+  let rAlTot=0; const rcTot={}; CH.forEach(ch=>rcTot[ch]=0);
+  CATS.forEach((c,ci)=>{
+    let sum=0;
+    CH.forEach(ch=>{ const v=Math.max(0,V(`ra_${ch}_${ci}`)); rAl[ch][c]=v; sum+=v; rcTot[ch]+=v; });
+    $('rat_'+ci).textContent=sum?N(sum):'—';
+    rAlTot+=sum;
+  });
+  CH.forEach(ch=>$('rac_'+ch).textContent=N(rcTot[ch]));
+  $('rat_t').textContent=N(rAlTot);
+  $('ra_rep').textContent=L.rarep+' '+N(rpTot);
+  const raFree=rpTot-rAlTot;
+  const rf=$('ra_free'); rf.textContent=N(raFree); rf.className='num '+(raFree<0?'neg':'');
+  $('w_ra').className='warn'+(raFree<0?' on':'');
+  if(raFree<0) $('w_ra_d').textContent=N(rAlTot)+' / '+N(rpTot);
+
   $('rp_t').textContent=rpTot?N(rpTot)+' '+L.un:'—';
   $('rp_v').textContent=R(rpVal);
   $('rp_ch').textContent=cAvg>0?L.rpauto+' · US$ '+N(Math.round(cAvg/fx)):L.rpauto;
@@ -758,7 +788,7 @@ function calc(){
     CATS.forEach((c,ci)=>{
       soU[ch][ci]=[];
       let uCat=0;
-      const base=alloc[ch][c] + (totAl>0?rpTot*alloc[ch][c]/totAl:0);   // reposição rateada pela alocação
+      const base=alloc[ch][c]+rAl[ch][c];   // estoque inicial + o que a reposição trouxe para esta linha
       for(let q=0;q<NQ;q++){
         const u=Math.max(0,V(`so_${ch}_${ci}_${q}`));
         soU[ch][ci][q]=u; sold[ch][q]+=u; uCat+=u;
@@ -838,7 +868,7 @@ function calc(){
   for(let q=0;q<NQ;q++){ rev[q]=0; cmv[q]=0; un[q]=0; }
   CH.forEach(ch=>{
     CATS.forEach(c=>{
-      const base=alloc[ch][c];
+      const base=alloc[ch][c]+rAl[ch][c];
       if(!base) return;
       const ci=CATS.indexOf(c);
       for(let q=0;q<NQ;q++){
@@ -1095,11 +1125,13 @@ function migrate(a){
   if(a.length===493) a=a.slice(0,389).concat(['0','0','0','0','0','0','0','0','0',''], a.slice(389));
   // v14: reposição sobe para o item 4 (antes do sell-out) e entra o carimbo de versão no índice 0
   if(a.length===503) a=['14'].concat(a.slice(0,227), a.slice(389,399), a.slice(227,389), a.slice(399));
+  // v15: custo unitário sobe, entram as 18 células de alocação da reposição, depois as unidades por trimestre
+  if(a.length===504) a=a.slice(0,228).concat([a[237]], new Array(18).fill('0'), a.slice(228,237), a.slice(238));
   return a;
 }
 // converte o bloco de sell-out de % para unidades usando a alocação do próprio cenário
 function pctToUnits(a){
-  if(!a||a.length!==504) return a;
+  if(!a||a.length!==522) return a;
   const out=a.slice();
   for(let ch=0;ch<3;ch++) for(let ci=0;ci<6;ci++){
     const al=parseFloat(a[208+ci*3+ch])||0;
