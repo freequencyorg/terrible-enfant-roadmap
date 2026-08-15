@@ -216,7 +216,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 </div>
 <div class="note" style="margin-top:8px">Los datos se guardan automáticamente en este navegador mientras escribe, y son los mismos en los tres idiomas — cambiar de idioma cambia solo las etiquetas, nunca los números. Para no depender de una sola computadora, use <b>Descargar escenario</b> (genera un archivo .json que puede guardar en Drive o enviar por correo) o <b>Copiar enlace del escenario</b>. También puede guardar varias versiones con nombre — conservador, optimista — y alternar entre ellas. <span style="opacity:.7">Los campos en amarillo son editables · el resto se calcula · los cambios se guardan en este navegador</span></div>
 
-<input class="e" type="hidden" id="ver" value="15">
+<input class="e" type="hidden" id="ver" value="16">
 <h2 id="h1" onclick="tog('s1')"><span class="chev">▾</span>1. Premisas generales</h2>
 <div class="sec" id="s1">
 <table style="width:auto">
@@ -225,11 +225,15 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 <tr><td>Margen del socio sobre el SRP · Showroom</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="m_sh" value="0" oninput="calc()"></td><td class="sk">%</td></tr>
 <tr><td>Margen del socio sobre el SRP · Matalab (mayorista)</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="m_mt" value="55" oninput="calc()"></td><td class="sk">%</td></tr>
 <tr><td>Margen del socio sobre el SRP · E-commerce</td><td class="num"><input class="e w" type="number" min="0" max="100" step="1" id="m_ec" value="0" oninput="calc()"></td><td class="sk">%</td></tr>
-<tr class="cat"><td colspan="3">Carga tributaria efectiva</td></tr>
-<tr><td>Carga tributaria efectiva
-  <span class="regsw"><button id="rg_sn" onclick="setReg(7)">Simples Nacional</button><button id="rg_lp" onclick="setReg(23)">Lucro Presumido</button></span></td>
-<td class="num"><input class="e w" type="number" min="0" max="100" step="0.5" id="tx_ef" value="23" oninput="calc()"></td>
-<td class="sk">% · <span id="tx_efv"></span></td></tr>
+<tr class="cat"><td colspan="3">Impuestos
+  <span class="regsw"><button id="rg_sn" onclick="setReg(0,7)">Simples Nacional</button><button id="rg_lp" onclick="setReg(26.8,2.3)">Lucro Presumido</button></span></td></tr>
+<tr><td>Sobre el valor agregado (ICMS + CBS)</td>
+<td class="num"><input class="e w" type="number" min="0" max="100" step="0.1" id="tx_va" value="26.8" oninput="calc()"></td>
+<td class="sk">%</td></tr>
+<tr><td>Sobre los ingresos (IRPJ + CSLL)</td>
+<td class="num"><input class="e w" type="number" min="0" max="100" step="0.1" id="tx_rev" value="2.3" oninput="calc()"></td>
+<td class="sk">%</td></tr>
+<tr class="sb"><td>carga efectiva</td><td class="num" id="tx_efp"></td><td class="sk">% · <span id="tx_efv"></span></td></tr>
 <tr class="cat"><td colspan="3">Inversión ya realizada (<span class="cl">R$</span>)</td></tr>
 <tr class="cat"><td colspan="3" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Comunicación</td></tr>
 <tr><td>Creative direction fee 2025</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_1" value="0" oninput="calc()"></td><td class="sk cl">R$</td></tr>
@@ -245,7 +249,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 </table>
 <div class="note" style="margin-top:12px">La moneda de visualización cambia todos los valores calculados y los campos de costo en reales. Los precios de catálogo se siguen cargando en dólares. El tipo de cambio es el de las premisas.</div>
 <div class="note">Capital aplicado antes del inicio del horizonte (septiembre 2026). Entra en la base de cálculo del ROI y del repago, pero no pasa por el estado de resultados de los trimestres proyectados.</div>
-<div class="note">Un solo número sobre los ingresos brutos facturados. En el Lucro Presumido de comercio, el 23% surge del ICMS neto de crédito (~14%), la CBS de 8,8% desde 2027 sobre el valor agregado (~5,6%) e IRPJ más CSLL por la presunción del comercio (~2,3%); en los dos primeros trimestres PIS y COFINS suman 3,65% en lugar de la CBS, lo que da casi lo mismo. El campo es editable.</div>
+<div class="note">Dos números. ICMS y CBS son no acumulativos: se aplican sobre los ingresos menos el CMV, es decir solo sobre el valor agregado — así entra el crédito de la importación, y por eso un costo nacionalizado mayor devuelve más crédito. IRPJ y CSLL se aplican sobre los ingresos brutos por la presunción del comercio. En Lucro Presumido de comercio eso da 26,8% y 2,3%; en Simples sería 0% y ~7%, porque allí no hay crédito para apropiar. Ambos editables.</div>
 </div>
 
 <h2 id="h2" onclick="tog('s2')"><span class="chev">▾</span>2. Catálogo e inversión en stock</h2>
@@ -938,13 +942,16 @@ function calc(){
 
   // ---------- DRE
   const tax=[],net=[],mc=[],eb=[],cum=[],rtA=[];
-  const efr=Math.max(0,V('tx_ef'))/100;              // carga tributária efetiva, um número só
+  // ICMS e CBS são não-cumulativos (incidem sobre receita − CMV, logo creditam a importação);
+  // IRPJ e CSLL incidem sobre a receita bruta
+  const rVA=Math.max(0,V('tx_va'))/100, rREV=Math.max(0,V('tx_rev'))/100;
   regLabel();
   const invTotal=tInv+rzT+rpVal;
   let acc=-(tInv+rzT), payback=-1;   // a reposição sai do caixa no trimestre em que é comprada
   const byYear={};
   for(let q=0;q<NQ;q++){
-    tax[q]=rev[q]*efr; rtA[q]=efr;
+    tax[q]=Math.max(0,rev[q]-cmv[q])*rVA + rev[q]*rREV;
+    rtA[q]=rev[q]>0?tax[q]/rev[q]:0;
     net[q]=rev[q]-tax[q]; mc[q]=net[q]-cmv[q];
     eb[q]=mc[q]-com[q]-fee[q]-op[q];
     acc+=eb[q]-rpV[q]; cum[q]=acc;
@@ -956,6 +963,7 @@ function calc(){
     $(`d_${k}_t`).textContent=R(s); return s; };
   const Trev=put('rev',rev); const Ttax=put('tax',tax.map(v=>-v)); put('net',net);
   $('tx_efv').textContent=R(-Ttax)+' '+L.txper;
+  $('tx_efp').textContent=Trev>0?P(-Ttax/Trev):'—';
   put('cmv',cmv.map(v=>-v)); const Tmc=put('mc',mc);
   put('com',com.map(v=>-v)); put('fee',fee.map(v=>-v)); put('op',op.map(v=>-v));
   const Teb=put('eb',eb);
@@ -1036,11 +1044,11 @@ function calc(){
 }
 
 // chave de comparação entre regimes: só troca a carga efetiva
-function setReg(v){ const e=$('tx_ef'); e.value=String(v); calc(); }
+function setReg(va,rv){ $('tx_va').value=String(va); $('tx_rev').value=String(rv); calc(); }
 function regLabel(){
-  const v=V('tx_ef'), near=(a,b)=>Math.abs(a-b)<0.05;
-  $('rg_sn').className=near(v,7)?'on':'';
-  $('rg_lp').className=near(v,23)?'on':'';
+  const a=V('tx_va'), b=V('tx_rev'), near=(x,y)=>Math.abs(x-y)<0.05;
+  $('rg_sn').className=(near(a,0)&&near(b,7))?'on':'';
+  $('rg_lp').className=(near(a,26.8)&&near(b,2.3))?'on':'';
 }
 function tog(id){
   const s=$(id), h=s.previousElementSibling;
@@ -1127,11 +1135,18 @@ function migrate(a){
   if(a.length===503) a=['14'].concat(a.slice(0,227), a.slice(389,399), a.slice(227,389), a.slice(399));
   // v15: custo unitário sobe, entram as 18 células de alocação da reposição, depois as unidades por trimestre
   if(a.length===504) a=a.slice(0,228).concat([a[237]], new Array(18).fill('0'), a.slice(228,237), a.slice(238));
+  // v16: a carga única vira duas — sobre o valor agregado (não-cumulativa) e sobre a receita
+  if(a.length===522){
+    const r=parseFloat(a[5])||0;
+    const par = r<=10 ? ['0', String(r)]                       // Simples: tudo sobre a receita
+                      : [String(Math.round(Math.max(0,(r-2.3)/0.78)*10)/10), '2.3'];
+    a=a.slice(0,5).concat(par, a.slice(6));
+  }
   return a;
 }
 // converte o bloco de sell-out de % para unidades usando a alocação do próprio cenário
 function pctToUnits(a){
-  if(!a||a.length!==522) return a;
+  if(!a||a.length!==523) return a;
   const out=a.slice();
   for(let ch=0;ch<3;ch++) for(let ci=0;ci<6;ci++){
     const al=parseFloat(a[208+ci*3+ch])||0;
