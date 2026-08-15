@@ -963,7 +963,7 @@ function calc(){
     $(`d_${k}_t`).textContent=R(s); return s; };
   const Trev=put('rev',rev); const Ttax=put('tax',tax.map(v=>-v)); put('net',net);
   $('tx_efv').textContent=R(-Ttax)+' '+L.txper;
-  $('tx_efp').textContent=Trev>0?P(-Ttax/Trev):'—';
+  $('tx_efp').textContent=Trev>0?P(-Ttax/Trev).replace('%',''):'—';
   put('cmv',cmv.map(v=>-v)); const Tmc=put('mc',mc);
   put('com',com.map(v=>-v)); put('fee',fee.map(v=>-v)); put('op',op.map(v=>-v));
   const Teb=put('eb',eb);
