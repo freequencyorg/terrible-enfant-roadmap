@@ -216,7 +216,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 </div>
 <div class="note" style="margin-top:8px">Los datos se guardan automáticamente en este navegador mientras escribe, y son los mismos en los tres idiomas — cambiar de idioma cambia solo las etiquetas, nunca los números. Para no depender de una sola computadora, use <b>Descargar escenario</b> (genera un archivo .json que puede guardar en Drive o enviar por correo) o <b>Copiar enlace del escenario</b>. También puede guardar varias versiones con nombre — conservador, optimista — y alternar entre ellas. <span style="opacity:.7">Los campos en amarillo son editables · el resto se calcula · los cambios se guardan en este navegador</span></div>
 
-<input class="e" type="hidden" id="ver" value="16">
+<input class="e" type="hidden" id="ver" value="17">
 <h2 id="h1" onclick="tog('s1')"><span class="chev">▾</span>1. Premisas generales</h2>
 <div class="sec" id="s1">
 <table style="width:auto">
@@ -369,6 +369,15 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 <div style="margin:0 0 12px"><button class="btn" id="clrb" onclick="clearSales()">Poner ventas en cero</button></div>
 <div class="warn" id="w_sell">Ventas por encima del stock asignado — <span id="w_sell_d"></span></div>
 <div class="warn" id="w_stock">Venta por encima del stock disponible en el trimestre — <span id="w_stock_d"></span></div>
+<div class="rpbar">
+  <span>Sell-out máximo sobre el stock disponible</span>
+  <input class="e" type="number" min="0" max="100" step="1" id="so_max" value="88" oninput="calc()">
+  <span class="sk">%</span>
+  <span class="sep"></span>
+  <span class="sk">sell-through realizado</span> <b id="st_real"></b>
+  <span class="sk" id="st_ch"></span>
+</div>
+<div class="warn" id="w_st">Sell-out por encima del techo — el escenario asume que casi todo el stock se vende — <span id="w_st_d"></span></div>
 <div class="rpbar">
   <span>Costo unitario de la reposición</span>
   <input class="e" type="number" min="0" step="1" id="rp_c" value="" oninput="calc()">
@@ -543,7 +552,7 @@ const L={never:"no alcanzado",units:"un/trimestre",
  ofimp:"de lo importado",invested:"invertidos",
  ofrev:"de los ingresos",sellthru:"sell-through",
  com:"Comunicación",show:"Showroom",
- tot:"Total",inq:"en",
+ tot:"Total",stceil:"techo",inq:"en",
  txper:"en el período",rpauto:"en blanco = costo promedio del catálogo",rarep:"Total repuesto",
  confirm:"¿Confirmar?",reset:"Restaurar valores",
  none:"— sin escenarios guardados —",
@@ -785,14 +794,15 @@ function calc(){
   $('rp_ch').textContent=cAvg>0?L.rpauto+' · US$ '+N(Math.round(cAvg/fx)):L.rpauto;
 
   // ---------- vendas em unidades por categoria × canal
-  const soU={}, sold={}, overSell=[];
+  const soU={}, sold={}, overSell=[], stSold={}, stAvail={};
   CH.forEach(ch=>{
     soU[ch]=[]; sold[ch]=new Array(NQ).fill(0);
-    let tot=0;
+    let tot=0, av=0;
     CATS.forEach((c,ci)=>{
       soU[ch][ci]=[];
       let uCat=0;
       const base=alloc[ch][c]+rAl[ch][c];   // estoque inicial + o que a reposição trouxe para esta linha
+      av+=base;
       for(let q=0;q<NQ;q++){
         const u=Math.max(0,V(`so_${ch}_${ci}_${q}`));
         soU[ch][ci][q]=u; sold[ch][q]+=u; uCat+=u;
@@ -808,6 +818,7 @@ function calc(){
     });
     for(let q=0;q<NQ;q++) $(`su_${ch}_${q}`).textContent=sold[ch][q]?N(sold[ch][q]):'—';
     $(`su_${ch}_t`).textContent=N(tot);
+    stSold[ch]=tot; stAvail[ch]=av;
   });
   const unQ=[], avail=[], bal=[]; let carry=totImp; const negQ=[];
   for(let q=0;q<NQ;q++){
@@ -827,6 +838,25 @@ function calc(){
   $('sq_t').textContent=N(totSold);
   $('w_sell').className='warn'+(overSell.length?' on':'');
   if(overSell.length) $('w_sell_d').textContent=overSell.join(' · ');
+
+  // ---------- teto de sell-out: nem todo estoque escoa dentro da janela
+  const stMax=Math.max(0,Math.min(100,V('so_max')))/100;
+  const stTotU=totImp+rpTot;                       // tudo que entrou: importação inicial + reposições
+  const stT=stTotU>0?totSold/stTotU:0;
+  // o teto morde no TOTAL: estoque circula entre canais, então o excesso de um canal
+  // isolado não é violação — isso quem pega é o aviso de venda acima do estoque alocado
+  const overST=[];
+  if(stT>stMax+0.001) overST.push(`${P0(stT)} ${L.sellthru}`);
+  const stParts=CH.map(ch=>{
+    const st=stAvail[ch]>0?stSold[ch]/stAvail[ch]:0;
+    return `${CHL[ch]} ${stAvail[ch]>0?P0(st):'—'}`;
+  });
+  const stE=$('st_real');
+  stE.textContent=stTotU>0?P0(stT):'—';
+  stE.className=stT>stMax+0.001?'neg':'';
+  $('st_ch').textContent=' · '+stParts.join(' · ');
+  $('w_st').className='warn'+(overST.length?' on':'');
+  if(overST.length) $('w_st_d').textContent=overST.join(' · ')+` (${L.stceil} ${P0(stMax)})`;
 
   // ---------- comunicação
   const com=[]; const grpT={b:[],p:[]};
@@ -1142,16 +1172,19 @@ function migrate(a){
                       : [String(Math.round(Math.max(0,(r-2.3)/0.78)*10)/10), '2.3'];
     a=a.slice(0,5).concat(par, a.slice(6));
   }
+  // v17: teto de sell-out sobre o estoque disponível, logo antes do custo de reposição
+  // (checagem DEPOIS da v16: a cadeia só funciona em ordem crescente de comprimento)
+  if(a.length===523) a=a.slice(0,229).concat(['88'], a.slice(229));
   return a;
 }
 // converte o bloco de sell-out de % para unidades usando a alocação do próprio cenário
 function pctToUnits(a){
-  if(!a||a.length!==523) return a;
+  if(!a||a.length!==524) return a;
   const out=a.slice();
   for(let ch=0;ch<3;ch++) for(let ci=0;ci<6;ci++){
-    const al=parseFloat(a[208+ci*3+ch])||0;
+    const al=parseFloat(a[211+ci*3+ch])||0;
     for(let q=0;q<NQ;q++){
-      const i=226+ch*54+ci*9+q;
+      const i=258+ch*54+ci*9+q;
       out[i]=String(Math.round(al*(parseFloat(a[i])||0)/100));
     }
   }
