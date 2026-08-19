@@ -216,7 +216,7 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 </div>
 <div class="note" style="margin-top:8px">Os dados são gravados automaticamente neste navegador enquanto você digita, e são os mesmos nos três idiomas — trocar de idioma troca só os rótulos, nunca os números. Para não depender de um único computador, use <b>Baixar cenário</b> (gera um arquivo .json que você guarda no Drive ou manda por e-mail) ou <b>Copiar link do cenário</b>. Você também pode salvar várias versões com nome — conservador, otimista — e alternar entre elas. <span style="opacity:.7">Campos em amarelo são editáveis · o resto é calculado · alterações salvas neste navegador</span></div>
 
-<input class="e" type="hidden" id="ver" value="18">
+<input class="e" type="hidden" id="ver" value="19">
 <h2 id="h1" onclick="tog('s1')"><span class="chev">▾</span>1. Premissas gerais</h2>
 <div class="sec" id="s1">
 <table style="width:auto">
@@ -254,6 +254,9 @@ table td:first-child,table th:first-child{white-space:normal;min-width:110px}
 <tr><td>Aluguel do showroom pago</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_5" value="0" oninput="calc()"></td><td class="sk cl">R$</td></tr>
 <tr><td>Investimento em reforma do showroom</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_6" value="0" oninput="calc()"></td><td class="sk cl">R$</td></tr>
 <tr class="sb"><td>Subtotal Showroom</td><td class="num" id="rz_st"></td><td class="sk cl">R$</td></tr>
+<tr class="cat"><td colspan="3" style="font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)">Aporte de sócios</td></tr>
+<tr><td>Comando (Argentina)</td><td class="num"><input class="e n" type="number" min="0" step="1000" id="rz_7" value="0" oninput="calc()"></td><td class="sk cl">R$</td></tr>
+<tr class="sb"><td>Subtotal Aporte de sócios</td><td class="num" id="rz_at"></td><td class="sk cl">R$</td></tr>
 <tr class="tot"><td>Total</td><td class="num" id="rz_t"></td><td class="sk cl">R$</td></tr>
 </table>
 <div class="note" style="margin-top:12px">A moeda de exibição muda todos os valores calculados e os campos de custo em reais. Os preços de catálogo continuam sendo lançados em dólar. O câmbio é o mesmo das premissas.</div>
@@ -560,7 +563,7 @@ const L={never:"não atingido",units:"un/trimestre",
  sold:"un vendidas",atcost:"a custo",
  ofimp:"do importado",invested:"investidos",
  ofrev:"da receita",sellthru:"sell-through",
- com:"Comunicação",show:"Showroom",
+ com:"Comunicação",show:"Showroom",apt:"Aporte de sócios",
  tot:"Total",stceil:"teto",inq:"em",
  txper:"no período",rpauto:"em branco = custo médio do catálogo",rarep:"Total reposto",
  confirm:"Confirmar?",reset:"Restaurar padrões",
@@ -722,8 +725,10 @@ function fillQty(ci){
 function calc(){
   const fx=V('fx')||1;
   const mg={sh:V('m_sh')/100, mt:V('m_mt')/100, ec:V('m_ec')/100};
-  const rzC=V('rz_1')+V('rz_2')+V('rz_3')+V('rz_4'), rzS=V('rz_5')+V('rz_6'), rzT=rzC+rzS;
-  $('rz_ct').textContent=NM(rzC); $('rz_st').textContent=NM(rzS); $('rz_t').textContent=NM(rzT);
+  const rzC=V('rz_1')+V('rz_2')+V('rz_3')+V('rz_4'), rzS=V('rz_5')+V('rz_6'),
+        rzA=V('rz_7'), rzT=rzC+rzS+rzA;
+  $('rz_ct').textContent=NM(rzC); $('rz_st').textContent=NM(rzS);
+  $('rz_at').textContent=NM(rzA); $('rz_t').textContent=NM(rzT);
 
   // ---------- catálogo
   const A={}; CATS.forEach(c=>A[c]={q:0,su:0,cu:0,sq:0,cq:0,inv:0,n:0});
@@ -1024,7 +1029,9 @@ function calc(){
   // ---------- indicadores
   const totUn0=totImp+rpTot;
   $('k_inv').textContent=Rk(invTotal);
-  $('k_inv_s').textContent=L.stock+' '+Rk(tInv+rpVal)+(rzT>0?` · ${L.com} ${Rk(rzC)} · ${L.show} ${Rk(rzS)}`:'');
+  $('k_inv_s').textContent=L.stock+' '+Rk(tInv+rpVal)
+    +(rzC>0?` · ${L.com} ${Rk(rzC)}`:'')+(rzS>0?` · ${L.show} ${Rk(rzS)}`:'')
+    +(rzA>0?` · ${L.apt} ${Rk(rzA)}`:'');
   $('k_rev').textContent=Rk(Trev);
   $('k_rev_s').textContent=N(totSold)+' '+L.sold+(totUn0>0?' · '+L.sellthru+' '+P0(totSold/totUn0):'');
   $('k_eb').textContent=Rk(Teb); $('k_eb').className='v '+sig(Teb);
@@ -1198,16 +1205,18 @@ function migrate(a){
   // v18: 2026 ganha alíquotas próprias (PIS/COFINS ainda cumulativos) e entra o crédito
   // de CBS/IBS sobre despesas; o par antigo passa a valer só de 2027 em diante
   if(a.length===524) a=a.slice(0,5).concat(['18','5.93'], [a[5], a[6]], ['0'], a.slice(7));
+  // v19: aporte de sócios entra logo depois do bloco de showroom do "já investido"
+  if(a.length===527) a=a.slice(0,16).concat(['0'], a.slice(16));
   return a;
 }
 // converte o bloco de sell-out de % para unidades usando a alocação do próprio cenário
 function pctToUnits(a){
-  if(!a||a.length!==527) return a;
+  if(!a||a.length!==528) return a;
   const out=a.slice();
   for(let ch=0;ch<3;ch++) for(let ci=0;ci<6;ci++){
-    const al=parseFloat(a[214+ci*3+ch])||0;
+    const al=parseFloat(a[215+ci*3+ch])||0;
     for(let q=0;q<NQ;q++){
-      const i=261+ch*54+ci*9+q;
+      const i=262+ch*54+ci*9+q;
       out[i]=String(Math.round(al*(parseFloat(a[i])||0)/100));
     }
   }
