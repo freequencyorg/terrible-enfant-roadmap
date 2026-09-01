@@ -64,7 +64,7 @@
   .bhead .bsub{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
   .brow{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:11px 20px;border-bottom:1px solid var(--line);font-size:14.5px;color:var(--ink-2)}
   .brow .bnote{display:block;font-size:12px;color:var(--ink-3);margin-top:2px}
-  .brow input.money,.brow input.usdmoney,.brow input.team{width:150px;text-align:right;font-family:var(--sans);font-size:14.5px;padding:8px 10px;border:1px solid #5a5a5a;background:#222;color:var(--ink);border-radius:0}
+  .brow input.money,.brow input.usdmoney,.brow input.team{width:160px;font-variant-numeric:tabular-nums;text-align:right;font-family:var(--sans);font-size:14.5px;padding:8px 10px;border:1px solid #5a5a5a;background:#222;color:var(--ink);border-radius:0}
   .brow input:focus{border-color:var(--accent);outline:none}
   .brow input::placeholder{color:#6a6a6a}
   .brow .fee-flag{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line);padding:5px 11px;white-space:nowrap}
@@ -195,52 +195,52 @@
 
     <div class="btable">
       <div class="bhead"><h4>Fase 1 · Lanzamiento para prensa — showroom</h4><span class="bsub">Soft opening</span></div>
-      <div class="brow"><span>Media partner</span><input class="money" data-group="f1" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Producción del evento</span><input class="money" data-group="f1" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Contenido (foto + video)</span><input class="money" data-group="f1" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Seeding</span><input class="money" data-group="f1" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>F&amp;B</span><input class="money" data-group="f1" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Otros</span><input class="money" data-group="f1" type="number" min="0" step="100" placeholder="R$"></div>
+      <div class="brow"><span>Media partner</span><input class="money" data-group="f1" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Producción del evento</span><input class="money" data-group="f1" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Contenido (foto + video)</span><input class="money" data-group="f1" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Seeding</span><input class="money" data-group="f1" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>F&amp;B</span><input class="money" data-group="f1" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Otros</span><input class="money" data-group="f1" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
       <div class="bsubtotal"><span>Subtotal fase 1</span><b data-subtotal="f1">R$ 0</b></div>
     </div>
     <div class="btable">
       <div class="bhead"><h4>Fase 2 · Lanzamiento de los productos — Matalab</h4><span class="bsub">Matalab</span></div>
-      <div class="brow"><span>Media partner</span><input class="money" data-group="f2" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Producción del evento</span><input class="money" data-group="f2" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Contenido (foto + video)</span><input class="money" data-group="f2" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Seeding</span><input class="money" data-group="f2" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>F&amp;B</span><input class="money" data-group="f2" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Otros</span><input class="money" data-group="f2" type="number" min="0" step="100" placeholder="R$"></div>
+      <div class="brow"><span>Media partner</span><input class="money" data-group="f2" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Producción del evento</span><input class="money" data-group="f2" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Contenido (foto + video)</span><input class="money" data-group="f2" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Seeding</span><input class="money" data-group="f2" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>F&amp;B</span><input class="money" data-group="f2" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Otros</span><input class="money" data-group="f2" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
       <div class="bsubtotal"><span>Subtotal fase 2</span><b data-subtotal="f2">R$ 0</b></div>
     </div>
     <div class="btable">
       <div class="bhead"><h4>Fase 3 · Collab Edgar</h4><span class="bsub">Collab</span></div>
-      <div class="brow"><span>Media partner</span><input class="money" data-group="f3" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Producción del evento</span><input class="money" data-group="f3" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Contenido (foto + video)</span><input class="money" data-group="f3" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Seeding</span><input class="money" data-group="f3" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>F&amp;B</span><input class="money" data-group="f3" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Otros</span><input class="money" data-group="f3" type="number" min="0" step="100" placeholder="R$"></div>
+      <div class="brow"><span>Media partner</span><input class="money" data-group="f3" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Producción del evento</span><input class="money" data-group="f3" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Contenido (foto + video)</span><input class="money" data-group="f3" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Seeding</span><input class="money" data-group="f3" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>F&amp;B</span><input class="money" data-group="f3" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Otros</span><input class="money" data-group="f3" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
       <div class="bsubtotal"><span>Subtotal fase 3</span><b data-subtotal="f3">R$ 0</b></div>
     </div>
     <div class="btable">
       <div class="bhead"><h4>Fase 4 · NTS — semana del SPFW</h4><span class="bsub">14–18 oct 2026</span></div>
-      <div class="brow"><span>Media partner</span><input class="money" data-group="f4" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Producción del evento</span><input class="money" data-group="f4" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Contenido (foto + video)</span><input class="money" data-group="f4" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Seeding</span><input class="money" data-group="f4" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>F&amp;B</span><input class="money" data-group="f4" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Otros</span><input class="money" data-group="f4" type="number" min="0" step="100" placeholder="R$"></div>
+      <div class="brow"><span>Media partner</span><input class="money" data-group="f4" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Producción del evento</span><input class="money" data-group="f4" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Contenido (foto + video)</span><input class="money" data-group="f4" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Seeding</span><input class="money" data-group="f4" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>F&amp;B</span><input class="money" data-group="f4" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Otros</span><input class="money" data-group="f4" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
       <div class="bsubtotal"><span>Subtotal fase 4</span><b data-subtotal="f4">R$ 0</b></div>
     </div>
     <div class="btable">
       <div class="bhead"><h4>Fase 5 · Sello Risco + conexión Mentor</h4><span class="bsub">Fin de año</span></div>
-      <div class="brow"><span>Media partner</span><input class="money" data-group="f5" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Producción del evento</span><input class="money" data-group="f5" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Contenido (foto + video)</span><input class="money" data-group="f5" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Seeding</span><input class="money" data-group="f5" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>F&amp;B</span><input class="money" data-group="f5" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Otros</span><input class="money" data-group="f5" type="number" min="0" step="100" placeholder="R$"></div>
+      <div class="brow"><span>Media partner</span><input class="money" data-group="f5" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Producción del evento</span><input class="money" data-group="f5" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Contenido (foto + video)</span><input class="money" data-group="f5" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Seeding</span><input class="money" data-group="f5" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>F&amp;B</span><input class="money" data-group="f5" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Otros</span><input class="money" data-group="f5" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
       <div class="brow"><span>Producción del Originals con Mentor</span><span class="fee-flag">Presupuesto aparte · común acuerdo</span></div>
       <div class="bsubtotal"><span>Subtotal fase 5</span><b data-subtotal="f5">R$ 0</b></div>
     </div>
@@ -253,8 +253,8 @@
     <p class="sec-lead">Las dos posiciones definidas para la operación, precargadas con los términos acordados — valor y meses son editables. El PM tiene además 2% de comisión sobre las ventas del showroom (variable, fuera de los totales).</p>
     <div class="btable">
       <div class="teamhead"><span>Posición</span><span>R$ /mes</span><span>2026</span><span>2027</span></div>
-      <div class="teamrow"><span>Project Manager<span class="bnote">+ 2% de comisión sobre ventas del showroom · contrato mínimo de 12 meses</span></span><input class="team tv" type="number" min="0" step="100" value="8500"><input class="team tm" type="number" min="0" max="12" value="4"><input class="team tm" type="number" min="0" max="12" value="12"></div>
-      <div class="teamrow"><span>Asistente de Logística / Ventas<span class="bnote">Contrato de 4 meses</span></span><input class="team tv" type="number" min="0" step="100" value="2000"><input class="team tm" type="number" min="0" max="12" value="4"><input class="team tm" type="number" min="0" max="12" value="0"></div>
+      <div class="teamrow"><span>Project Manager<span class="bnote">+ 2% de comisión sobre ventas del showroom · contrato mínimo de 12 meses</span></span><input class="team tv" type="text" inputmode="numeric" data-cur="R$" value="8500"><input class="team tm" type="number" min="0" max="12" value="4"><input class="team tm" type="number" min="0" max="12" value="12"></div>
+      <div class="teamrow"><span>Asistente de Logística / Ventas<span class="bnote">Contrato de 4 meses</span></span><input class="team tv" type="text" inputmode="numeric" data-cur="R$" value="2000"><input class="team tm" type="number" min="0" max="12" value="4"><input class="team tm" type="number" min="0" max="12" value="0"></div>
       <div class="bsubtotal"><span>Costo mensual del equipo</span><b id="team-total">R$ 0</b></div>
     </div>
   </section>
@@ -266,29 +266,29 @@
 
     <div class="btable">
       <div class="bhead"><h4>Fee mensual Freequency — desglose</h4><span class="bsub">Desde sep/2026 · valores en US$</span></div>
-      <div class="brow"><span>Business / Adm</span><input class="usdmoney" data-group="fee" type="number" min="0" step="100" placeholder="US$"></div>
-      <div class="brow"><span>PR / Social</span><input class="usdmoney" data-group="fee" type="number" min="0" step="100" placeholder="US$"></div>
+      <div class="brow"><span>Business / Adm</span><input class="usdmoney" data-group="fee" type="text" inputmode="numeric" data-cur="US$" placeholder="US$"></div>
+      <div class="brow"><span>PR / Social</span><input class="usdmoney" data-group="fee" type="text" inputmode="numeric" data-cur="US$" placeholder="US$"></div>
       <div class="bsubtotal"><span>Total del fee mensual</span><b id="fee-total">US$ 0</b></div>
     </div>
 
     <div class="btable">
       <div class="bhead"><h4>Partidas recurrentes</h4><span class="bsub">Mensual · desde la activación</span></div>
-      <div class="brow"><span>Partida — pequeños local shootings</span><input class="money" data-group="rec" type="number" min="0" step="100" placeholder="R$ /mes"></div>
-      <div class="brow"><span>Partida — eventos mensuales en el showroom<span class="bnote">Programación recurrente — el espacio funciona 24 hs</span></span><input class="money" data-group="rec" type="number" min="0" step="100" placeholder="R$ /mes"></div>
-      <div class="brow"><span>Agencia de PR (retainer)<span class="newtag">nuevo · validar</span></span><input class="money" data-group="rec" type="number" min="0" step="100" placeholder="R$ /mes"></div>
-      <div class="brow"><span>Proveedores de social media (contenido / gestión)<span class="newtag">nuevo · validar</span></span><input class="money" data-group="rec" type="number" min="0" step="100" placeholder="R$ /mes"></div>
-      <div class="brow"><span>ERP + plataforma de e-commerce (mensualidades)<span class="newtag">nuevo · validar</span></span><input class="money" data-group="rec" type="number" min="0" step="100" placeholder="R$ /mes"></div>
-      <div class="brow"><span>Pauta / paid media<span class="newtag">nuevo · validar</span></span><input class="money" data-group="rec" type="number" min="0" step="100" placeholder="R$ /mes"></div>
+      <div class="brow"><span>Partida — pequeños local shootings</span><input class="money" data-group="rec" type="text" inputmode="numeric" data-cur="R$" placeholder="R$ /mes"></div>
+      <div class="brow"><span>Partida — eventos mensuales en el showroom<span class="bnote">Programación recurrente — el espacio funciona 24 hs</span></span><input class="money" data-group="rec" type="text" inputmode="numeric" data-cur="R$" placeholder="R$ /mes"></div>
+      <div class="brow"><span>Agencia de PR (retainer)<span class="newtag">nuevo · validar</span></span><input class="money" data-group="rec" type="text" inputmode="numeric" data-cur="R$" placeholder="R$ /mes"></div>
+      <div class="brow"><span>Proveedores de social media (contenido / gestión)<span class="newtag">nuevo · validar</span></span><input class="money" data-group="rec" type="text" inputmode="numeric" data-cur="R$" placeholder="R$ /mes"></div>
+      <div class="brow"><span>ERP + plataforma de e-commerce (mensualidades)<span class="newtag">nuevo · validar</span></span><input class="money" data-group="rec" type="text" inputmode="numeric" data-cur="R$" placeholder="R$ /mes"></div>
+      <div class="brow"><span>Pauta / paid media<span class="newtag">nuevo · validar</span></span><input class="money" data-group="rec" type="text" inputmode="numeric" data-cur="R$" placeholder="R$ /mes"></div>
       <div class="brow"><span>PR local + SM local + gestión de negocio</span><span class="fee-flag">Cubierto por el fee · sep/2026</span></div>
       <div class="bsubtotal"><span>Total mensual</span><b data-subtotal="rec">R$ 0</b></div>
     </div>
 
     <div class="btable">
       <div class="bhead"><h4>Infraestructura y one-off</h4><span class="bsub">En paralelo a los gates</span></div>
-      <div class="brow"><span>Sistema de gestión local — implementación (facturas / NFs)</span><input class="money" data-group="one" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Hotsite / landing pages de los proyectos locales</span><input class="money" data-group="one" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Packaging y materiales del showroom<span class="newtag">nuevo · validar</span></span><input class="money" data-group="one" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="brow"><span>Otros / contingencia<span class="newtag">nuevo · validar</span></span><input class="money" data-group="one" type="number" min="0" step="100" placeholder="R$"></div>
+      <div class="brow"><span>Sistema de gestión local — implementación (facturas / NFs)</span><input class="money" data-group="one" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Hotsite / landing pages de los proyectos locales</span><input class="money" data-group="one" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Packaging y materiales del showroom<span class="newtag">nuevo · validar</span></span><input class="money" data-group="one" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="brow"><span>Otros / contingencia<span class="newtag">nuevo · validar</span></span><input class="money" data-group="one" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
       <div class="bsubtotal"><span>Total one-off</span><b data-subtotal="one">R$ 0</b></div>
     </div>
 
@@ -300,10 +300,10 @@
     <div class="sec-title"><span class="sec-num">IV.</span><h2>Roadmap 2027 — estructura abierta</h2></div>
     <p class="sec-lead">El fee mensual de Freequency, el equipo local y las partidas recurrentes continúan en 2027. El plan detallado se define en <strong>octubre de 2026</strong>, con foco en <strong>retail</strong> y la <strong>primera tienda en São Paulo</strong> — los trimestres de abajo guardan presupuestos provisorios hasta entonces.</p>
     <div class="q4">
-      <div class="qcard"><div class="q">Q1 2027</div><p>Eventos / activaciones — a definir en el plan de oct/2026.</p><input class="money" data-group="e27" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="qcard"><div class="q">Q2 2027</div><p>Eventos / activaciones — a definir en el plan de oct/2026.</p><input class="money" data-group="e27" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="qcard"><div class="q">Q3 2027</div><p>Eventos / activaciones — a definir en el plan de oct/2026.</p><input class="money" data-group="e27" type="number" min="0" step="100" placeholder="R$"></div>
-      <div class="qcard"><div class="q">Q4 2027</div><p>Eventos / activaciones — a definir en el plan de oct/2026.</p><input class="money" data-group="e27" type="number" min="0" step="100" placeholder="R$"></div>
+      <div class="qcard"><div class="q">Q1 2027</div><p>Eventos / activaciones — a definir en el plan de oct/2026.</p><input class="money" data-group="e27" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="qcard"><div class="q">Q2 2027</div><p>Eventos / activaciones — a definir en el plan de oct/2026.</p><input class="money" data-group="e27" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="qcard"><div class="q">Q3 2027</div><p>Eventos / activaciones — a definir en el plan de oct/2026.</p><input class="money" data-group="e27" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
+      <div class="qcard"><div class="q">Q4 2027</div><p>Eventos / activaciones — a definir en el plan de oct/2026.</p><input class="money" data-group="e27" type="text" inputmode="numeric" data-cur="R$" placeholder="R$"></div>
     </div>
     <div class="retail-note"><strong>Retail · primera tienda en São Paulo</strong> — ventana de apertura e inversión a definir en el plan de octubre/2026. El CAPEX de la tienda no entra en los totales hasta ser dimensionado.</div>
   </section>
@@ -439,7 +439,19 @@
   var m26Input = document.getElementById('m26');
   var m27Input = document.getElementById('m27');
   function fx(){ var v = parseFloat(fxInput.value); return (isNaN(v)||v<=0) ? null : v; }
-  function num(inp){ var v = parseFloat(inp.value); return (isNaN(v)||v<0) ? 0 : v; }
+  function num(inp){
+    if(inp.hasAttribute('data-cur')){ var d = (inp.value||'').replace(/\D/g,''); return d ? parseInt(d,10) : 0; }
+    var v = parseFloat(inp.value); return (isNaN(v)||v<0) ? 0 : v;
+  }
+  function fmtIn(inp){ var v = num(inp); inp.value = v > 0 ? inp.getAttribute('data-cur') + ' ' + nf(v) : ''; }
+  function rawIn(inp){ var v = num(inp); inp.value = v > 0 ? String(v) : ''; }
+  var curInputs = Array.prototype.slice.call(document.querySelectorAll('input[data-cur]'));
+  curInputs.forEach(function(inp){
+    inp.addEventListener('focus', function(){ rawIn(inp); try{ inp.select(); }catch(e){} });
+    inp.addEventListener('blur', function(){ fmtIn(inp); });
+  });
+  window.__fmtMoneyAll = function(){ curInputs.forEach(function(inp){ if(document.activeElement !== inp) fmtIn(inp); }); };
+  window.__numMoney = num;
   function nf(n){ try{ return n.toLocaleString('es-AR',{maximumFractionDigits:0}); }catch(e){ return ''+Math.round(n); } }
   function brl(n){ return 'R$ ' + nf(n); }
   function usd(n){ var f = fx(); return f ? 'US$ ' + nf(n/f) : 'US$ —'; }
@@ -514,12 +526,13 @@
     .concat([fxInput, m26Input, m27Input]);
   all.forEach(function(inp){ inp.addEventListener('input', recalc); inp.addEventListener('change', recalc); });
   recalc();
+  window.__fmtMoneyAll();
 })();
 
 (function(){
   var KEY='te-roadmap-v4';
   var inputs=Array.prototype.slice.call(document.querySelectorAll('input'));
-  function serialize(){return JSON.stringify(inputs.map(function(i){return i.value;}));}
+  function serialize(){return JSON.stringify(inputs.map(function(i){ if(i.hasAttribute('data-cur')){ var n = window.__numMoney(i); return n>0 ? String(n) : ''; } return i.value; }));}
   function apply(json){try{var a=JSON.parse(json);if(!(a instanceof Array))return;inputs.forEach(function(inp,i){if(typeof a[i]==='string'&&a[i]!=='')inp.value=a[i];});}catch(e){}}
   function b64e(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
   function b64d(s){return decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/'))));}
@@ -527,6 +540,7 @@
   if(location.hash.length>1){try{apply(b64d(location.hash.slice(1)));fromHash=true;}catch(e){}}
   if(!fromHash){try{var s=localStorage.getItem(KEY);if(s)apply(s);}catch(e){}}
   inputs.forEach(function(inp){inp.dispatchEvent(new Event('input'));});
+  if(window.__fmtMoneyAll) window.__fmtMoneyAll();
   var t;
   inputs.forEach(function(inp){inp.addEventListener('input',function(){clearTimeout(t);t=setTimeout(function(){try{localStorage.setItem(KEY,serialize());}catch(e){}},300);});});
   Array.prototype.forEach.call(document.querySelectorAll('a.lang'),function(a){a.addEventListener('click',function(ev){ev.preventDefault();try{localStorage.setItem(KEY,serialize());}catch(e){}location.href=a.getAttribute('href')+'#'+b64e(serialize());});});
