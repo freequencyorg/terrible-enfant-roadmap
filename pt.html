@@ -83,12 +83,12 @@
   .chip.no{border-color:var(--accent);color:var(--accent)}
 
   .mxwrap{overflow-x:auto}
-  .mx{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);min-width:900px}
+  .mx{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);min-width:980px}
   .mx th,.mx td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:right;font-size:13.5px;color:var(--ink-2)}
   .mx th:first-child,.mx td:first-child{text-align:left;padding-left:18px;white-space:nowrap;color:var(--ink-2)}
   .mx thead th{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);border-bottom:2px solid var(--ink);vertical-align:bottom;line-height:1.3;padding-top:14px}
   .mx thead th .mnum{display:block;font-family:var(--serif);font-style:italic;font-size:16px;color:var(--accent);text-transform:none;letter-spacing:0;margin-bottom:2px}
-  .mx input{width:108px;text-align:right;font-family:var(--sans);font-size:14px;padding:7px 8px;border:1px solid #5a5a5a;background:#222;color:var(--ink);border-radius:0;font-variant-numeric:tabular-nums}
+  .mx input{width:96px;text-align:right;font-family:var(--sans);font-size:14px;padding:7px 8px;border:1px solid #5a5a5a;background:#222;color:var(--ink);border-radius:0;font-variant-numeric:tabular-nums}
   .mx input:focus{border-color:var(--accent);outline:none}
   .mx input::placeholder{color:#6a6a6a}
   .mx td.rt{font-weight:600;color:var(--ink);white-space:nowrap}
@@ -144,7 +144,7 @@
 
   <nav class="nav">
     <a href="index.html" class="lang ">EN</a><a href="pt.html" class="lang on">PT</a><a href="es.html" class="lang ">ES</a>
-    <a href="#roadmap">Ações</a><a href="#fixos">Custos fixos</a><a href="#referral">Referral</a><a href="#anual">Anual</a>
+    <a href="#roadmap">Acts</a><a href="#fixos">Always On</a><a href="#anual">Anual</a>
     <span class="spacer"></span>
     <button id="share" data-ok="Copiado!">Copiar link com dados</button><button id="reset">Limpar tudo</button>
   </nav>
@@ -165,7 +165,7 @@
     <span><label for="m27">Meses 2027</label><input type="number" id="m27" value="12" min="0" max="12"></span>
   </div>
   <div class="btotals">
-    <div class="tot"><div class="lbl">Ações 2026 (5 marcos)</div><div class="val" id="c-act">US$ 0</div></div>
+    <div class="tot"><div class="lbl">Acts 2026 (6)</div><div class="val" id="c-act">US$ 0</div></div>
     <div class="tot"><div class="lbl">Custos fixos / mês</div><div class="val" id="c-fix">US$ 0</div></div>
     <div class="tot"><div class="lbl">Total 2026</div><div class="val" id="c-26">US$ 0</div></div>
     <div class="tot grand"><div class="lbl">Total 2026 + 2027</div><div class="val" id="c-g">US$ 0</div></div>
@@ -173,37 +173,38 @@
   <p class="smallnote">Custos fixos / mês = Tier 1 + Tier 2 + Tier 3 mensal. Total 2026 = fixos × meses 2026 + ações + one-off. Total 2027 = fixos × meses 2027 + provisão 2027.</p>
 
   <section class="sec" id="roadmap">
-    <div class="sec-title"><span class="sec-num">I.</span><h2>Ações — marcos de lançamento</h2></div>
-    <p class="sec-lead">Os cinco marcos de lançamento lado a lado, com o mesmo breakdown de custos para cada um.</p>
+    <div class="sec-title"><span class="sec-num">I.</span><h2>Acts — marcos de lançamento</h2></div>
+    <p class="sec-lead">Os seis acts do lançamento lado a lado — soft opening/press, o lançamento Matalab e quatro collabs — com o mesmo breakdown de custos para cada um.</p>
     <div class="mxwrap">
     <table class="mx">
       <thead><tr>
         <th>Item de custo</th>
-        <th><span class="mnum">1</span>Imprensa · Showroom</th>
-        <th><span class="mnum">2</span>Lançamento · Matalab</th>
-        <th><span class="mnum">3</span>Collab Edgar</th>
-        <th><span class="mnum">4</span>NTS · semana SPFW</th>
-        <th><span class="mnum">5</span>Selo Risco · Mentor</th>
+        <th><span class="mnum">Act 1</span>Soft opening / Press</th>
+        <th><span class="mnum">Act 2</span>Lançamento Matalab</th>
+        <th><span class="mnum">Act 3</span>Collab 1</th>
+        <th><span class="mnum">Act 4</span>Collab 2</th>
+        <th><span class="mnum">Act 5</span>Collab 3</th>
+        <th><span class="mnum">Act 6</span>Collab 4</th>
         <th>Total</th>
       </tr></thead>
       <tbody>
-        <tr><td>Media partner</td><td><input class="money" data-group="f1" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="1" type="text" inputmode="numeric"></td><td class="rt" id="r-1">—</td></tr>
-        <tr><td>Produção do evento</td><td><input class="money" data-group="f1" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="2" type="text" inputmode="numeric"></td><td class="rt" id="r-2">—</td></tr>
-        <tr><td>Conteúdo (foto + vídeo)</td><td><input class="money" data-group="f1" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="3" type="text" inputmode="numeric"></td><td class="rt" id="r-3">—</td></tr>
-        <tr><td>Seeding</td><td><input class="money" data-group="f1" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="4" type="text" inputmode="numeric"></td><td class="rt" id="r-4">—</td></tr>
-        <tr><td>F&amp;B</td><td><input class="money" data-group="f1" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="5" type="text" inputmode="numeric"></td><td class="rt" id="r-5">—</td></tr>
-        <tr><td>Outros</td><td><input class="money" data-group="f1" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="6" type="text" inputmode="numeric"></td><td class="rt" id="r-6">—</td></tr>
+        <tr><td>Media partner</td><td><input class="money" data-group="f1" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="1" type="text" inputmode="numeric"></td><td class="rt" id="r-1">—</td></tr>
+        <tr><td>Produção do evento</td><td><input class="money" data-group="f1" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="2" type="text" inputmode="numeric"></td><td class="rt" id="r-2">—</td></tr>
+        <tr><td>Conteúdo (foto + vídeo)</td><td><input class="money" data-group="f1" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="3" type="text" inputmode="numeric"></td><td class="rt" id="r-3">—</td></tr>
+        <tr><td>Seeding</td><td><input class="money" data-group="f1" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="4" type="text" inputmode="numeric"></td><td class="rt" id="r-4">—</td></tr>
+        <tr><td>F&amp;B</td><td><input class="money" data-group="f1" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="5" type="text" inputmode="numeric"></td><td class="rt" id="r-5">—</td></tr>
+        <tr><td>Outros</td><td><input class="money" data-group="f1" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="6" type="text" inputmode="numeric"></td><td class="rt" id="r-6">—</td></tr>
 
-        <tr class="total"><td>Total por marco</td><td id="c-f1"></td><td id="c-f2"></td><td id="c-f3"></td><td id="c-f4"></td><td id="c-f5"></td><td class="gcell" id="c-fall"></td></tr>
+        <tr class="total"><td>Total por marco</td><td id="c-f1"></td><td id="c-f2"></td><td id="c-f3"></td><td id="c-f4"></td><td id="c-f5"></td><td id="c-f6"></td><td class="gcell" id="c-fall"></td></tr>
       </tbody>
     </table>
     </div>
-    <p class="smallnote" style="margin-top:10px">Gates: chegada dos produtos confirmada (D0) + novo termo de comprometimento assinado, substituindo o primeiro MOU. Marcos, não sequência — datas exatas a confirmar após o D0. Produção do Originals com o Mentor = budget à parte, a definir.</p>
+    <p class="smallnote" style="margin-top:10px">Gates: chegada dos produtos confirmada (D0) + novo termo de comprometimento assinado, substituindo o primeiro MOU. Acts são marcos, não sequência — datas a confirmar após o D0. Collabs 1–4 serão nomeadas conforme forem fechadas.</p>
   </section>
 
   <section class="sec" id="fixos">
-    <div class="sec-title"><span class="sec-num">II.</span><h2>Custos fixos de comunicação — por tier</h2></div>
-    <p class="sec-lead">Tudo o que recorre independentemente das ações, em três tiers: o fee da Freequency, a estrutura recorrente de comunicação e a operação que existe para servir a comunicação (equipe, sistemas, implantações). Itens mensais multiplicam pelos meses ativos; one-off contam uma vez em 2026.</p>
+    <div class="sec-title"><span class="sec-num">II.</span><h2>Always On — comunicação contínua</h2></div>
+    <p class="sec-lead">Tudo o que roda continuamente, independentemente dos acts: o fee da Freequency, a estrutura recorrente de comunicação, a operação que a serve (equipe, sistemas, implantações) e o referral program. Itens mensais multiplicam pelos meses ativos; one-off contam uma vez em 2026.</p>
 
     <div class="tier">
       <div class="thead"><h4><span class="tnum">Tier 1</span>Fee Freequency</h4><span class="tsub">Mensal · a partir de set/2026</span></div>
@@ -238,11 +239,8 @@
       <div class="brow"><span>Gerenciamento Mentor</span><span class="flag">Budget à parte · comum acordo · a definir</span></div>
       <div class="bsubtotal"><span>Tier 3 · mensal</span><b id="t3-total">US$ 0</b></div>
     </div>
-  </section>
 
-  <section class="sec" id="referral">
-    <div class="sec-title"><span class="sec-num">III.</span><h2>Referral Program — analog influencers</h2></div>
-    <p class="sec-lead">10–15 membros recrutados chamam seu círculo para comprar no showroom, criando uma atmosfera de altíssima exclusividade. Remuneração: um <strong>deal fee</strong> único por membro no acordo, mais <strong>comissão por cada par</strong> vendido pela indicação. Os números de comissão abaixo são estimativas — o custo real acompanha as vendas.</p>
+    <p class="sec-lead" style="margin-top:34px" id="referral">10–15 membros recrutados chamam seu círculo para comprar no showroom, criando uma atmosfera de altíssima exclusividade. Remuneração: um <strong>deal fee</strong> único por membro no acordo, mais <strong>comissão por cada par</strong> vendido pela indicação. Os números de comissão abaixo são estimativas — o custo real acompanha as vendas.</p>
     <div class="tier">
       <div class="thead"><h4>Referral program</h4><span class="tsub">Deal fee + comissão sobre vendas indicadas no showroom</span></div>
       <div class="brow"><span>Membros<span class="bnote">Alvo: 10–15</span></span><span class="amt"><input class="tm" id="i-refmembers" type="number" min="0" max="50" value="12"></span></div>
@@ -258,14 +256,16 @@
     </div>
   </section>
 
+
+
   <section class="sec" id="anual">
-    <div class="sec-title"><span class="sec-num">IV.</span><h2>Demonstrativo anual</h2></div>
+    <div class="sec-title"><span class="sec-num">III.</span><h2>Demonstrativo anual</h2></div>
     <p class="sec-lead">Consolidado a partir dos valores acima, na moeda do documento. A provisão de ações 2027 é o único campo digitado diretamente aqui.</p>
     <div class="atwrap">
     <table class="atable">
       <thead><tr><th>Item</th><th>2026</th><th>2027</th><th>Total</th></tr></thead>
       <tbody>
-        <tr><td>Ações<span class="bnote">2026 = os cinco marcos · 2027 = provisão (digite aqui)</span></td><td id="a-act-26"></td><td><span class="amt"><input class="money" data-group="p27" type="text" inputmode="numeric"></span></td><td id="a-act-t"></td></tr>
+        <tr><td>Acts<span class="bnote">2026 = os seis acts · 2027 = provisão (digite aqui)</span></td><td id="a-act-26"></td><td><span class="amt"><input class="money" data-group="p27" type="text" inputmode="numeric"></span></td><td id="a-act-t"></td></tr>
         <tr><td>Tier 1 · Fee Freequency<span class="bnote">Mensal × meses ativos</span></td><td id="a-t1-26"></td><td id="a-t1-27"></td><td id="a-t1-t"></td></tr>
         <tr><td>Tier 2 · Comunicação recorrente<span class="bnote">Mensal × meses ativos</span></td><td id="a-t2-26"></td><td id="a-t2-27"></td><td id="a-t2-t"></td></tr>
         <tr><td>Tier 3 · Equipe local<span class="bnote">Valor × meses contratados por posição</span></td><td id="a-team-26"></td><td id="a-team-27"></td><td id="a-team-t"></td></tr>
@@ -335,14 +335,14 @@
       var el = document.querySelector('[data-subtotal="'+g+'"]');
       if(el) el.textContent = D(groups[g]);
     });
-    var act26 = (groups.f1||0)+(groups.f2||0)+(groups.f3||0)+(groups.f4||0)+(groups.f5||0);
+    var act26 = (groups.f1||0)+(groups.f2||0)+(groups.f3||0)+(groups.f4||0)+(groups.f5||0)+(groups.f6||0);
     for(var r=1;r<=6;r++){
       var rs = 0;
       Array.prototype.forEach.call(document.querySelectorAll('input[data-row="'+r+'"]'), function(inp){ rs += usdOf(inp); });
       var rt = document.getElementById('r-'+r);
       if(rt) rt.textContent = rs>0 ? D(rs) : '—';
     }
-    for(var c=1;c<=5;c++){ cell('c-f'+c, groups['f'+c]||0); }
+    for(var c=1;c<=6;c++){ cell('c-f'+c, groups['f'+c]||0); }
     cell('c-fall', act26);
     var t1 = groups.t1||0, t2 = groups.t2||0, t3m = groups.t3m||0, t3o = groups.t3o||0, p27 = groups.p27||0;
     var m26 = Math.floor(parseFloat(m26Input.value)||0), m27 = Math.floor(parseFloat(m27Input.value)||0);
@@ -410,7 +410,7 @@
 })();
 
 (function(){
-  var KEY='te-budget-v8';
+  var KEY='te-budget-v9';
   var inputs=Array.prototype.slice.call(document.querySelectorAll('input, select'));
   function serialize(){return JSON.stringify(inputs.map(function(i){ if(i.classList && i.classList.contains('money')){ return i.getAttribute('data-usd') || ''; } return i.value; }));}
   function apply(json){try{var a=JSON.parse(json);if(!(a instanceof Array))return;inputs.forEach(function(inp,i){if(typeof a[i]!=='string'||a[i]==='')return;if(inp.classList && inp.classList.contains('money')){inp.setAttribute('data-usd', a[i]);}else{inp.value=a[i];}});}catch(e){}}
