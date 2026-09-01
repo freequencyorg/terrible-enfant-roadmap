@@ -105,6 +105,8 @@
   .amt input::placeholder{color:#6a6a6a}
   .amt input.tm{width:64px;text-align:center}
   .brow .flag{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line);padding:5px 11px;white-space:nowrap}
+  .calcv{font-family:var(--serif);font-size:16px;color:var(--ink);font-weight:400;white-space:nowrap}
+  .pctlbl{font-size:13px;color:var(--ink-3);margin-left:6px}
   .bsubtotal{display:flex;justify-content:space-between;align-items:baseline;padding:12px 22px;background:#1d1d1d;border-top:1px solid var(--line);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
   .bsubtotal b{font-family:var(--serif);font-size:16.5px;letter-spacing:0;text-transform:none;color:var(--ink)}
   .usd2{font-family:var(--sans);font-size:12px;font-weight:400;color:var(--ink-3);margin-left:8px}
@@ -142,7 +144,7 @@
 
   <nav class="nav">
     <a href="index.html" class="lang on">EN</a><a href="pt.html" class="lang ">PT</a><a href="es.html" class="lang ">ES</a>
-    <a href="#roadmap">Actions</a><a href="#fixos">Fixed costs</a><a href="#anual">Annual</a>
+    <a href="#roadmap">Actions</a><a href="#fixos">Fixed costs</a><a href="#referral">Referral</a><a href="#anual">Annual</a>
     <span class="spacer"></span>
     <button id="share" data-ok="Copied!">Copy share link</button><button id="reset">Reset</button>
   </nav>
@@ -238,8 +240,26 @@
     </div>
   </section>
 
+  <section class="sec" id="referral">
+    <div class="sec-title"><span class="sec-num">III.</span><h2>Referral Program — analog influencers</h2></div>
+    <p class="sec-lead">10–15 recruited members invite their circle to buy at the showroom, building a highly exclusive atmosphere. Compensation: a one-off <strong>deal fee</strong> per member plus <strong>commission on every pair</strong> sold through their referral. Commission figures below are estimates — actual cost follows real sales.</p>
+    <div class="tier">
+      <div class="thead"><h4>Referral program</h4><span class="tsub">Deal fee + commission on showroom referral sales</span></div>
+      <div class="brow"><span>Members<span class="bnote">Target: 10–15</span></span><span class="amt"><input class="tm" id="i-refmembers" type="number" min="0" max="50" value="12"></span></div>
+      <div class="brow"><span>Deal fee per member<span class="bnote">One-off, on signing · 2026</span></span><span class="amt"><input class="money" id="i-reffee" type="text" inputmode="numeric"></span></div>
+      <div class="brow"><span>Commission per pair sold</span><span class="amt"><input class="tm" id="i-refpct" type="number" min="0" max="100" value="20"><span class="pctlbl">%</span></span></div>
+      <div class="brow"><span>Average price per pair</span><span class="amt"><input class="money" id="i-refprice" type="text" inputmode="numeric"></span></div>
+      <div class="brow"><span>Pairs sold per member / month<span class="bnote">Estimate for provisioning</span></span><span class="amt"><input class="tm" id="i-refsales" type="number" min="0" max="500" value="2"></span></div>
+      <div class="groupl">Calculated</div>
+      <div class="brow"><span>Deal fees — total<span class="bnote">Members × deal fee · one-off 2026</span></span><b class="calcv" id="d-refdeal">—</b></div>
+      <div class="brow"><span>Referred revenue (estimate)<span class="bnote">Members × pairs × average price</span></span><b class="calcv" id="d-refrev">—</b></div>
+      <div class="brow"><span>Commission (estimate)</span><b class="calcv" id="d-refcom">—</b></div>
+      <div class="bsubtotal"><span>Program cost</span><b id="d-reftot">—</b></div>
+    </div>
+  </section>
+
   <section class="sec" id="anual">
-    <div class="sec-title"><span class="sec-num">III.</span><h2>Annual statement</h2></div>
+    <div class="sec-title"><span class="sec-num">IV.</span><h2>Annual statement</h2></div>
     <p class="sec-lead">Consolidated from the values above, in the document currency. The 2027 actions provision is the only field typed directly here.</p>
     <div class="atwrap">
     <table class="atable">
@@ -251,6 +271,7 @@
         <tr><td>Tier 3 · Local team<span class="bnote">Value × contracted months per role</span></td><td id="a-team-26"></td><td id="a-team-27"></td><td id="a-team-t"></td></tr>
         <tr><td>Tier 3 · Systems (monthly)<span class="bnote">Monthly × active months</span></td><td id="a-t3m-26"></td><td id="a-t3m-27"></td><td id="a-t3m-t"></td></tr>
         <tr><td>Tier 3 · One-off (2026)<span class="bnote">Counted once, 2026</span></td><td id="a-t3o-26"></td><td>—</td><td id="a-t3o-t"></td></tr>
+        <tr><td>Referral program<span class="bnote">Deal fees + estimated commission × months</span></td><td id="a-ref-26"></td><td id="a-ref-27"></td><td id="a-ref-t"></td></tr>
         <tr><td>Mentor management<span class="bnote">Separate budget · mutual agreement · TBD</span></td><td>TBD</td><td>TBD</td><td>TBD</td></tr>
         <tr class="total"><td>Total</td><td id="a-tot-26"></td><td id="a-tot-27"></td><td class="gcell" id="a-tot-g"></td></tr>
       </tbody>
@@ -337,9 +358,24 @@
       teamMo += v; team26 += v*Math.floor(parseFloat(tms[0].value)||0); team27 += v*Math.floor(parseFloat(tms[1].value)||0);
     });
     document.getElementById('t3-total').textContent = D(teamMo + t3m) + ' /mo · + ' + D(t3o) + ' one-off';
+    var refM = Math.floor(parseFloat(document.getElementById('i-refmembers').value)||0);
+    var refFee = usdOf(document.getElementById('i-reffee'));
+    var refPct = (parseFloat(document.getElementById('i-refpct').value)||0)/100;
+    var refPrice = usdOf(document.getElementById('i-refprice'));
+    var refSales = parseFloat(document.getElementById('i-refsales').value)||0;
+    var refDeal = refM * refFee;
+    var refRevMo = refM * refSales * refPrice;
+    var refComMo = refRevMo * refPct;
+    var ref26 = refDeal + refComMo*m26;
+    var ref27 = refComMo*m27;
+    document.getElementById('d-refdeal').textContent = refDeal>0 ? D(refDeal) : '—';
+    document.getElementById('d-refrev').textContent = refRevMo>0 ? D(refRevMo) + ' /mo' : '—';
+    document.getElementById('d-refcom').textContent = refComMo>0 ? D(refComMo) + ' /mo' : '—';
+    document.getElementById('d-reftot').textContent = (ref26+ref27)>0 ? (D(ref26) + ' (2026) · ' + D(ref27) + ' (2027)') : '—';
+    cell('a-ref-26', ref26); cell('a-ref-27', ref27); cell('a-ref-t', ref26+ref27);
     var fixMo = t1 + t2 + t3m + teamMo;
-    var tot26 = (t1+t2+t3m)*m26 + team26 + act26 + t3o;
-    var tot27 = (t1+t2+t3m)*m27 + team27 + p27;
+    var tot26 = (t1+t2+t3m)*m26 + team26 + act26 + t3o + ref26;
+    var tot27 = (t1+t2+t3m)*m27 + team27 + p27 + ref27;
     document.getElementById('c-act').textContent = D(act26);
     document.getElementById('c-fix').textContent = D(fixMo);
     document.getElementById('c-26').textContent = D(tot26);
@@ -380,7 +416,7 @@
 })();
 
 (function(){
-  var KEY='te-budget-v7';
+  var KEY='te-budget-v8';
   var inputs=Array.prototype.slice.call(document.querySelectorAll('input, select'));
   function serialize(){return JSON.stringify(inputs.map(function(i){ if(i.classList && i.classList.contains('money')){ return i.getAttribute('data-usd') || ''; } return i.value; }));}
   function apply(json){try{var a=JSON.parse(json);if(!(a instanceof Array))return;inputs.forEach(function(inp,i){if(typeof a[i]!=='string'||a[i]==='')return;if(inp.classList && inp.classList.contains('money')){inp.setAttribute('data-usd', a[i]);}else{inp.value=a[i];}});}catch(e){}}
