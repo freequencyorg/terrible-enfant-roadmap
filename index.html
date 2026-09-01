@@ -80,6 +80,21 @@
   .chip{font-size:11px;letter-spacing:.06em;color:var(--ink-2);border:1px solid var(--line);padding:3px 9px;background:var(--paper)}
   .chip.no{border-color:var(--accent);color:var(--accent)}
 
+  .mxwrap{overflow-x:auto}
+  .mx{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);min-width:900px}
+  .mx th,.mx td{padding:9px 8px;border-bottom:1px solid var(--line);text-align:right;font-size:13.5px;color:var(--ink-2)}
+  .mx th:first-child,.mx td:first-child{text-align:left;padding-left:18px;white-space:nowrap;color:var(--ink-2)}
+  .mx thead th{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);border-bottom:2px solid var(--ink);vertical-align:bottom;line-height:1.3;padding-top:14px}
+  .mx thead th .mnum{display:block;font-family:var(--serif);font-style:italic;font-size:16px;color:var(--accent);text-transform:none;letter-spacing:0;margin-bottom:2px}
+  .mx input{width:108px;text-align:right;font-family:var(--sans);font-size:14px;padding:7px 8px;border:1px solid #5a5a5a;background:#222;color:var(--ink);border-radius:0;font-variant-numeric:tabular-nums}
+  .mx input:focus{border-color:var(--accent);outline:none}
+  .mx input::placeholder{color:#6a6a6a}
+  .mx td.rt{font-weight:600;color:var(--ink);white-space:nowrap}
+  .mx td.rt .u{display:block;font-size:11px;font-weight:400;color:var(--ink-3)}
+  .mx tr.total td{background:#1d1d1d;font-family:var(--serif);font-size:15px;color:var(--ink);border-bottom:none;white-space:nowrap}
+  .mx tr.total td .u{display:block;font-family:var(--sans);font-size:11px;color:var(--ink-3)}
+  .mx tr.total td:first-child{font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+  .mx tr.total td.gcell{color:var(--accent)}
   .brow{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:10px 22px;border-top:1px solid var(--line);font-size:14.5px;color:var(--ink-2)}
   .brow .bnote{display:block;font-size:12px;color:var(--ink-3);margin-top:2px}
   .amt{display:flex;align-items:center;gap:12px;flex-shrink:0}
@@ -126,7 +141,7 @@
 
   <nav class="nav">
     <a href="index.html" class="lang on">EN</a><a href="pt.html" class="lang ">PT</a><a href="es.html" class="lang ">ES</a>
-    <a href="#roadmap">Roadmap & actions</a><a href="#fixos">Fixed costs</a><a href="#anual">Annual</a>
+    <a href="#roadmap">Actions</a><a href="#fixos">Fixed costs</a><a href="#anual">Annual</a>
     <span class="spacer"></span>
     <button id="share" data-ok="Copied!">Copy share link</button><button id="reset">Reset</button>
   </nav>
@@ -146,7 +161,7 @@
     <span><label for="m27">Months 2027</label><input type="number" id="m27" value="12" min="0" max="12"></span>
   </div>
   <div class="btotals">
-    <div class="tot"><div class="lbl">Actions 2026 (5 phases)</div><div class="val" id="c-act">US$ 0</div><div class="usd" id="c-act-b">R$ 0</div></div>
+    <div class="tot"><div class="lbl">Actions 2026 (5 milestones)</div><div class="val" id="c-act">US$ 0</div><div class="usd" id="c-act-b">R$ 0</div></div>
     <div class="tot"><div class="lbl">Fixed costs / month</div><div class="val" id="c-fix">US$ 0</div><div class="usd" id="c-fix-b">R$ 0 /mo</div></div>
     <div class="tot"><div class="lbl">Total 2026</div><div class="val" id="c-26">US$ 0</div><div class="usd" id="c-26-b">R$ 0</div></div>
     <div class="tot grand"><div class="lbl">Total 2026 + 2027</div><div class="val" id="c-g">US$ 0</div><div class="usd" id="c-g-b">R$ 0</div></div>
@@ -154,74 +169,32 @@
   <p class="smallnote">Fixed costs / month = Tier 1 + Tier 2 + Tier 3 monthly (team converted from R$). Total 2026 = fixed × months 2026 + actions + one-off. Total 2027 = fixed × months 2027 + 2027 provision.</p>
 
   <section class="sec" id="roadmap">
-    <div class="sec-title"><span class="sec-num">I.</span><h2>Roadmap & actions — the launch sequence</h2></div>
-    <p class="sec-lead">The five phases in order of exposure. Each card holds its date and its own cost breakdown — media partner, event production, content, seeding, F&amp;B, other.</p>
-    <div class="gatebar"><b>Two gates before anything starts:</b> (1) product arrival date confirmed with 100% certainty — this sets D0; (2) new commitment agreement on amounts and dates signed, replacing the unfulfilled first MOU.</div>
-    <div class="sim">
-      <span><label for="d0">D0 (arrival)</label>&nbsp; <input type="date" id="d0"></span>
-      <button id="clear" type="button">Clear</button>
-      <span class="hint">Set D0 and pick each phase’s date on its card — the tool shows weeks after D0 and checks the sequence against NTS (Oct 14–18).</span>
-      <span class="sim-check" id="check"></span>
-    </div>
-    <div class="timeline">
-      <div class="phase"><div class="node">1</div><div class="pcard">
-        <div class="phead"><div class="prow"><h3>Press launch — showroom</h3><span class="when"><b>Date</b> · <input type="date" class="pd"> <span class="est"></span></span></div><p>Soft opening for 50 curated guests (Freequency + Lema). Photos and videos exhibited in the space. No online yet.</p>
-        <div class="chips"><span class="chip no">No online / no Instagram</span><span class="chip">Press</span><span class="chip">Freequency + Lema</span></div></div>
-        <div class="brow"><span>Media partner</span><span class="amt"><input class="money" data-group="f1" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Event production</span><span class="amt"><input class="money" data-group="f1" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Content (photo + video)</span><span class="amt"><input class="money" data-group="f1" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Seeding</span><span class="amt"><input class="money" data-group="f1" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>F&amp;B</span><span class="amt"><input class="money" data-group="f1" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Other</span><span class="amt"><input class="money" data-group="f1" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="bsubtotal"><span>Phase 1 subtotal</span><b data-subtotal="f1">US$ 0</b></div>
-      </div></div>
-      <div class="phase"><div class="node">2</div><div class="pcard">
-        <div class="phead"><div class="prow"><h3>Product launch — Matalab</h3><span class="when"><b>Date</b> · <input type="date" class="pd"> <span class="est"></span></span></div><p>Cocktail for a larger list; content goes live, with physical material at Cidade Matarazzo. Joint guest list Lema / Matalab / Freequency.</p>
-        <div class="chips"><span class="chip">Online content activated</span><span class="chip">Cidade Matarazzo</span></div></div>
-        <div class="brow"><span>Media partner</span><span class="amt"><input class="money" data-group="f2" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Event production</span><span class="amt"><input class="money" data-group="f2" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Content (photo + video)</span><span class="amt"><input class="money" data-group="f2" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Seeding</span><span class="amt"><input class="money" data-group="f2" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>F&amp;B</span><span class="amt"><input class="money" data-group="f2" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Other</span><span class="amt"><input class="money" data-group="f2" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="bsubtotal"><span>Phase 2 subtotal</span><b data-subtotal="f2">US$ 0</b></div>
-      </div></div>
-      <div class="phase"><div class="node">3</div><div class="pcard">
-        <div class="phead"><div class="prow"><h3>Edgar collab</h3><span class="when"><b>Date</b> · <input type="date" class="pd"> <span class="est"></span></span></div><p>Keeps the collab’s original strategy, repositioned after the Matalab launch.</p>
-        <div class="chips"><span class="chip">Original strategy</span></div></div>
-        <div class="brow"><span>Media partner</span><span class="amt"><input class="money" data-group="f3" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Event production</span><span class="amt"><input class="money" data-group="f3" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Content (photo + video)</span><span class="amt"><input class="money" data-group="f3" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Seeding</span><span class="amt"><input class="money" data-group="f3" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>F&amp;B</span><span class="amt"><input class="money" data-group="f3" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Other</span><span class="amt"><input class="money" data-group="f3" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="bsubtotal"><span>Phase 3 subtotal</span><b data-subtotal="f3">US$ 0</b></div>
-      </div></div>
-      <div class="phase"><div class="node">4</div><div class="pcard">
-        <div class="phead"><div class="prow"><h3>NTS — SPFW week</h3><span class="when"><b>Fixed · Oct 14–18, 2026</b></span></div><p>High media exposure and an event at the NTS café. Date locked to the calendar — phases 1–3 must close before it.</p>
-        <div class="chips"><span class="chip">Media peak</span><span class="chip">Event at the NTS café</span></div></div>
-        <div class="brow"><span>Media partner</span><span class="amt"><input class="money" data-group="f4" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Event production</span><span class="amt"><input class="money" data-group="f4" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Content (photo + video)</span><span class="amt"><input class="money" data-group="f4" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Seeding</span><span class="amt"><input class="money" data-group="f4" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>F&amp;B</span><span class="amt"><input class="money" data-group="f4" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Other</span><span class="amt"><input class="money" data-group="f4" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="bsubtotal"><span>Phase 4 subtotal</span><b data-subtotal="f4">US$ 0</b></div>
-      </div></div>
-      <div class="phase risco"><div class="node">5</div><div class="pcard">
-        <div class="phead"><div class="prow"><h3>Risco label + Mentor</h3><span class="when"><b>End of year</b> · <input type="date" class="dt" id="d5" value="2026-12-10"></span></div><p>End-of-year launch inaugurating the connection with Mentor — first Originals.</p>
-        <div class="chips"><span class="chip">First Originals</span><span class="chip">Risco label</span></div></div>
-        <div class="brow"><span>Media partner</span><span class="amt"><input class="money" data-group="f5" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Event production</span><span class="amt"><input class="money" data-group="f5" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Content (photo + video)</span><span class="amt"><input class="money" data-group="f5" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Seeding</span><span class="amt"><input class="money" data-group="f5" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>F&amp;B</span><span class="amt"><input class="money" data-group="f5" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Other</span><span class="amt"><input class="money" data-group="f5" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"><span class="mirror"></span></span></div>
-        <div class="brow"><span>Mentor Originals production</span><span class="flag">separate budget · TBD</span></div>
-        <div class="bsubtotal"><span>Phase 5 subtotal</span><b data-subtotal="f5">US$ 0</b></div>
-      </div></div>
+    <div class="sec-title"><span class="sec-num">I.</span><h2>Actions — launch milestones</h2></div>
+    <p class="sec-lead">The five launch milestones side by side, with the same cost breakdown for each. Type in US$ — subtotals show the R$ equivalent.</p>
+    <div class="mxwrap">
+    <table class="mx">
+      <thead><tr>
+        <th>Cost line</th>
+        <th><span class="mnum">1</span>Press · Showroom</th>
+        <th><span class="mnum">2</span>Launch · Matalab</th>
+        <th><span class="mnum">3</span>Edgar collab</th>
+        <th><span class="mnum">4</span>NTS · SPFW week</th>
+        <th><span class="mnum">5</span>Risco label · Mentor</th>
+        <th>Total</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Media partner</td><td><input class="money" data-group="f1" data-row="1" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f2" data-row="1" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f3" data-row="1" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f4" data-row="1" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f5" data-row="1" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td class="rt" id="r-1">—</td></tr>
+        <tr><td>Event production</td><td><input class="money" data-group="f1" data-row="2" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f2" data-row="2" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f3" data-row="2" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f4" data-row="2" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f5" data-row="2" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td class="rt" id="r-2">—</td></tr>
+        <tr><td>Content (photo + video)</td><td><input class="money" data-group="f1" data-row="3" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f2" data-row="3" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f3" data-row="3" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f4" data-row="3" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f5" data-row="3" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td class="rt" id="r-3">—</td></tr>
+        <tr><td>Seeding</td><td><input class="money" data-group="f1" data-row="4" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f2" data-row="4" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f3" data-row="4" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f4" data-row="4" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f5" data-row="4" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td class="rt" id="r-4">—</td></tr>
+        <tr><td>F&amp;B</td><td><input class="money" data-group="f1" data-row="5" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f2" data-row="5" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f3" data-row="5" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f4" data-row="5" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f5" data-row="5" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td class="rt" id="r-5">—</td></tr>
+        <tr><td>Other</td><td><input class="money" data-group="f1" data-row="6" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f2" data-row="6" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f3" data-row="6" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f4" data-row="6" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td><input class="money" data-group="f5" data-row="6" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></td><td class="rt" id="r-6">—</td></tr>
 
+        <tr class="total"><td>Milestone total</td><td id="c-f1"></td><td id="c-f2"></td><td id="c-f3"></td><td id="c-f4"></td><td id="c-f5"></td><td class="gcell" id="c-fall"></td></tr>
+      </tbody>
+    </table>
     </div>
+    <p class="smallnote" style="margin-top:10px">Gates: confirmed product arrival (D0) + signed commitment agreement replacing the first MOU. Milestones, not a sequence — exact dates to be confirmed after D0. Mentor Originals production = separate budget, TBD.</p>
   </section>
 
   <section class="sec" id="fixos">
@@ -274,7 +247,7 @@
     <table class="atable">
       <thead><tr><th>Item</th><th>2026</th><th>2027</th><th>Total</th></tr></thead>
       <tbody>
-        <tr><td>Actions<span class="bnote">2026 = the five phases · 2027 = provision (type here)</span></td><td id="a-act-26"></td><td><span class="amt"><input class="money" data-group="p27" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></span></td><td id="a-act-t"></td></tr>
+        <tr><td>Actions<span class="bnote">2026 = the five milestones · 2027 = provision (type here)</span></td><td id="a-act-26"></td><td><span class="amt"><input class="money" data-group="p27" data-cur="US$" type="text" inputmode="numeric" placeholder="US$"></span></td><td id="a-act-t"></td></tr>
         <tr><td>Tier 1 · Freequency fee<span class="bnote">Monthly × active months</span></td><td id="a-t1-26"></td><td id="a-t1-27"></td><td id="a-t1-t"></td></tr>
         <tr><td>Tier 2 · Recurring communication<span class="bnote">Monthly × active months</span></td><td id="a-t2-26"></td><td id="a-t2-27"></td><td id="a-t2-t"></td></tr>
         <tr><td>Tier 3 · Local team (contracted in R$)<span class="bnote">R$ × contracted months, converted</span></td><td id="a-team-26"></td><td id="a-team-27"></td><td id="a-team-t"></td></tr>
@@ -295,42 +268,6 @@
 </div>
 
 <script>
-(function(){
-  var d0input = document.getElementById('d0');
-  var clearBtn = document.getElementById('clear');
-  var check = document.getElementById('check');
-  var pds = Array.prototype.slice.call(document.querySelectorAll('input.pd'));
-  var ests = Array.prototype.slice.call(document.querySelectorAll('.est'));
-  var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var NTS_START = new Date(2026, 9, 14);
-  function fmt(d){ return MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear(); }
-  function parse(v){ var p=v.split('-'); return new Date(+p[0], +p[1]-1, +p[2]); }
-  function update(){
-    var d0 = d0input.value ? parse(d0input.value) : null;
-    var dates = [];
-    pds.forEach(function(pd, i){
-      var el = ests[i];
-      if(!pd.value){ el.textContent=''; dates.push(null); return; }
-      var d = parse(pd.value); dates.push(d);
-      el.textContent = d0 ? ('≈ D0 + ' + (Math.round((d - d0)/(7*86400000)*10)/10) + ' wks') : '';
-    });
-    check.className = 'sim-check'; check.textContent = '';
-    for(var i=1;i<dates.length;i++){
-      if(dates[i-1] && dates[i] && dates[i] <= dates[i-1]){ check.className='sim-check warn'; check.textContent='△ Stage dates are out of order — phase 1 should come before 2, and 2 before 3.'; return; }
-    }
-    var p3 = dates[2];
-    if(p3){
-      var gap = Math.round((NTS_START - p3)/86400000);
-      if(gap >= 7){ check.className='sim-check ok'; check.textContent='✓ The sequence closes before NTS: Edgar collab on ' + fmt(p3) + ', ' + gap + ' days before Oct 14.'; }
-      else if(gap >= 0){ check.className='sim-check warn'; check.textContent='△ Tight: Edgar collab on ' + fmt(p3) + ', only ' + gap + ' days before NTS (Oct 14).'; }
-      else { check.className='sim-check warn'; check.textContent='✕ Conflict: the Edgar collab (' + fmt(p3) + ') lands after NTS starts (Oct 14).'; }
-    }
-  }
-  d0input.addEventListener('input', update); d0input.addEventListener('change', update);
-  pds.forEach(function(pd){ pd.addEventListener('input', update); pd.addEventListener('change', update); });
-  clearBtn.addEventListener('click', function(){ d0input.value=''; update(); });
-})();
-
 (function(){
   var money = Array.prototype.slice.call(document.querySelectorAll('input.money'));
   var fxInput = document.getElementById('fx');
@@ -388,6 +325,14 @@
       if(el) el.innerHTML = U(groups[g]) + '<span class="usd2">· ' + B(toBRL(groups[g])) + '</span>';
     });
     var act26 = (groups.f1||0)+(groups.f2||0)+(groups.f3||0)+(groups.f4||0)+(groups.f5||0);
+    for(var r=1;r<=6;r++){
+      var rs = 0;
+      Array.prototype.forEach.call(document.querySelectorAll('input[data-row="'+r+'"]'), function(inp){ rs += num(inp); });
+      var rt = document.getElementById('r-'+r);
+      if(rt) rt.innerHTML = rs>0 ? (U(rs) + '<span class="u">' + B(toBRL(rs)) + '</span>') : '—';
+    }
+    for(var c=1;c<=5;c++){ cell('c-f'+c, groups['f'+c]||0); }
+    cell('c-fall', act26);
     var t1 = groups.t1||0, t2 = groups.t2||0, t3m = groups.t3m||0, t3o = groups.t3o||0, p27 = groups.p27||0;
     var m26 = Math.floor(num(m26Input)), m27 = Math.floor(num(m27Input));
     var teamMoB = 0, team26B = 0, team27B = 0;
@@ -435,7 +380,7 @@
 })();
 
 (function(){
-  var KEY='te-budget-v5';
+  var KEY='te-budget-v6';
   var inputs=Array.prototype.slice.call(document.querySelectorAll('input'));
   function serialize(){return JSON.stringify(inputs.map(function(i){ if(i.hasAttribute('data-cur')){ var n=window.__numMoney(i); return n>0?String(n):''; } return i.value; }));}
   function apply(json){try{var a=JSON.parse(json);if(!(a instanceof Array))return;inputs.forEach(function(inp,i){if(typeof a[i]==='string'&&a[i]!=='')inp.value=a[i];});}catch(e){}}
