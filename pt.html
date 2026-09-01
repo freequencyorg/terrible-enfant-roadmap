@@ -428,8 +428,10 @@
   inputs.forEach(function(inp){inp.dispatchEvent(new Event('input'));});
   if(window.__fmtMoneyAll) window.__fmtMoneyAll();
   window.__fetchFx(false);
-  var t;
-  function save(){clearTimeout(t);t=setTimeout(function(){try{localStorage.setItem(KEY,serialize());}catch(e){}},300);}
+  var t, resetting=false;
+  function save(){if(resetting)return;clearTimeout(t);t=setTimeout(function(){if(resetting)return;try{localStorage.setItem(KEY,serialize());}catch(e){}},300);}
+  if(location.search.indexOf('cleared=')!==-1){ try{ history.replaceState(null,'',location.pathname + location.hash); }catch(e){} }
+  inputs.forEach(function(inp){ try{ inp.setAttribute('autocomplete','off'); }catch(e){} });
   inputs.forEach(function(inp){inp.addEventListener('input',save);inp.addEventListener('change',save);});
   Array.prototype.forEach.call(document.querySelectorAll('a.lang'),function(a){a.addEventListener('click',function(ev){ev.preventDefault();try{localStorage.setItem(KEY,serialize());}catch(e){}location.href=a.getAttribute('href')+'#'+b64e(serialize());});});
   var shareBtn=document.getElementById('share'), resetBtn=document.getElementById('reset');
@@ -439,7 +441,15 @@
     function done(){var o=shareBtn.textContent;shareBtn.textContent=shareBtn.getAttribute('data-ok');setTimeout(function(){shareBtn.textContent=o;},1800);}
     if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done,function(){prompt('Link:',url);});}else{prompt('Link:',url);}
   });
-  resetBtn.addEventListener('click',function(){try{localStorage.removeItem(KEY);}catch(e){}location.href=location.pathname;});
+  resetBtn.addEventListener('click',function(){
+    resetting = true; clearTimeout(t);
+    try{localStorage.removeItem(KEY);}catch(e){}
+    inputs.forEach(function(inp){
+      if(inp.classList && inp.classList.contains('money')){ inp.removeAttribute('data-usd'); }
+      if(inp.tagName === 'INPUT') inp.value = '';
+    });
+    location.replace(location.pathname + '?cleared=' + Date.now());
+  });
 })();
 </script>
 </body>
