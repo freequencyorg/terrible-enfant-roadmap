@@ -226,8 +226,8 @@
       <div class="thead"><h4><span class="tnum">Tier 3</span>Operación al servicio de la comunicación</h4><span class="tsub">Equipo · sistemas · one-off</span></div>
       <div class="groupl">Equipo local</div>
       <div class="colhead"><span>Valor /mes</span><span class="tm">2026</span><span class="tm">2027</span></div>
-      <div class="brow"><span>Project Manager<span class="bnote">Nominal R$ 8.500/mes · + 2% de comisión sobre ventas del showroom (variable, fuera de los totales) · contrato mín. 12 meses</span></span><span class="amt"><input class="money team" data-init-brl="8500" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
-      <div class="brow"><span>Asistente de Logística / Ventas<span class="bnote">Nominal R$ 2.000/mes · contrato de 4 meses</span></span><span class="amt"><input class="money team" data-init-brl="2000" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="0"></span></div>
+      <div class="brow"><span>Project Manager<span class="bnote">Nominal R$ 8.500/mes · + 2% de comisión sobre ventas del showroom (variable, fuera de los totales) · contrato mín. 12 meses</span></span><span class="amt"><input class="money team" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
+      <div class="brow"><span>Asistente de Logística / Ventas<span class="bnote">Nominal R$ 2.000/mes · contrato de 4 meses</span></span><span class="amt"><input class="money team" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="0"></span></div>
       <div class="groupl">Sistemas (mensual)</div>
       <div class="brow"><span>ERP + plataforma de e-commerce (mensualidades)</span><span class="amt"><input class="money" data-group="t3m" type="text" inputmode="numeric"></span></div>
       <div class="groupl">One-off (2026)</div>
@@ -315,12 +315,6 @@
   });
   function setPlaceholders(){ money.forEach(function(inp){ inp.placeholder = CUR(); }); }
   window.__fmtMoneyAll = function(){ money.forEach(function(inp){ if(document.activeElement !== inp) fmtIn(inp); }); setPlaceholders(); };
-  window.__seedDefaults = function(){
-    money.forEach(function(inp){
-      var ib = inp.getAttribute('data-init-brl');
-      if(ib && !inp.getAttribute('data-usd')) setUsd(inp, parseInt(ib,10)/f());
-    });
-  };
   function fxInfoText(){
     var fv = fxOrNull();
     if(!fv){ fxInfo.textContent = 'sin cambio — escribí uno'; return; }
@@ -400,16 +394,16 @@
   setPlaceholders();
 
   function fetchFx(force){
-    if(!force && fxOrNull()){ fxInfoText(); window.__seedDefaults(); window.__fmtMoneyAll(); recalc(); return; }
+    if(!force && fxOrNull()){ fxInfoText(); window.__fmtMoneyAll(); recalc(); return; }
     fxInfo.textContent = 'buscando el cambio de hoy…';
     fetch('https://api.frankfurter.dev/v1/latest?from=USD&to=BRL').then(function(r){ return r.json(); }).then(function(j){
       var r = j && j.rates && j.rates.BRL;
       if(!r) throw new Error('no rate');
       fxInput.value = Math.round(r*10000)/10000;
       var p = (j.date||'').split('-'); fxDate.value = p.length===3 ? (p[2]+'/'+p[1]+'/'+p[0]) : (j.date||'');
-      window.__seedDefaults(); window.__fmtMoneyAll(); recalc();
+      window.__fmtMoneyAll(); recalc();
       fxInput.dispatchEvent(new Event('change'));
-    }).catch(function(){ if(!fxOrNull()){ fxInput.value = '5.10'; fxDate.value = ''; } window.__seedDefaults(); window.__fmtMoneyAll(); recalc(); });
+    }).catch(function(){ if(!fxOrNull()){ fxInput.value = '5.10'; fxDate.value = ''; } window.__fmtMoneyAll(); recalc(); });
   }
   window.__fetchFx = fetchFx;
   document.getElementById('fxrefresh').addEventListener('click', function(){ fetchFx(true); });
