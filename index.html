@@ -170,12 +170,12 @@
     <span><label for="taxF">Tax Freequency %</label><input type="number" id="taxF" value="0" min="0" max="100" step="0.5"></span>
   </div>
   <div class="btotals">
-    <div class="tot"><div class="lbl">Acts (6) · 12M</div><div class="val" id="c-act">US$ 0</div></div>
-    <div class="tot"><div class="lbl">Fixed costs / month</div><div class="val" id="c-fix">US$ 0</div></div>
-    <div class="tot"><div class="lbl">Total 2026</div><div class="val" id="c-26">US$ 0</div></div>
-    <div class="tot grand"><div class="lbl">Total 2026 + 2027</div><div class="val" id="c-g">US$ 0</div></div>
+    <div class="tot"><div class="lbl">Acts (6) · 12M</div><div class="val" id="c-act">US$ 0</div><div class="usd" id="c-act-tax"></div></div>
+    <div class="tot"><div class="lbl">Fixed costs / month</div><div class="val" id="c-fix">US$ 0</div><div class="usd" id="c-fix-tax"></div></div>
+    <div class="tot"><div class="lbl">Total 2026</div><div class="val" id="c-26">US$ 0</div><div class="usd" id="c-26-tax"></div></div>
+    <div class="tot grand"><div class="lbl">Total 2026 + 2027</div><div class="val" id="c-g">US$ 0</div><div class="usd" id="c-g-tax"></div></div>
   </div>
-  <p class="smallnote">Fixed costs / month = Tier 1 + Tier 2 + Tier 3 monthly. Acts belong to the 12-month cycle, split pro-rata between the years by active months. Totals per year = fixed × months + acts share + one-off (2026) + referral.</p>
+  <p class="smallnote">Fixed costs / month = Tier 1 + Tier 2 + Tier 3 monthly. Acts belong to the 12-month cycle, split pro-rata between the years by active months. Totals per year = fixed × months + acts share + one-off (2026) + referral. With the setup tax rates filled in, every value shown already includes each line’s payer taxes.</p>
 
   <section class="sec" id="roadmap">
     <div class="sec-title"><span class="sec-num">I.</span><h2>Acts — launch milestones</h2></div>
@@ -286,7 +286,7 @@
       </tbody>
     </table>
     </div>
-    <p class="smallnote" style="margin-top:10px">Retail / first store in São Paulo (2027 plan, defined in October 2026) is not included until scoped. Values above exclude taxes — see the payer split below.</p>
+    <p class="smallnote" style="margin-top:10px">Retail / first store in São Paulo (2027 plan, defined in October 2026) is not included until scoped. Values already include each line’s taxes, per its selected payer — the split below separates Talarias and Freequency.</p>
 
     <div class="sec-title" style="margin-top:44px"><span class="sec-num">IV.</span><h2>Payer split &amp; taxes</h2></div>
     <p class="sec-lead">Every line above has a <strong>paid by</strong> selector — Talarias or Freequency. This table consolidates who pays what, and applies the service-tax rate set in the setup bar to each payer’s base.</p>
@@ -355,19 +355,24 @@
     el.textContent = u>0 ? D(u) : '—';
   }
   function recalc(){
-    var groups = {};
+    var rT = (parseFloat(taxTIn.value)||0)/100, rF = (parseFloat(taxFIn.value)||0)/100;
+    function rateOf(p){ return p==='T' ? rT : rF; }
+    function payerNear(el, sel){ var c = el && el.closest ? el.closest(sel) : null; var s = c ? c.querySelector('select.payer') : null; return s ? s.value : 'F'; }
+    function multOf(el){ return 1 + rateOf(payerNear(el, 'tr,.brow')); }
+    var groups = {}, groupsB = {};
     money.forEach(function(inp){
       var g = inp.getAttribute('data-group');
-      if(g){ if(!groups[g]) groups[g]=0; groups[g]+=usdOf(inp); }
+      if(g){ if(!groups[g]){ groups[g]=0; groupsB[g]=0; } groups[g]+=usdOf(inp)*multOf(inp); groupsB[g]+=usdOf(inp); }
     });
     Object.keys(groups).forEach(function(g){
       var el = document.querySelector('[data-subtotal="'+g+'"]');
       if(el) el.textContent = D(groups[g]);
     });
     var act26 = (groups.f1||0)+(groups.f2||0)+(groups.f3||0)+(groups.f4||0)+(groups.f5||0)+(groups.f6||0);
+    var act26b = (groupsB.f1||0)+(groupsB.f2||0)+(groupsB.f3||0)+(groupsB.f4||0)+(groupsB.f5||0)+(groupsB.f6||0);
     for(var r=1;r<=6;r++){
       var rs = 0;
-      Array.prototype.forEach.call(document.querySelectorAll('input[data-row="'+r+'"]'), function(inp){ rs += usdOf(inp); });
+      Array.prototype.forEach.call(document.querySelectorAll('input[data-row="'+r+'"]'), function(inp){ rs += usdOf(inp)*multOf(inp); });
       var rt = document.getElementById('r-'+r);
       if(rt) rt.textContent = rs>0 ? D(rs) : '—';
     }
@@ -378,17 +383,17 @@
     function tierYears(g){
       var y26 = 0, y27 = 0;
       Array.prototype.forEach.call(document.querySelectorAll('input.money[data-group="'+g+'"]'), function(inp){
-        var v = usdOf(inp); var tms = inp.parentNode.querySelectorAll('.tm');
+        var v = usdOf(inp)*multOf(inp); var tms = inp.parentNode.querySelectorAll('.tm');
         if(tms.length >= 2){ y26 += v*Math.floor(parseFloat(tms[0].value)||0); y27 += v*Math.floor(parseFloat(tms[1].value)||0); }
         else { y26 += v*m26; y27 += v*m27; }
       });
       return [y26, y27];
     }
     var t1y = tierYears('t1'), t2y = tierYears('t2'), t3my = tierYears('t3m');
-    var teamMo = 0, team26 = 0, team27 = 0;
+    var teamMo = 0, team26 = 0, team27 = 0, teamMoB = 0;
     Array.prototype.forEach.call(document.querySelectorAll('input.team'), function(tv){
-      var v = usdOf(tv); var tms = tv.parentNode.querySelectorAll('.tm');
-      teamMo += v; team26 += v*Math.floor(parseFloat(tms[0].value)||0); team27 += v*Math.floor(parseFloat(tms[1].value)||0);
+      var vb = usdOf(tv); var v = vb*multOf(tv); var tms = tv.parentNode.querySelectorAll('.tm');
+      teamMo += v; teamMoB += vb; team26 += v*Math.floor(parseFloat(tms[0].value)||0); team27 += v*Math.floor(parseFloat(tms[1].value)||0);
     });
     document.getElementById('t3-total').textContent = D(teamMo + t3m) + ' /mo · + ' + D(t3o) + ' one-off';
     var refM = Math.floor(parseFloat(document.getElementById('i-refmembers').value)||0);
@@ -396,14 +401,17 @@
     var refPct = (parseFloat(document.getElementById('i-refpct').value)||0)/100;
     var refPrice = usdOf(document.getElementById('i-refprice'));
     var refSales = parseFloat(document.getElementById('i-refsales').value)||0;
+    var refPayerEl = document.getElementById('refpayer');
+    var refMult = 1 + rateOf(refPayerEl ? refPayerEl.value : 'T');
     var refDeal = refM * refFee;
     var refRevMo = refM * refSales * refPrice;
     var refComMo = refRevMo * refPct;
-    var ref26 = refDeal + refComMo*m26;
-    var ref27 = refComMo*m27;
-    document.getElementById('d-refdeal').textContent = refDeal>0 ? D(refDeal) : '—';
+    var ref26b = refDeal + refComMo*m26;
+    var ref27b = refComMo*m27;
+    var ref26 = ref26b*refMult, ref27 = ref27b*refMult;
+    document.getElementById('d-refdeal').textContent = refDeal>0 ? D(refDeal*refMult) : '—';
     document.getElementById('d-refrev').textContent = refRevMo>0 ? D(refRevMo) + ' /mo' : '—';
-    document.getElementById('d-refcom').textContent = refComMo>0 ? D(refComMo) + ' /mo' : '—';
+    document.getElementById('d-refcom').textContent = refComMo>0 ? D(refComMo*refMult) + ' /mo' : '—';
     document.getElementById('d-reftot').textContent = (ref26+ref27)>0 ? (D(ref26) + ' (2026) · ' + D(ref27) + ' (2027)') : '—';
     cell('a-ref-26', ref26); cell('a-ref-27', ref27); cell('a-ref-t', ref26+ref27);
     var fixMo = t1 + t2 + t3m + teamMo;
@@ -425,7 +433,6 @@
     cell('a-tot-26', tot26); cell('a-tot-27', tot27); cell('a-tot-g', tot26+tot27);
     var spT=[0,0], spF=[0,0];
     function addSp(p, a, b){ var t = (p==='T')?spT:spF; t[0]+=a; t[1]+=b; }
-    function payerNear(el, sel){ var c = el && el.closest ? el.closest(sel) : null; var s = c ? c.querySelector('select.payer') : null; return s ? s.value : 'F'; }
     for(var r2=1;r2<=6;r2++){
       var rowIn = document.querySelectorAll('input[data-row="'+r2+'"]');
       if(!rowIn.length) continue;
@@ -447,9 +454,7 @@
     Array.prototype.forEach.call(document.querySelectorAll('input.money[data-group="t3o"]'), function(inp){
       addSp(payerNear(inp,'.brow'), usdOf(inp), 0);
     });
-    var refP = document.getElementById('refpayer');
-    addSp(refP ? refP.value : 'T', ref26, ref27);
-    var rT = (parseFloat(taxTIn.value)||0)/100, rF = (parseFloat(taxFIn.value)||0)/100;
+    addSp(refPayerEl ? refPayerEl.value : 'T', ref26b, ref27b);
     document.getElementById('s-t-rate').textContent = String(parseFloat(taxTIn.value)||0);
     document.getElementById('s-f-rate').textContent = String(parseFloat(taxFIn.value)||0);
     cell('s-t-26', spT[0]); cell('s-t-27', spT[1]); cell('s-t-t', spT[0]+spT[1]);
@@ -460,6 +465,13 @@
     cell('s-ft-26', spF[0]*(1+rF)); cell('s-ft-27', spF[1]*(1+rF)); cell('s-ft-t', (spF[0]+spF[1])*(1+rF));
     var g26 = spT[0]*(1+rT)+spF[0]*(1+rF), g27 = spT[1]*(1+rT)+spF[1]*(1+rF);
     cell('s-g-26', g26); cell('s-g-27', g27); cell('s-g-t', g26+g27);
+    var tax26 = spT[0]*rT + spF[0]*rF, tax27 = spT[1]*rT + spF[1]*rF;
+    var fixMoB = (groupsB.t1||0) + (groupsB.t2||0) + (groupsB.t3m||0) + teamMoB;
+    function taxline(id, u){ var el = document.getElementById(id); if(el) el.textContent = u>0.5 ? ('of which taxes: ' + D(u)) : ''; }
+    taxline('c-act-tax', act26 - act26b);
+    taxline('c-fix-tax', fixMo - fixMoB);
+    taxline('c-26-tax', tax26);
+    taxline('c-g-tax', tax26 + tax27);
     fxInfoText();
   }
   window.__recalc = recalc;
