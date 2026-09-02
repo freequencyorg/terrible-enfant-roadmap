@@ -426,15 +426,41 @@
 })();
 
 (function(){
-  var KEY='te-budget-v11';
+  var KEY='te-budget-v12';
+  var TAG='v12';
   var inputs=Array.prototype.slice.call(document.querySelectorAll('input, select'));
-  function serialize(){return JSON.stringify(inputs.map(function(i){ if(i.classList && i.classList.contains('money')){ return i.getAttribute('data-usd') || ''; } return i.value; }));}
-  function apply(json){try{var a=JSON.parse(json);if(!(a instanceof Array))return;inputs.forEach(function(inp,i){if(typeof a[i]!=='string'||a[i]==='')return;if(inp.classList && inp.classList.contains('money')){inp.setAttribute('data-usd', a[i]);}else{inp.value=a[i];}});}catch(e){}}
-  function b64e(s){return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+  function getVal(i){ if(i.classList && i.classList.contains('money')){ return i.getAttribute('data-usd') || ''; } return i.value; }
+  function setVal(i, v){ if(i.classList && i.classList.contains('money')){ if(v===''){ i.removeAttribute('data-usd'); } else { i.setAttribute('data-usd', v); } } else { i.value = v; } }
+  var DEF = inputs.map(getVal);
+  function serialize(){
+    var parts = [TAG];
+    inputs.forEach(function(i, idx){
+      var v = getVal(i);
+      if(v !== DEF[idx]) parts.push(idx.toString(36) + '_' + encodeURIComponent(v));
+    });
+    return parts.join('!');
+  }
+  function apply(s){
+    try{
+      if(s.indexOf(TAG + '!') !== 0 && s !== TAG) return false;
+      s.split('!').slice(1).forEach(function(pair){
+        var k = pair.indexOf('_'); if(k < 1) return;
+        var idx = parseInt(pair.slice(0, k), 36);
+        if(!(idx >= 0 && idx < inputs.length)) return;
+        setVal(inputs[idx], decodeURIComponent(pair.slice(k+1)));
+      });
+      return true;
+    }catch(e){ return false; }
+  }
+  function applyLegacy(json){try{var a=JSON.parse(json);if(!(a instanceof Array))return false;inputs.forEach(function(inp,i){if(typeof a[i]!=='string'||a[i]==='')return;setVal(inp,a[i]);});return true;}catch(e){return false;}}
   function b64d(s){return decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/'))));}
   var fromHash=false;
-  if(location.hash.length>1){try{apply(b64d(location.hash.slice(1)));fromHash=true;}catch(e){}}
-  if(!fromHash){try{var s=localStorage.getItem(KEY);if(s)apply(s);}catch(e){}}
+  if(location.hash.length>1){
+    var h = location.hash.slice(1);
+    if(apply(h)){ fromHash = true; }
+    else { try{ if(applyLegacy(b64d(h))) fromHash = true; }catch(e){} }
+  }
+  if(!fromHash){try{var s=localStorage.getItem(KEY);if(s){ if(!apply(s)) applyLegacy(s); }}catch(e){}}
   inputs.forEach(function(inp){inp.dispatchEvent(new Event('input'));});
   if(window.__fmtMoneyAll) window.__fmtMoneyAll();
   window.__fetchFx(false);
@@ -443,10 +469,10 @@
   if(location.search.indexOf('cleared=')!==-1){ try{ history.replaceState(null,'',location.pathname + location.hash); }catch(e){} }
   inputs.forEach(function(inp){ try{ inp.setAttribute('autocomplete','off'); }catch(e){} });
   inputs.forEach(function(inp){inp.addEventListener('input',save);inp.addEventListener('change',save);});
-  Array.prototype.forEach.call(document.querySelectorAll('a.lang'),function(a){a.addEventListener('click',function(ev){ev.preventDefault();try{localStorage.setItem(KEY,serialize());}catch(e){}location.href=a.getAttribute('href')+'#'+b64e(serialize());});});
+  Array.prototype.forEach.call(document.querySelectorAll('a.lang'),function(a){a.addEventListener('click',function(ev){ev.preventDefault();try{localStorage.setItem(KEY,serialize());}catch(e){}location.href=a.getAttribute('href')+'#'+serialize();});});
   var shareBtn=document.getElementById('share'), resetBtn=document.getElementById('reset');
   shareBtn.addEventListener('click',function(){
-    var h='#'+b64e(serialize()); var url=location.origin+location.pathname+h;
+    var h='#'+serialize(); var url=location.origin+location.pathname+h;
     try{history.replaceState(null,'',h);}catch(e){}
     function done(){var o=shareBtn.textContent;shareBtn.textContent=shareBtn.getAttribute('data-ok');setTimeout(function(){shareBtn.textContent=o;},1800);}
     if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done,function(){prompt('Link:',url);});}else{prompt('Link:',url);}
