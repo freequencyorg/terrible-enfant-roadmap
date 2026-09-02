@@ -165,16 +165,16 @@
     <span><label for="m27">Meses 2027</label><input type="number" id="m27" value="12" min="0" max="12"></span>
   </div>
   <div class="btotals">
-    <div class="tot"><div class="lbl">Acts 2026 (6)</div><div class="val" id="c-act">US$ 0</div></div>
+    <div class="tot"><div class="lbl">Acts (6) · 12M</div><div class="val" id="c-act">US$ 0</div></div>
     <div class="tot"><div class="lbl">Costos fijos / mes</div><div class="val" id="c-fix">US$ 0</div></div>
     <div class="tot"><div class="lbl">Total 2026</div><div class="val" id="c-26">US$ 0</div></div>
     <div class="tot grand"><div class="lbl">Total 2026 + 2027</div><div class="val" id="c-g">US$ 0</div></div>
   </div>
-  <p class="smallnote">Costos fijos / mes = Tier 1 + Tier 2 + Tier 3 mensual. Total 2026 = fijos × meses 2026 + acciones + one-off. Total 2027 = fijos × meses 2027 + provisión 2027.</p>
+  <p class="smallnote">Costos fijos / mes = Tier 1 + Tier 2 + Tier 3 mensual. Los acts pertenecen al ciclo de 12 meses, divididos pro-rata entre los años por los meses activos. Totales por año = fijos × meses + parte de los acts + one-off (2026) + referral.</p>
 
   <section class="sec" id="roadmap">
     <div class="sec-title"><span class="sec-num">I.</span><h2>Acts — hitos de lanzamiento</h2></div>
-    <p class="sec-lead">Los seis acts del lanzamiento lado a lado — soft opening/press, el lanzamiento Matalab y cuatro collabs — con el mismo desglose de costos para cada uno.</p>
+    <p class="sec-lead">Los seis acts del lanzamiento — soft opening/press, el lanzamiento Matalab y cuatro collabs — distribuidos a lo largo del ciclo de 12 meses, con el mismo desglose de costos para cada uno.</p>
     <div class="mxwrap">
     <table class="mx">
       <thead><tr>
@@ -260,12 +260,12 @@
 
   <section class="sec" id="anual">
     <div class="sec-title"><span class="sec-num">III.</span><h2>Resumen anual</h2></div>
-    <p class="sec-lead">Consolidado a partir de los valores de arriba, en la moneda del documento. La provisión de acciones 2027 es el único campo que se escribe directamente acá.</p>
+    <p class="sec-lead">Consolidado a partir de los valores de arriba, en la moneda del documento. Los acts se dividen entre los años pro-rata por los meses activos; los ítems mensuales se multiplican por los meses de cada año.</p>
     <div class="atwrap">
     <table class="atable">
       <thead><tr><th>Ítem</th><th>2026</th><th>2027</th><th>Total</th></tr></thead>
       <tbody>
-        <tr><td>Acts<span class="bnote">2026 = los seis acts · 2027 = provisión (escribí acá)</span></td><td id="a-act-26"></td><td><span class="amt"><input class="money" data-group="p27" type="text" inputmode="numeric"></span></td><td id="a-act-t"></td></tr>
+        <tr><td>Acts<span class="bnote">Seis acts a lo largo del ciclo de 12 meses · distribuidos pro-rata por los meses activos de cada año</span></td><td id="a-act-26"></td><td id="a-act-27"></td><td id="a-act-t"></td></tr>
         <tr><td>Tier 1 · Fee Freequency<span class="bnote">Mensual × meses activos</span></td><td id="a-t1-26"></td><td id="a-t1-27"></td><td id="a-t1-t"></td></tr>
         <tr><td>Tier 2 · Comunicación recurrente<span class="bnote">Mensual × meses activos</span></td><td id="a-t2-26"></td><td id="a-t2-27"></td><td id="a-t2-t"></td></tr>
         <tr><td>Tier 3 · Equipo local<span class="bnote">Valor × meses contratados por posição</span></td><td id="a-team-26"></td><td id="a-team-27"></td><td id="a-team-t"></td></tr>
@@ -344,7 +344,7 @@
     }
     for(var c=1;c<=6;c++){ cell('c-f'+c, groups['f'+c]||0); }
     cell('c-fall', act26);
-    var t1 = groups.t1||0, t2 = groups.t2||0, t3m = groups.t3m||0, t3o = groups.t3o||0, p27 = groups.p27||0;
+    var t1 = groups.t1||0, t2 = groups.t2||0, t3m = groups.t3m||0, t3o = groups.t3o||0;
     var m26 = Math.floor(parseFloat(m26Input.value)||0), m27 = Math.floor(parseFloat(m27Input.value)||0);
     var teamMo = 0, team26 = 0, team27 = 0;
     Array.prototype.forEach.call(document.querySelectorAll('input.team'), function(tv){
@@ -368,13 +368,16 @@
     document.getElementById('d-reftot').textContent = (ref26+ref27)>0 ? (D(ref26) + ' (2026) · ' + D(ref27) + ' (2027)') : '—';
     cell('a-ref-26', ref26); cell('a-ref-27', ref27); cell('a-ref-t', ref26+ref27);
     var fixMo = t1 + t2 + t3m + teamMo;
-    var tot26 = (t1+t2+t3m)*m26 + team26 + act26 + t3o + ref26;
-    var tot27 = (t1+t2+t3m)*m27 + team27 + p27 + ref27;
+    var mtot = m26 + m27;
+    var actY26 = mtot > 0 ? act26 * (m26/mtot) : 0;
+    var actY27 = mtot > 0 ? act26 * (m27/mtot) : 0;
+    var tot26 = (t1+t2+t3m)*m26 + team26 + actY26 + t3o + ref26;
+    var tot27 = (t1+t2+t3m)*m27 + team27 + actY27 + ref27;
     document.getElementById('c-act').textContent = D(act26);
     document.getElementById('c-fix').textContent = D(fixMo);
     document.getElementById('c-26').textContent = D(tot26);
     document.getElementById('c-g').textContent = D(tot26+tot27);
-    cell('a-act-26', act26); cell('a-act-t', act26 + p27);
+    cell('a-act-26', actY26); cell('a-act-27', actY27); cell('a-act-t', act26);
     cell('a-t1-26', t1*m26); cell('a-t1-27', t1*m27); cell('a-t1-t', t1*(m26+m27));
     cell('a-t2-26', t2*m26); cell('a-t2-27', t2*m27); cell('a-t2-t', t2*(m26+m27));
     cell('a-team-26', team26); cell('a-team-27', team27); cell('a-team-t', team26+team27);
@@ -410,7 +413,7 @@
 })();
 
 (function(){
-  var KEY='te-budget-v9';
+  var KEY='te-budget-v10';
   var inputs=Array.prototype.slice.call(document.querySelectorAll('input, select'));
   function serialize(){return JSON.stringify(inputs.map(function(i){ if(i.classList && i.classList.contains('money')){ return i.getAttribute('data-usd') || ''; } return i.value; }));}
   function apply(json){try{var a=JSON.parse(json);if(!(a instanceof Array))return;inputs.forEach(function(inp,i){if(typeof a[i]!=='string'||a[i]==='')return;if(inp.classList && inp.classList.contains('money')){inp.setAttribute('data-usd', a[i]);}else{inp.value=a[i];}});}catch(e){}}
