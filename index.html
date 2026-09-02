@@ -104,6 +104,9 @@
   .amt input:focus{border-color:var(--accent);outline:none}
   .amt input::placeholder{color:#6a6a6a}
   .amt input.tm{width:64px;text-align:center}
+  select.payer{font-family:var(--sans);font-size:10.5px;letter-spacing:.04em;padding:4px 6px;border:1px solid #4a4a4a;background:#1b1b1b;color:var(--ink-3);border-radius:0;cursor:pointer;margin-left:10px;vertical-align:middle}
+  select.payer:focus{outline:none;border-color:var(--accent)}
+  .mx td select.payer{margin-left:8px}
   .brow .flag{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line);padding:5px 11px;white-space:nowrap}
   .calcv{font-family:var(--serif);font-size:16px;color:var(--ink);font-weight:400;white-space:nowrap}
   .pctlbl{font-size:13px;color:var(--ink-3);margin-left:6px}
@@ -163,6 +166,8 @@
     <button id="fxrefresh" type="button">Update to today</button>
     <span><label for="m26">Months 2026</label><input type="number" id="m26" value="4" min="0" max="12"></span>
     <span><label for="m27">Months 2027</label><input type="number" id="m27" value="12" min="0" max="12"></span>
+    <span><label for="taxT">Tax Talarias %</label><input type="number" id="taxT" value="0" min="0" max="100" step="0.5"></span>
+    <span><label for="taxF">Tax Freequency %</label><input type="number" id="taxF" value="0" min="0" max="100" step="0.5"></span>
   </div>
   <div class="btotals">
     <div class="tot"><div class="lbl">Acts (6) · 12M</div><div class="val" id="c-act">US$ 0</div></div>
@@ -188,12 +193,12 @@
         <th>Total</th>
       </tr></thead>
       <tbody>
-        <tr><td>Media partner</td><td><input class="money" data-group="f1" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="1" type="text" inputmode="numeric"></td><td class="rt" id="r-1">—</td></tr>
-        <tr><td>Event production</td><td><input class="money" data-group="f1" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="2" type="text" inputmode="numeric"></td><td class="rt" id="r-2">—</td></tr>
-        <tr><td>Content (photo + video)</td><td><input class="money" data-group="f1" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="3" type="text" inputmode="numeric"></td><td class="rt" id="r-3">—</td></tr>
-        <tr><td>Seeding</td><td><input class="money" data-group="f1" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="4" type="text" inputmode="numeric"></td><td class="rt" id="r-4">—</td></tr>
-        <tr><td>F&amp;B</td><td><input class="money" data-group="f1" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="5" type="text" inputmode="numeric"></td><td class="rt" id="r-5">—</td></tr>
-        <tr><td>Other</td><td><input class="money" data-group="f1" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="6" type="text" inputmode="numeric"></td><td class="rt" id="r-6">—</td></tr>
+        <tr><td>Media partner<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></td><td><input class="money" data-group="f1" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="1" type="text" inputmode="numeric"></td><td class="rt" id="r-1">—</td></tr>
+        <tr><td>Event production<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></td><td><input class="money" data-group="f1" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="2" type="text" inputmode="numeric"></td><td class="rt" id="r-2">—</td></tr>
+        <tr><td>Content (photo + video)<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></td><td><input class="money" data-group="f1" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="3" type="text" inputmode="numeric"></td><td class="rt" id="r-3">—</td></tr>
+        <tr><td>Seeding<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></td><td><input class="money" data-group="f1" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="4" type="text" inputmode="numeric"></td><td class="rt" id="r-4">—</td></tr>
+        <tr><td>F&amp;B<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></td><td><input class="money" data-group="f1" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="5" type="text" inputmode="numeric"></td><td class="rt" id="r-5">—</td></tr>
+        <tr><td>Other<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></td><td><input class="money" data-group="f1" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="6" type="text" inputmode="numeric"></td><td class="rt" id="r-6">—</td></tr>
 
         <tr class="total"><td>Milestone total</td><td id="c-f1"></td><td id="c-f2"></td><td id="c-f3"></td><td id="c-f4"></td><td id="c-f5"></td><td id="c-f6"></td><td class="gcell" id="c-fall"></td></tr>
       </tbody>
@@ -209,19 +214,19 @@
     <div class="tier">
       <div class="thead"><h4><span class="tnum">Tier 1</span>Freequency fee</h4><span class="tsub">Monthly · from Sep 2026</span></div>
       <div class="colhead"><span>Value /mo</span><span class="tm">2026</span><span class="tm">2027</span></div>
-      <div class="brow"><span>Business / Admin</span><span class="amt"><input class="money" data-group="t1" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
-      <div class="brow"><span>PR / Social</span><span class="amt"><input class="money" data-group="t1" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
+      <div class="brow"><span>Business / Admin<select class="payer"><option value="T">Talarias</option><option value="F">Freequency</option></select></span><span class="amt"><input class="money" data-group="t1" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
+      <div class="brow"><span>PR / Social<select class="payer"><option value="T">Talarias</option><option value="F">Freequency</option></select></span><span class="amt"><input class="money" data-group="t1" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
       <div class="bsubtotal"><span>Tier 1 · monthly</span><b data-subtotal="t1">US$ 0</b></div>
     </div>
 
     <div class="tier">
       <div class="thead"><h4><span class="tnum">Tier 2</span>Recurring communication</h4><span class="tsub">Monthly · from activation</span></div>
       <div class="colhead"><span>Value /mo</span><span class="tm">2026</span><span class="tm">2027</span></div>
-      <div class="brow"><span>PR agency (retainer)</span><span class="amt"><input class="money" data-group="t2" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
-      <div class="brow"><span>Social media suppliers (content / management)</span><span class="amt"><input class="money" data-group="t2" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
-      <div class="brow"><span>Small local shootings</span><span class="amt"><input class="money" data-group="t2" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
-      <div class="brow"><span>Monthly showroom events<span class="bnote">Recurring programming — the space runs 24h</span></span><span class="amt"><input class="money" data-group="t2" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
-      <div class="brow"><span>Paid media</span><span class="amt"><input class="money" data-group="t2" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
+      <div class="brow"><span>PR agency (retainer)<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></span><span class="amt"><input class="money" data-group="t2" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
+      <div class="brow"><span>Social media suppliers (content / management)<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></span><span class="amt"><input class="money" data-group="t2" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
+      <div class="brow"><span>Small local shootings<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></span><span class="amt"><input class="money" data-group="t2" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
+      <div class="brow"><span>Monthly showroom events<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select><span class="bnote">Recurring programming — the space runs 24h</span></span><span class="amt"><input class="money" data-group="t2" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
+      <div class="brow"><span>Paid media<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></span><span class="amt"><input class="money" data-group="t2" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
       <div class="bsubtotal"><span>Tier 2 · monthly</span><b data-subtotal="t2">US$ 0</b></div>
     </div>
 
@@ -229,16 +234,16 @@
       <div class="thead"><h4><span class="tnum">Tier 3</span>Operation serving communication</h4><span class="tsub">Team · systems · one-off</span></div>
       <div class="groupl">Local team</div>
       <div class="colhead"><span>Value /mo</span><span class="tm">2026</span><span class="tm">2027</span></div>
-      <div class="brow"><span>Project Manager<span class="bnote">Nominal R$ 8,500/mo · + 2% commission on showroom sales (variable, not included) · min. 12-month contract</span></span><span class="amt"><input class="money team" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
-      <div class="brow"><span>Logistics / Sales Assistant<span class="bnote">Nominal R$ 2,000/mo · 4-month contract</span></span><span class="amt"><input class="money team" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="0"></span></div>
+      <div class="brow"><span>Project Manager<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select><span class="bnote">Nominal R$ 8,500/mo · + 2% commission on showroom sales (variable, not included) · min. 12-month contract</span></span><span class="amt"><input class="money team" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
+      <div class="brow"><span>Logistics / Sales Assistant<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select><span class="bnote">Nominal R$ 2,000/mo · 4-month contract</span></span><span class="amt"><input class="money team" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="0"></span></div>
       <div class="groupl">Systems (monthly)</div>
       <div class="colhead"><span>Value /mo</span><span class="tm">2026</span><span class="tm">2027</span></div>
-      <div class="brow"><span>ERP + e-commerce platform (subscriptions)</span><span class="amt"><input class="money" data-group="t3m" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
+      <div class="brow"><span>ERP + e-commerce platform (subscriptions)<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></span><span class="amt"><input class="money" data-group="t3m" type="text" inputmode="numeric"><input class="tm" type="number" min="0" max="12" value="4"><input class="tm" type="number" min="0" max="12" value="12"></span></div>
       <div class="groupl">One-off (2026)</div>
-      <div class="brow"><span>Local management system — setup (invoicing / NF)</span><span class="amt"><input class="money" data-group="t3o" type="text" inputmode="numeric"></span></div>
-      <div class="brow"><span>Hotsite / landing pages</span><span class="amt"><input class="money" data-group="t3o" type="text" inputmode="numeric"></span></div>
-      <div class="brow"><span>Packaging & showroom materials</span><span class="amt"><input class="money" data-group="t3o" type="text" inputmode="numeric"></span></div>
-      <div class="brow"><span>Other / contingency</span><span class="amt"><input class="money" data-group="t3o" type="text" inputmode="numeric"></span></div>
+      <div class="brow"><span>Local management system — setup (invoicing / NF)<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></span><span class="amt"><input class="money" data-group="t3o" type="text" inputmode="numeric"></span></div>
+      <div class="brow"><span>Hotsite / landing pages<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></span><span class="amt"><input class="money" data-group="t3o" type="text" inputmode="numeric"></span></div>
+      <div class="brow"><span>Packaging & showroom materials<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></span><span class="amt"><input class="money" data-group="t3o" type="text" inputmode="numeric"></span></div>
+      <div class="brow"><span>Other / contingency<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></span><span class="amt"><input class="money" data-group="t3o" type="text" inputmode="numeric"></span></div>
       <div class="brow"><span>Mentor management</span><span class="flag">Separate budget · mutual agreement · TBD</span></div>
       <div class="bsubtotal"><span>Tier 3 · monthly</span><b id="t3-total">US$ 0</b></div>
     </div>
@@ -246,6 +251,7 @@
     <p class="sec-lead" style="margin-top:34px" id="referral">10–15 recruited members invite their circle to buy at the showroom, building a highly exclusive atmosphere. Compensation: a one-off <strong>deal fee</strong> per member plus <strong>commission on every pair</strong> sold through their referral. Commission figures below are estimates — actual cost follows real sales.</p>
     <div class="tier">
       <div class="thead"><h4>Referral program</h4><span class="tsub">Deal fee + commission on showroom referral sales</span></div>
+      <div class="brow"><span>Paid by</span><span class="amt"><select class="payer" id="refpayer"><option value="T">Talarias</option><option value="F">Freequency</option></select></span></div>
       <div class="brow"><span>Members<span class="bnote">Target: 10–15</span></span><span class="amt"><input class="tm" id="i-refmembers" type="number" min="0" max="50" value="12"></span></div>
       <div class="brow"><span>Deal fee per member<span class="bnote">One-off, on signing · 2026</span></span><span class="amt"><input class="money" id="i-reffee" type="text" inputmode="numeric"></span></div>
       <div class="brow"><span>Commission per pair sold</span><span class="amt"><input class="tm" id="i-refpct" type="number" min="0" max="100" value="20"><span class="pctlbl">%</span></span></div>
@@ -280,7 +286,25 @@
       </tbody>
     </table>
     </div>
-    <p class="smallnote" style="margin-top:10px">Retail / first store in São Paulo (2027 plan, defined in October 2026) is not included until scoped.</p>
+    <p class="smallnote" style="margin-top:10px">Retail / first store in São Paulo (2027 plan, defined in October 2026) is not included until scoped. Values above exclude taxes — see the payer split below.</p>
+
+    <div class="sec-title" style="margin-top:44px"><span class="sec-num">IV.</span><h2>Payer split &amp; taxes</h2></div>
+    <p class="sec-lead">Every line above has a <strong>paid by</strong> selector — Talarias or Freequency. This table consolidates who pays what, and applies the service-tax rate set in the setup bar to each payer’s base.</p>
+    <div class="atwrap">
+    <table class="atable">
+      <thead><tr><th>Item</th><th>2026</th><th>2027</th><th>Total</th></tr></thead>
+      <tbody>
+        <tr><td>Talarias — services (base)</td><td id="s-t-26"></td><td id="s-t-27"></td><td id="s-t-t"></td></tr>
+        <tr><td>Talarias — taxes (<span id="s-t-rate">0</span>%)</td><td id="s-tx-26"></td><td id="s-tx-27"></td><td id="s-tx-t"></td></tr>
+        <tr class="total"><td>Talarias — total incl. taxes</td><td id="s-tt-26"></td><td id="s-tt-27"></td><td id="s-tt-t"></td></tr>
+        <tr><td>Freequency — services (base)</td><td id="s-f-26"></td><td id="s-f-27"></td><td id="s-f-t"></td></tr>
+        <tr><td>Freequency — taxes (<span id="s-f-rate">0</span>%)</td><td id="s-fx-26"></td><td id="s-fx-27"></td><td id="s-fx-t"></td></tr>
+        <tr class="total"><td>Freequency — total incl. taxes</td><td id="s-ft-26"></td><td id="s-ft-27"></td><td id="s-ft-t"></td></tr>
+        <tr class="total"><td>Grand total incl. taxes</td><td id="s-g-26"></td><td id="s-g-27"></td><td class="gcell" id="s-g-t"></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p class="smallnote" style="margin-top:10px">Tax rates are entered manually in the setup bar and applied uniformly to each payer’s base. Actual rates vary by service type and structure (NF, ISS, withholdings, cross-border remittances) — validate them with the accountants before committing values.</p>
   </section>
 
   <footer>
@@ -298,6 +322,8 @@
   var curSel = document.getElementById('cur');
   var m26Input = document.getElementById('m26');
   var m27Input = document.getElementById('m27');
+  var taxTIn = document.getElementById('taxT');
+  var taxFIn = document.getElementById('taxF');
   function fxOrNull(){ var v = parseFloat(fxInput.value); return (isNaN(v)||v<=0) ? null : v; }
   function f(){ return fxOrNull() || 5.10; }
   function isB(){ return curSel.value === 'BRL'; }
@@ -397,11 +423,49 @@
     cell('a-t3m-26', t3my[0]); cell('a-t3m-27', t3my[1]); cell('a-t3m-t', t3my[0]+t3my[1]);
     cell('a-t3o-26', t3o); cell('a-t3o-t', t3o);
     cell('a-tot-26', tot26); cell('a-tot-27', tot27); cell('a-tot-g', tot26+tot27);
+    var spT=[0,0], spF=[0,0];
+    function addSp(p, a, b){ var t = (p==='T')?spT:spF; t[0]+=a; t[1]+=b; }
+    function payerNear(el, sel){ var c = el && el.closest ? el.closest(sel) : null; var s = c ? c.querySelector('select.payer') : null; return s ? s.value : 'F'; }
+    for(var r2=1;r2<=6;r2++){
+      var rowIn = document.querySelectorAll('input[data-row="'+r2+'"]');
+      if(!rowIn.length) continue;
+      var rs2 = 0; Array.prototype.forEach.call(rowIn, function(inp){ rs2 += usdOf(inp); });
+      addSp(payerNear(rowIn[0],'tr'), mtot>0 ? rs2*(m26/mtot) : 0, mtot>0 ? rs2*(m27/mtot) : 0);
+    }
+    ['t1','t2','t3m'].forEach(function(g){
+      Array.prototype.forEach.call(document.querySelectorAll('input.money[data-group="'+g+'"]'), function(inp){
+        var v = usdOf(inp); var tms = inp.parentNode.querySelectorAll('.tm');
+        var a = tms.length>=2 ? v*Math.floor(parseFloat(tms[0].value)||0) : v*m26;
+        var b = tms.length>=2 ? v*Math.floor(parseFloat(tms[1].value)||0) : v*m27;
+        addSp(payerNear(inp,'.brow'), a, b);
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('input.team'), function(tv){
+      var v = usdOf(tv); var tms = tv.parentNode.querySelectorAll('.tm');
+      addSp(payerNear(tv,'.brow'), v*Math.floor(parseFloat(tms[0].value)||0), v*Math.floor(parseFloat(tms[1].value)||0));
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('input.money[data-group="t3o"]'), function(inp){
+      addSp(payerNear(inp,'.brow'), usdOf(inp), 0);
+    });
+    var refP = document.getElementById('refpayer');
+    addSp(refP ? refP.value : 'T', ref26, ref27);
+    var rT = (parseFloat(taxTIn.value)||0)/100, rF = (parseFloat(taxFIn.value)||0)/100;
+    document.getElementById('s-t-rate').textContent = String(parseFloat(taxTIn.value)||0);
+    document.getElementById('s-f-rate').textContent = String(parseFloat(taxFIn.value)||0);
+    cell('s-t-26', spT[0]); cell('s-t-27', spT[1]); cell('s-t-t', spT[0]+spT[1]);
+    cell('s-tx-26', spT[0]*rT); cell('s-tx-27', spT[1]*rT); cell('s-tx-t', (spT[0]+spT[1])*rT);
+    cell('s-tt-26', spT[0]*(1+rT)); cell('s-tt-27', spT[1]*(1+rT)); cell('s-tt-t', (spT[0]+spT[1])*(1+rT));
+    cell('s-f-26', spF[0]); cell('s-f-27', spF[1]); cell('s-f-t', spF[0]+spF[1]);
+    cell('s-fx-26', spF[0]*rF); cell('s-fx-27', spF[1]*rF); cell('s-fx-t', (spF[0]+spF[1])*rF);
+    cell('s-ft-26', spF[0]*(1+rF)); cell('s-ft-27', spF[1]*(1+rF)); cell('s-ft-t', (spF[0]+spF[1])*(1+rF));
+    var g26 = spT[0]*(1+rT)+spF[0]*(1+rF), g27 = spT[1]*(1+rT)+spF[1]*(1+rF);
+    cell('s-g-26', g26); cell('s-g-27', g27); cell('s-g-t', g26+g27);
     fxInfoText();
   }
   window.__recalc = recalc;
-  var others = Array.prototype.slice.call(document.querySelectorAll('input.tm')).concat([fxInput, m26Input, m27Input]);
+  var others = Array.prototype.slice.call(document.querySelectorAll('input.tm')).concat([fxInput, m26Input, m27Input, taxTIn, taxFIn]);
   others.forEach(function(inp){ inp.addEventListener('input', recalc); inp.addEventListener('change', recalc); });
+  Array.prototype.forEach.call(document.querySelectorAll('select.payer'), function(s){ s.addEventListener('change', recalc); });
   money.forEach(function(inp){ inp.addEventListener('input', recalc); });
   curSel.addEventListener('change', function(){ window.__fmtMoneyAll(); recalc(); });
   fxInput.addEventListener('input', function(ev){ if(ev.isTrusted) fxDate.value = ''; });
@@ -426,8 +490,8 @@
 })();
 
 (function(){
-  var KEY='te-budget-v12';
-  var TAG='v12';
+  var KEY='te-budget-v13';
+  var TAG='v13';
   var inputs=Array.prototype.slice.call(document.querySelectorAll('input, select'));
   function getVal(i){ if(i.classList && i.classList.contains('money')){ return i.getAttribute('data-usd') || ''; } return i.value; }
   function setVal(i, v){ if(i.classList && i.classList.contains('money')){ if(v===''){ i.removeAttribute('data-usd'); } else { i.setAttribute('data-usd', v); } } else { i.value = v; } }
