@@ -92,6 +92,28 @@
   .mx input:focus{border-color:var(--accent);outline:none}
   .mx input::placeholder{color:#6a6a6a}
   .mx td.rt{font-weight:600;color:var(--ink);white-space:nowrap}
+  .paybar{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--accent);padding:14px 18px;margin-bottom:18px}
+  .paybar-t{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
+  .paybar-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px 30px}
+  @media(max-width:720px){.paybar-grid{grid-template-columns:1fr}}
+  .prow2{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13.5px;color:var(--ink-2);padding:5px 0;border-bottom:1px dotted var(--line)}
+  .prow2 .pr-right{display:flex;align-items:center;gap:12px}
+  .prow2 .rt2{font-size:13px;color:var(--ink);min-width:78px;text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+  .actgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:940px){.actgrid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.actgrid{grid-template-columns:1fr}}
+  .actcard{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--accent);padding:14px 16px 8px}
+  .acthead{margin-bottom:10px}
+  .acthead .mnum2{display:block;font-family:var(--serif);font-style:italic;font-size:18px;color:var(--accent)}
+  .acthead .actname{display:block;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin-top:2px}
+  .arow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:3px 0}
+  .arow>span{font-size:12.5px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .arow input.money{width:112px;text-align:right;font-family:var(--sans);font-size:13px;padding:6px 8px;border:1px solid #4a4a4a;background:#222;color:var(--ink);border-radius:0;font-variant-numeric:tabular-nums}
+  .arow input.money:focus{border-color:var(--accent);outline:none}
+  .arow input.money::placeholder{color:#6a6a6a}
+  .actsub{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--line);margin-top:8px;padding:8px 0 6px;font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.1em}
+  .actsub b{color:var(--ink);font-size:14px;font-variant-numeric:tabular-nums}
+  .acttotal{margin-top:16px}
   .mx td.rt .u{display:block;font-size:11px;font-weight:400;color:var(--ink-3)}
   .mx tr.total td{background:#1d1d1d;font-family:var(--serif);font-size:15px;color:var(--ink);border-bottom:none;white-space:nowrap}
   .mx tr.total td .u{display:block;font-family:var(--sans);font-size:11px;color:var(--ink-3)}
@@ -180,30 +202,76 @@
   <section class="sec" id="roadmap">
     <div class="sec-title"><span class="sec-num">I.</span><h2>Acts — hitos de lanzamiento</h2></div>
     <p class="sec-lead">Los seis acts del lanzamiento — soft opening/press, el lanzamiento Matalab y cuatro collabs — distribuidos a lo largo del ciclo de 12 meses, con el mismo desglose de costos para cada uno.</p>
-    <div class="mxwrap">
-    <table class="mx">
-      <thead><tr>
-        <th>Ítem de costo</th>
-        <th><span class="mnum">Act 1</span>Soft opening / Press</th>
-        <th><span class="mnum">Act 2</span>Lanzamiento Matalab</th>
-        <th><span class="mnum">Act 3</span>Collab 1</th>
-        <th><span class="mnum">Act 4</span>Collab 2</th>
-        <th><span class="mnum">Act 5</span>Collab 3</th>
-        <th><span class="mnum">Act 6</span>Collab 4</th>
-        <th>Total</th>
-      </tr></thead>
-      <tbody>
-        <tr><td>Media partner<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></td><td><input class="money" data-group="f1" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="1" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="1" type="text" inputmode="numeric"></td><td class="rt" id="r-1">—</td></tr>
-        <tr><td>Producción del evento<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></td><td><input class="money" data-group="f1" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="2" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="2" type="text" inputmode="numeric"></td><td class="rt" id="r-2">—</td></tr>
-        <tr><td>Contenido (foto + video)<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></td><td><input class="money" data-group="f1" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="3" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="3" type="text" inputmode="numeric"></td><td class="rt" id="r-3">—</td></tr>
-        <tr><td>Seeding<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></td><td><input class="money" data-group="f1" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="4" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="4" type="text" inputmode="numeric"></td><td class="rt" id="r-4">—</td></tr>
-        <tr><td>F&amp;B<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></td><td><input class="money" data-group="f1" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="5" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="5" type="text" inputmode="numeric"></td><td class="rt" id="r-5">—</td></tr>
-        <tr><td>Otros<select class="payer"><option value="F">Freequency</option><option value="T">Talarias</option></select></td><td><input class="money" data-group="f1" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f2" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f3" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f4" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f5" data-row="6" type="text" inputmode="numeric"></td><td><input class="money" data-group="f6" data-row="6" type="text" inputmode="numeric"></td><td class="rt" id="r-6">—</td></tr>
+    <div class="paybar">
+      <div class="paybar-t">Pagado por &amp; total por ítem de costo — vale para todos los acts</div>
+      <div class="paybar-grid">
+        <div class="prow2"><span>Media partner</span><span class="pr-right"><select class="payer" data-prow="1"><option value="F">Freequency</option><option value="T">Talarias</option></select><b class="rt2" id="r-1">—</b></span></div>
+        <div class="prow2"><span>Producción del evento</span><span class="pr-right"><select class="payer" data-prow="2"><option value="F">Freequency</option><option value="T">Talarias</option></select><b class="rt2" id="r-2">—</b></span></div>
+        <div class="prow2"><span>Contenido (foto + video)</span><span class="pr-right"><select class="payer" data-prow="3"><option value="F">Freequency</option><option value="T">Talarias</option></select><b class="rt2" id="r-3">—</b></span></div>
+        <div class="prow2"><span>Seeding</span><span class="pr-right"><select class="payer" data-prow="4"><option value="F">Freequency</option><option value="T">Talarias</option></select><b class="rt2" id="r-4">—</b></span></div>
+        <div class="prow2"><span>F&amp;B</span><span class="pr-right"><select class="payer" data-prow="5"><option value="F">Freequency</option><option value="T">Talarias</option></select><b class="rt2" id="r-5">—</b></span></div>
+        <div class="prow2"><span>Otros</span><span class="pr-right"><select class="payer" data-prow="6"><option value="F">Freequency</option><option value="T">Talarias</option></select><b class="rt2" id="r-6">—</b></span></div>
 
-        <tr class="total"><td>Total por hito</td><td id="c-f1"></td><td id="c-f2"></td><td id="c-f3"></td><td id="c-f4"></td><td id="c-f5"></td><td id="c-f6"></td><td class="gcell" id="c-fall"></td></tr>
-      </tbody>
-    </table>
+      </div>
     </div>
+    <div class="actgrid">
+      <div class="actcard"><div class="acthead"><span class="mnum2">Act 1</span><span class="actname">Soft opening / Press</span></div>
+        <div class="arow"><span>Media partner</span><input class="money" data-group="f1" data-row="1" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Producción del evento</span><input class="money" data-group="f1" data-row="2" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Contenido (foto + video)</span><input class="money" data-group="f1" data-row="3" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Seeding</span><input class="money" data-group="f1" data-row="4" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>F&amp;B</span><input class="money" data-group="f1" data-row="5" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Otros</span><input class="money" data-group="f1" data-row="6" type="text" inputmode="numeric"></div>
+        <div class="actsub"><span>Total</span><b id="c-f1">—</b></div>
+      </div>
+      <div class="actcard"><div class="acthead"><span class="mnum2">Act 2</span><span class="actname">Lanzamiento Matalab</span></div>
+        <div class="arow"><span>Media partner</span><input class="money" data-group="f2" data-row="1" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Producción del evento</span><input class="money" data-group="f2" data-row="2" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Contenido (foto + video)</span><input class="money" data-group="f2" data-row="3" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Seeding</span><input class="money" data-group="f2" data-row="4" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>F&amp;B</span><input class="money" data-group="f2" data-row="5" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Otros</span><input class="money" data-group="f2" data-row="6" type="text" inputmode="numeric"></div>
+        <div class="actsub"><span>Total</span><b id="c-f2">—</b></div>
+      </div>
+      <div class="actcard"><div class="acthead"><span class="mnum2">Act 3</span><span class="actname">Collab 1</span></div>
+        <div class="arow"><span>Media partner</span><input class="money" data-group="f3" data-row="1" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Producción del evento</span><input class="money" data-group="f3" data-row="2" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Contenido (foto + video)</span><input class="money" data-group="f3" data-row="3" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Seeding</span><input class="money" data-group="f3" data-row="4" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>F&amp;B</span><input class="money" data-group="f3" data-row="5" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Otros</span><input class="money" data-group="f3" data-row="6" type="text" inputmode="numeric"></div>
+        <div class="actsub"><span>Total</span><b id="c-f3">—</b></div>
+      </div>
+      <div class="actcard"><div class="acthead"><span class="mnum2">Act 4</span><span class="actname">Collab 2</span></div>
+        <div class="arow"><span>Media partner</span><input class="money" data-group="f4" data-row="1" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Producción del evento</span><input class="money" data-group="f4" data-row="2" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Contenido (foto + video)</span><input class="money" data-group="f4" data-row="3" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Seeding</span><input class="money" data-group="f4" data-row="4" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>F&amp;B</span><input class="money" data-group="f4" data-row="5" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Otros</span><input class="money" data-group="f4" data-row="6" type="text" inputmode="numeric"></div>
+        <div class="actsub"><span>Total</span><b id="c-f4">—</b></div>
+      </div>
+      <div class="actcard"><div class="acthead"><span class="mnum2">Act 5</span><span class="actname">Collab 3</span></div>
+        <div class="arow"><span>Media partner</span><input class="money" data-group="f5" data-row="1" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Producción del evento</span><input class="money" data-group="f5" data-row="2" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Contenido (foto + video)</span><input class="money" data-group="f5" data-row="3" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Seeding</span><input class="money" data-group="f5" data-row="4" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>F&amp;B</span><input class="money" data-group="f5" data-row="5" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Otros</span><input class="money" data-group="f5" data-row="6" type="text" inputmode="numeric"></div>
+        <div class="actsub"><span>Total</span><b id="c-f5">—</b></div>
+      </div>
+      <div class="actcard"><div class="acthead"><span class="mnum2">Act 6</span><span class="actname">Collab 4</span></div>
+        <div class="arow"><span>Media partner</span><input class="money" data-group="f6" data-row="1" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Producción del evento</span><input class="money" data-group="f6" data-row="2" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Contenido (foto + video)</span><input class="money" data-group="f6" data-row="3" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Seeding</span><input class="money" data-group="f6" data-row="4" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>F&amp;B</span><input class="money" data-group="f6" data-row="5" type="text" inputmode="numeric"></div>
+        <div class="arow"><span>Otros</span><input class="money" data-group="f6" data-row="6" type="text" inputmode="numeric"></div>
+        <div class="actsub"><span>Total</span><b id="c-f6">—</b></div>
+      </div>
+
+    </div>
+    <div class="bsubtotal acttotal"><span>Total por hito</span><b id="c-fall">—</b></div>
     <p class="smallnote" style="margin-top:10px">Gates: llegada de los productos confirmada (D0) + nuevo acuerdo de compromiso firmado, en reemplazo del primer MOU. Los acts son hitos, no secuencia — fechas a confirmar después del D0. Las collabs 1–4 se nombrarán a medida que se cierren.</p>
   </section>
 
@@ -358,7 +426,7 @@
     var rT = (parseFloat(taxTIn.value)||0)/100, rF = (parseFloat(taxFIn.value)||0)/100;
     function rateOf(p){ return p==='T' ? rT : rF; }
     function payerNear(el, sel){ var c = el && el.closest ? el.closest(sel) : null; var s = c ? c.querySelector('select.payer') : null; return s ? s.value : 'F'; }
-    function multOf(el){ return 1 + rateOf(payerNear(el, 'tr,.brow')); }
+    function multOf(el){ var pr = el.getAttribute ? el.getAttribute('data-row') : null; if(pr){ var s = document.querySelector('select.payer[data-prow="'+pr+'"]'); return 1 + rateOf(s ? s.value : 'F'); } return 1 + rateOf(payerNear(el, '.brow')); }
     var groups = {}, groupsB = {};
     money.forEach(function(inp){
       var g = inp.getAttribute('data-group');
@@ -437,7 +505,8 @@
       var rowIn = document.querySelectorAll('input[data-row="'+r2+'"]');
       if(!rowIn.length) continue;
       var rs2 = 0; Array.prototype.forEach.call(rowIn, function(inp){ rs2 += usdOf(inp); });
-      addSp(payerNear(rowIn[0],'tr'), mtot>0 ? rs2*(m26/mtot) : 0, mtot>0 ? rs2*(m27/mtot) : 0);
+      var ps2 = document.querySelector('select.payer[data-prow="'+r2+'"]');
+      addSp(ps2 ? ps2.value : 'F', mtot>0 ? rs2*(m26/mtot) : 0, mtot>0 ? rs2*(m27/mtot) : 0);
     }
     ['t1','t2','t3m'].forEach(function(g){
       Array.prototype.forEach.call(document.querySelectorAll('input.money[data-group="'+g+'"]'), function(inp){
@@ -502,8 +571,8 @@
 })();
 
 (function(){
-  var KEY='te-budget-v13';
-  var TAG='v13';
+  var KEY='te-budget-v14';
+  var TAG='v14';
   var inputs=Array.prototype.slice.call(document.querySelectorAll('input, select'));
   function getVal(i){ if(i.classList && i.classList.contains('money')){ return i.getAttribute('data-usd') || ''; } return i.value; }
   function setVal(i, v){ if(i.classList && i.classList.contains('money')){ if(v===''){ i.removeAttribute('data-usd'); } else { i.setAttribute('data-usd', v); } } else { i.value = v; } }
