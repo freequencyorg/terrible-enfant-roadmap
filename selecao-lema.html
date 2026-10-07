@@ -530,19 +530,27 @@ function planilha(){
 }
 
 let DL=null;
+const SOLTA = !(window.claude && window.claude.use);   // página normal, fora do visualizador
 (async ()=>{
   try{ DL = await (window.claude && window.claude.use ? window.claude.use('downloads') : null); }catch(e){ DL=null; }
-  if(DL) $('b-excel').hidden = false;
+  if(DL || SOLTA) $('b-excel').hidden = false;
 })();
 $('b-excel').addEventListener('click', async ()=>{
-  if(!DL) return;
-  try{
-    await DL.save({filename:'TE-selecao-LEMA.xlsx', data:planilha()});
-    aviso('Excel salvo.');
-  }catch(e){
-    const c = e && e.code;
-    aviso(c==='declined' ? 'Download cancelado.' : 'Não consegui baixar aqui — use o botão copiar.', c!=='declined');
+  const blob = planilha();
+  if(DL){
+    try{
+      await DL.save({filename:'TE-selecao-LEMA.xlsx', data:blob});
+      aviso('Excel salvo.');
+    }catch(e){
+      const c = e && e.code;
+      aviso(c==='declined' ? 'Download cancelado.' : 'Não consegui baixar aqui — use o botão copiar.', c!=='declined');
+    }
+    return;
   }
+  const a=document.createElement('a'), u=URL.createObjectURL(blob);
+  a.href=u; a.download='TE-selecao-LEMA.xlsx'; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(u), 4000);
+  aviso('Excel baixado.');
 });
 
 carrega(); desenha(); pinta();
